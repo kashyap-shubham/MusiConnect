@@ -12,3 +12,65 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+
+
+model User {
+  id        String     @id @default(uuid())
+  email     String     @unique
+  name      String
+  image     String?
+  playlists Playlist[]
+  createdAt DateTime   @default(now())
+}
+
+model Artist {
+  id     String  @id @default(uuid())
+  name   String
+  image  String?
+  albums Album[]
+  songs  Song[]
+}
+
+model Album {
+  id            String   @id @default(uuid())
+  title         String
+  coverImageKey String?
+  releaseDate   DateTime
+  artistId      String
+  artist        Artist   @relation(fields: [artistId], references: [id])
+  songs         Song[]
+}
+
+model Song {
+  id        String   @id @default(uuid())
+  title     String
+  duration  Int
+  audioKey  String
+  artistId  String
+  albumId   String
+  artist    Artist   @relation(fields: [artistId], references: [id])
+  album     Album    @relation(fields: [albumId], references: [id])
+  playlists PlaylistSong[]
+  createdAt DateTime @default(now())
+}
+
+model Playlist {
+  id        String         @id @default(uuid())
+  name      String
+  userId    String
+  user      User           @relation(fields: [userId], references: [id])
+  songs     PlaylistSong[]
+  createdAt DateTime       @default(now())
+}
+
+model PlaylistSong {
+  playlistId String
+  songId     String
+  addedAt    DateTime @default(now())
+
+  playlist Playlist @relation(fields: [playlistId], references: [id])
+  song     Song     @relation(fields: [songId], references: [id])
+
+  @@id([playlistId, songId])
+}
