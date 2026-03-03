@@ -40,7 +40,7 @@ importers:
         specifier: ^5.0.6
         version: 5.0.6
       '@types/node':
-        specifier: ^22.15.3
+        specifier: ^22.19.13
         version: 22.19.13
       prisma:
         specifier: ^7.4.2
