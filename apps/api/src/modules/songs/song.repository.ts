@@ -1,5 +1,6 @@
 import { prisma } from "../../lib/prisma"
 import { Song, Prisma } from "../../generated/prisma"
+import { CreateSongInput } from "./schemas/create-song.schema";
 
 
 export const songWithRelations = Prisma.validator<Prisma.SongDefaultArgs>()({
@@ -45,6 +46,29 @@ export class SongRepository {
                     },
                 },
             },
+        });
+    }
+
+
+    async create(data: CreateSongInput) {
+        return prisma.song.create({
+            data: {
+            title: data.title,
+            duration: data.duration,
+            albumId: data.albumId,
+            audioKey: data.audioKey,
+
+            artists: {
+                create: [
+                {
+                    artist: {
+                    connect: { id: data.artistId },
+                    },
+                },
+                ],
+            },
+            },
+            ...songWithRelations,
         });
     }
 
