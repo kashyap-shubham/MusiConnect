@@ -1,5 +1,6 @@
 import express, { type Application } from "express";
 import routes from "./routes";
+import "dotenv/config";
 
 
 const app: Application = express();
