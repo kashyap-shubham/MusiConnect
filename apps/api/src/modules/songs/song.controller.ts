@@ -5,10 +5,10 @@ import { createSongSchema } from "./schemas/create-song.schema";
 
 
 export class SongController {
-    private service = new SongService();
+    private service:  SongService;
 
     constructor() {
-        this.service = new SongService
+        this.service = new SongService();
     }
 
     async getSongs(req: Request, res: Response, next: NextFunction) {
