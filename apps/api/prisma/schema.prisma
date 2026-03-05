@@ -1,12 +1,11 @@
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
 }
-
 
 model User {
   id        String     @id @default(uuid())
@@ -18,11 +17,12 @@ model User {
 }
 
 model Artist {
-  id     String  @id @default(uuid())
-  name   String
-  image  String?
-  albums Album[]
-  songs  Song[]
+  id        String       @id @default(uuid())
+  name      String
+  image     String?
+  albums    Album[]
+  songs     SongArtist[]
+  createdAt DateTime     @default(now())
 }
 
 model Album {
@@ -31,8 +31,12 @@ model Album {
   coverImageKey String?
   releaseDate   DateTime
   artistId      String
-  artist        Artist   @relation(fields: [artistId], references: [id])
-  songs         Song[]
+
+  artist Artist @relation(fields: [artistId], references: [id])
+
+  songs Song[]
+
+  createdAt DateTime @default(now())
 }
 
 model Song {
@@ -40,21 +44,37 @@ model Song {
   title     String
   duration  Int
   audioKey  String
-  artistId  String
-  albumId   String
-  artist    Artist   @relation(fields: [artistId], references: [id])
-  album     Album    @relation(fields: [albumId], references: [id])
+  albumId   String?
+
+  album Album? @relation(fields: [albumId], references: [id])
+
+  artists SongArtist[]
+
   playlists PlaylistSong[]
+
   createdAt DateTime @default(now())
+}
+
+model SongArtist {
+  songId   String
+  artistId String
+
+  song   Song   @relation(fields: [songId], references: [id])
+  artist Artist @relation(fields: [artistId], references: [id])
+
+  @@id([songId, artistId])
 }
 
 model Playlist {
   id        String         @id @default(uuid())
   name      String
   userId    String
-  user      User           @relation(fields: [userId], references: [id])
-  songs     PlaylistSong[]
-  createdAt DateTime       @default(now())
+
+  user  User @relation(fields: [userId], references: [id])
+
+  songs PlaylistSong[]
+
+  createdAt DateTime @default(now())
 }
 
 model PlaylistSong {

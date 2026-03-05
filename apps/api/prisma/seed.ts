@@ -85,24 +85,24 @@ async function seedSongs() {
       title: "Choo Lo",
       duration: 230,
       audioKey: "songs/choo-lo.mp3",
-      artistId: "11111111-1111-1111-1111-111111111111",
       albumId: "33333333-3333-3333-3333-333333333333",
+      artistIds: ["11111111-1111-1111-1111-111111111111"],
     },
     {
       id: "66666666-6666-6666-6666-666666666666",
       title: "Aaftab",
       duration: 210,
       audioKey: "songs/aaftab.mp3",
-      artistId: "11111111-1111-1111-1111-111111111111",
       albumId: "33333333-3333-3333-3333-333333333333",
+      artistIds: ["11111111-1111-1111-1111-111111111111"],
     },
     {
       id: "77777777-7777-7777-7777-777777777777",
       title: "Kesariya",
       duration: 215,
       audioKey: "songs/kesariya.mp3",
-      artistId: "22222222-2222-2222-2222-222222222222",
       albumId: "44444444-4444-4444-4444-444444444444",
+      artistIds: ["22222222-2222-2222-2222-222222222222"],
     },
   ];
 
@@ -110,7 +110,20 @@ async function seedSongs() {
     await prisma.song.upsert({
       where: { id: song.id },
       update: {},
-      create: song,
+      create: {
+        id: song.id,
+        title: song.title,
+        duration: song.duration,
+        audioKey: song.audioKey,
+        albumId: song.albumId,
+        artists: {
+          create: song.artistIds.map((artistId) => ({
+            artist: {
+              connect: { id: artistId },
+            },
+          })),
+        },
+      },
     });
   }
 
@@ -137,33 +150,26 @@ async function seedPlaylists() {
     },
   });
 
-  await prisma.playlistSong.upsert({
-    where: {
-      playlistId_songId: {
-        playlistId: playlist.id,
-        songId: "55555555-5555-5555-5555-555555555555",
-      },
-    },
-    update: {},
-    create: {
-      playlistId: playlist.id,
-      songId: "55555555-5555-5555-5555-555555555555",
-    },
-  });
+  const playlistSongs = [
+    "55555555-5555-5555-5555-555555555555",
+    "66666666-6666-6666-6666-666666666666",
+  ];
 
-  await prisma.playlistSong.upsert({
-    where: {
-      playlistId_songId: {
-        playlistId: playlist.id,
-        songId: "66666666-6666-6666-6666-666666666666",
+  for (const songId of playlistSongs) {
+    await prisma.playlistSong.upsert({
+      where: {
+        playlistId_songId: {
+          playlistId: playlist.id,
+          songId,
+        },
       },
-    },
-    update: {},
-    create: {
-      playlistId: playlist.id,
-      songId: "66666666-6666-6666-6666-666666666666",
-    },
-  });
+      update: {},
+      create: {
+        playlistId: playlist.id,
+        songId,
+      },
+    });
+  }
 
   console.log("Playlists seeded");
 }
