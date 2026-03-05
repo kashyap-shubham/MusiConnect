@@ -2,17 +2,23 @@ import { prisma } from "../../lib/prisma"
 import { Song, Prisma } from "../../generated/prisma"
 
 
-type SongwithRelations = Song & {
-    album: Prisma.AlbumGetPayload<{}> | null;
+export const songWithRelations = Prisma.validator<Prisma.SongDefaultArgs>()({
+  include: {
+    album: true,
     artists: {
-        artist: Prisma.ArtistGetPayload<{}>;
-    } [];
-};
+      include: {
+        artist: true,
+      },
+    },
+  },
+});
+
+export type SongWithRelations = Prisma.SongGetPayload<typeof songWithRelations>;
 
 
 export class SongRepository {
 
-    async findAll(): Promise<SongwithRelations[]> {
+    async findAll(): Promise<SongWithRelations[]> {
 
         return prisma.song.findMany({
             include: {
@@ -27,7 +33,7 @@ export class SongRepository {
     }
 
 
-    async findById(id: string): Promise<SongwithRelations | null> {
+    async findById(id: string): Promise<SongWithRelations | null> {
 
         return prisma.song.findUnique({
             where: {id},
