@@ -1,39 +1,28 @@
-import { CreateSongInput } from "./schemas/create-song.schema";
 import { SongRepository } from "./song.repository";
-const CDN_URL = process.env.CDN_URL 
+import { CreateSongInput } from "./schemas/create-song.schema";
+import { UpdateSongInput } from "./schemas/update-song.schema";
 
-export class SongService {
-    private repository: SongRepository;
+export class SongsService {
 
-   constructor() {
-    this.repository = new SongRepository();
-   } 
+  private repository = new SongRepository();
 
-   async getAllSong() {
+  async getAllSongs() {
     return this.repository.findAll();
-   }
+  }
 
-   async getSongById(id: string) {
-    const song = await this.repository.findById(id);
+  async getSongById(id: string) {
+    return this.repository.findById(id);
+  }
 
-    if (!song) {
-        throw new Error("Song not Found");
-    }
-    return song;
-   }
+  async createSong(data: CreateSongInput) {
+    return this.repository.create(data);
+  }
 
-   async createSong(data: CreateSongInput) {
-     const song = await this.repository.create(data);
+  async updateSong(id: string, data: UpdateSongInput) {
+    return this.repository.update(id, data);
+  }
 
-     return {
-       id: song.id,
-       title: song.title,
-       duration: song.duration,
-       audioUrl: `${CDN_URL}/${song.audioKey}`,
-
-       artists: song.artists.map((a) => a.artist.name),
-
-       album: song.album?.title,
-     };
-   }
+  async deleteSong(id: string) {
+    return this.repository.delete(id);
+  }
 }
