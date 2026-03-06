@@ -3,10 +3,10 @@ import { z } from 'zod';
 export const createSongSchema = z.object({
     title: z.string().min(1),
     duration: z.number().int().positive(),
-    albumId: z.uuid().optional(),
+    albumId: z.string().optional(),
     audioKey: z.url(),
     artistIds: z
-    .array(z.uuid())
+    .array(z.string())
     .min(1, "At least one artist is required"),
 });
 
