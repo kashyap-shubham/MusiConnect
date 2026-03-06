@@ -3,14 +3,14 @@ import { AlbumController } from "./album.controller";
 
 const router: Router = Router();
 
-const albumController = new AlbumController();
+const controller = new AlbumController();
 
-router.get("/", albumController.getAlbums);
+router.get("/", controller.getAlbums);
 
-router.get("/:id", albumController.getAlbumById);
+router.get("/:id", controller.getAlbumById.bind(controller));
 
-router.get("/:id/songs", albumController.getSongsByAlbumId);
+router.get("/:id/songs", controller.getSongsByAlbumId.bind(controller));
 
-router.post("/", albumController.createAlbum);
+router.post("/", controller.createAlbum.bind(controller));
 
 export default router;

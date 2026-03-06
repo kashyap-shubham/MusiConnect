@@ -33,4 +33,8 @@ export class ArtistService {
     async getArtistSongs(id: string) {
         return this.repository.findSongByArtist(id);
     }
+
+    async getAlbumsByArtistId(artistId: string) {
+      return this.repository.findAlbumsByArtistId(artistId);
+    }
 }

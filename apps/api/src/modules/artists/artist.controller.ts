@@ -62,4 +62,13 @@ export class ArtistController {
       res.status(500).json({ message: "Internal server error" });
     }
   }
+
+  async getAlbumsByArtistId (req: Request<{ id: string }>, res: Response) {
+    const { id } = req.params;
+    
+    const albums = await this.service.getAlbumsByArtistId(id);
+    
+    return res.json(albums);
+  }
+  
 }
