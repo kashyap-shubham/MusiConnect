@@ -1,3 +1,5 @@
+// src/lib/api.ts
+
 const API_BASE_URL = "http://localhost:3001/api";
 
 export async function apiFetch<T>(
@@ -10,14 +12,12 @@ export async function apiFetch<T>(
       "Content-Type": "application/json",
       ...(options?.headers || {}),
     },
-    cache: "no-store",
   });
 
   if (!res.ok) {
-    const errorBody = await res.json();
-    console.error("API Error:", errorBody);
-
-    throw new Error(errorBody?.message || `API Error: ${res.status}`);
+    const error = await res.json();
+    console.error("API Error:", error);
+    throw new Error(error?.message || "API request failed");
   }
 
   return res.json();

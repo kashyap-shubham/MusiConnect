@@ -24,3 +24,10 @@ export async function createSong(data: {
     body: JSON.stringify(data),
   })
 }
+
+
+export async function deleteSong(id: string) {
+  return apiFetch(`/songs/${id}`, {
+    method: "DELETE",
+  });
+}

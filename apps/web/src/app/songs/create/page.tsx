@@ -14,8 +14,8 @@ export default function CreateSongPage() {
   const [duration, setDuration] = useState<number>(0);
   const [audioKey, setAudioKey] = useState("");
 
-  const [artistId, setArtistId] = useState("");
-  const [albumId, setAlbumId] = useState("");
+  const [artistId, setArtistId] = useState<string>("");
+  const [albumId, setAlbumId] = useState<string>("");
 
   const [artists, setArtists] = useState<Artist[]>([]);
   const [albums, setAlbums] = useState<Album[]>([]);
@@ -28,10 +28,13 @@ export default function CreateSongPage() {
         const artistsData = await getArtists();
         const albumsData = await getAlbums();
 
+        console.log("artistsData:", artistsData);
+        console.log("albumsData:", albumsData);
+
         setArtists(artistsData || []);
         setAlbums(albumsData || []);
-      } catch (err) {
-        console.error("Failed loading artists/albums", err);
+      } catch (error) {
+        console.error("Failed loading artists/albums", error);
       }
     }
 
@@ -53,7 +56,7 @@ export default function CreateSongPage() {
         title,
         duration,
         audioKey,
-        albumId: albumId || undefined,
+        albumId: albumId,
         artistIds: [artistId],
       });
 
@@ -112,6 +115,7 @@ export default function CreateSongPage() {
             required
           >
             <option value="">Select Artist</option>
+
             {artists.map((artist) => (
               <option key={artist.id} value={artist.id}>
                 {artist.name}
@@ -127,6 +131,7 @@ export default function CreateSongPage() {
             onChange={(e) => setAlbumId(e.target.value)}
           >
             <option value="">No Album</option>
+
             {albums.map((album) => (
               <option key={album.id} value={album.id}>
                 {album.title}
