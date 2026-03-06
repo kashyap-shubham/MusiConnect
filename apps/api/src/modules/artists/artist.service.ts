@@ -1,4 +1,4 @@
-import { Artist } from "@/generated/prisma";
+import { Artist } from "../../generated/prisma";
 import { ArtistRepository } from "./artist.repository";
 import { CreateArtistInput } from "./schemas/create-artist.schema";
 
