@@ -29,5 +29,24 @@ export async function createSong(data: {
 export async function deleteSong(id: string) {
   return apiFetch(`/songs/${id}`, {
     method: "DELETE",
-  });
+  })
 }
+
+
+export async function updateSong(
+  id: string,
+  data: {
+    title?: string
+    duration?: number
+    audioKey?: string
+    albumId?: string
+    artistIds?: string[]
+  }
+) {
+  return apiFetch(`/songs/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(data),
+  })
+}
+
+
