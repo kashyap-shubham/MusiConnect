@@ -59,8 +59,8 @@ model SongArtist {
   songId   String
   artistId String
 
-  song   Song   @relation(fields: [songId], references: [id])
-  artist Artist @relation(fields: [artistId], references: [id])
+  song   Song   @relation(fields: [songId], references: [id], onDelete: Cascade)
+  artist Artist @relation(fields: [artistId], references: [id], onDelete: Cascade)
 
   @@id([songId, artistId])
 }
@@ -82,8 +82,8 @@ model PlaylistSong {
   songId     String
   addedAt    DateTime @default(now())
 
-  playlist Playlist @relation(fields: [playlistId], references: [id])
-  song     Song     @relation(fields: [songId], references: [id])
+  playlist Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+  song     Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
 
   @@id([playlistId, songId])
 }

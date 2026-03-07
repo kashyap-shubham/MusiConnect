@@ -1,4 +1,5 @@
 import { getSong } from "@/services/song.service";
+import UpdateSongButton from "./UpdateSongButton";
 
 export default async function SongPage({
   params,
@@ -28,6 +29,8 @@ export default async function SongPage({
       <p>
         <strong>Audio Key:</strong> {song.audioKey}
       </p>
+
+    <UpdateSongButton songId={song.id} />
 
       
     </main>
