@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { createSong } from "@/services/song.service";
-import { getArtists, Artist } from "@/services/artist.service";
+import { getArtists } from "@/services/artist.service";
 import { getAlbums, Album } from "@/services/album.service";
+import { Artist } from "@/types/artist.types";
 
 export default function CreateSongPage() {
   const router = useRouter();
