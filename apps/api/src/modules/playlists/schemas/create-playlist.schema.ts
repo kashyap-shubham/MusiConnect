@@ -7,7 +7,8 @@ export const createPlaylistSchema = z.object({
     .max(255),
 
   userId: z
-    .uuid("Invalid user id"),
+    .string(),
+    // todo => in production add this .uuid("Invalid user id"),
 });
 
 export type CreatePlaylistInput = z.infer<typeof createPlaylistSchema>;
