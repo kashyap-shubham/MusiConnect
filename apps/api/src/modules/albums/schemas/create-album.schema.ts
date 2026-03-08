@@ -7,7 +7,8 @@ export const createAlbumSchema = z.object({
     .max(255),
 
   artistId: z
-    .uuid("Invalid artist id"),
+    .string(),
+    // todo => in production enable this .uuid("Invalid artist id"),
 
   releaseDate: z
     .iso
