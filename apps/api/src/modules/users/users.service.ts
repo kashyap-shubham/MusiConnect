@@ -1,28 +1,22 @@
 import { ApiError } from "@/errors/ApiError";
 import { UsersRepository } from "./users.repository";
 
-
-
 export class UserService {
-    private userRepository: UsersRepository;
+  private userRepository: UsersRepository;
 
-    constructor() {
-        this.userRepository = new UsersRepository();
-    }
+  constructor() {
+    this.userRepository = new UsersRepository();
+  }
 
-    async getUserById(id: string) {
-        const user = await this.userRepository.findById(id);
+  async getUserById(id: string) {
+    const user = await this.userRepository.findById(id);
 
-        if (!user) {
-            throw new ApiError(404, "User not Found");
-        }
+    return user;
+  }
 
-        return user;
-    }
+  async getUserPlaylists(userId: string) {
+    const playlist = await this.userRepository.getUserPlaylists(userId);
 
-    async getUserPlaylists(userId: string) {
-        const playlist = await this.userRepository.getUserPlaylists(userId);
-
-        return playlist;
-    }
+    return playlist;
+  }
 }
