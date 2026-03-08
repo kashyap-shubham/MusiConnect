@@ -1,10 +1,7 @@
 import type { Request, Response } from "express";
 import { AlbumService } from "./album.service";
 import { createAlbumSchema } from "./schemas/create-album.schema";
-
-type AlbumParams = {
-  id: string;
-};
+import { ApiError } from "@/errors/ApiError";
 
 export class AlbumController {
   private albumService: AlbumService;
@@ -14,52 +11,48 @@ export class AlbumController {
   }
 
   createAlbum = async (req: Request, res: Response) => {
-    try {
-      const validatedData = createAlbumSchema.parse(req.body);
+    const validatedData = createAlbumSchema.parse(req.body);
 
-      const album = await this.albumService.createAlbum(validatedData);
+    const album = await this.albumService.createAlbum(validatedData);
 
-      return res.status(201).json(album);
-    } catch (error) {
-      console.error("Create album error:", error);
-
-      return res.status(400).json({
-        message: "Invalid request",
-      });
-    }
+    return res.status(201).json({
+      success: true,
+      data: album,
+    });
   };
 
-  getAlbums = async (_req: Request, res: Response) => {
+  getAlbums = async (req: Request, res: Response) => {
     const albums = await this.albumService.getAlbums();
 
-    return res.json(albums);
+    return res.status(200).json({
+      success: true,
+      data: albums,
+    });
   };
 
-  getAlbumById = async (
-    req: Request<AlbumParams>,
-    res: Response
-  ) => {
-    const { id } = req.params;
+  getAlbumById = async (req: Request, res: Response) => {
+    const { id } = req.params as { id: string };
 
     const album = await this.albumService.getAlbumById(id);
 
     if (!album) {
-      return res.status(404).json({
-        message: "Album not found",
-      });
+      throw new ApiError(404, "Album Not Found");
     }
 
-    return res.json(album);
+    return res.status(200).json({
+      success: true,
+      data: album,
+    });
   };
 
-  getSongsByAlbumId = async (
-    req: Request<AlbumParams>,
-    res: Response
-  ) => {
-    const { id } = req.params;
+  getSongsByAlbumId = async (req: Request, res: Response) => {
+    const { id } = req.params as { id: string };
 
     const songs = await this.albumService.getSongsByAlbumId(id);
 
-    return res.json(songs);
+    return res.status(200).json({
+      success: true,
+      data: songs,
+    });
   };
 }

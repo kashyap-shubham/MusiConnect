@@ -1,16 +1,17 @@
 import { Router } from "express";
 import { AlbumController } from "./album.controller";
+import { asyncHandler } from "@/utils/asyncHandler";
 
 const router: Router = Router();
-
 const controller = new AlbumController();
 
-router.get("/", controller.getAlbums);
 
-router.get("/:id", controller.getAlbumById.bind(controller));
+router.get("/", asyncHandler(controller.getAlbums));
 
-router.get("/:id/songs", controller.getSongsByAlbumId.bind(controller));
+router.get("/:id", asyncHandler(controller.getAlbumById));
 
-router.post("/", controller.createAlbum.bind(controller));
+router.get("/:id/songs", asyncHandler(controller.getSongsByAlbumId));
+
+router.post("/", asyncHandler(controller.createAlbum));
 
 export default router;
