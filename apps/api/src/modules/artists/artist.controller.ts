@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ArtistService } from "./artist.service";
 import { createArtistSchema } from "./schemas/create-artist.schema";
 import { CreateArtistInput } from "./schemas/create-artist.schema";
-
+import { ApiError } from "@/errors/ApiError";
 
 export class ArtistController {
   private service: ArtistService;
@@ -12,56 +12,62 @@ export class ArtistController {
   }
 
   async getAll(req: Request, res: Response): Promise<void> {
-    try {
-      const artists = await this.service.getAllArtist();
-      res.status(200).json(artists);
-    } catch (error) {
-      console.error("Error fetching artists:", error);
-      res.status(500).json({ message: "Internal server error" });
-    }
+    const artists = await this.service.getAllArtist();
+
+    res.status(200).json({
+      success: true,
+      data: artists,
+    });
   }
 
   async getById(req: Request, res: Response): Promise<void> {
-    try {
-      const artist = await this.service.getArtistById(req.params.id);
-      res.status(200).json(artist);
-    } catch (error) {
-      console.error("Error fetching artist:", error);
-      res.status(404).json({ message: "Artist not found" });
+    const { id } = req.params as { id: string };
+
+    const artist = await this.service.getArtistById(id);
+
+    if (!artist) {
+      throw new ApiError(404, "Artist not found");
     }
+
+    res.status(200).json({
+      success: true,
+      data: artist,
+    });
   }
 
   async create(
     req: Request<{}, {}, CreateArtistInput>,
     res: Response,
   ): Promise<void> {
-    try {
-      const parsed = createArtistSchema.parse(req.body);
+    const parsed = createArtistSchema.parse(req.body);
 
-      const artist = await this.service.createArtist(parsed);
+    const artist = await this.service.createArtist(parsed);
 
-      res.status(201).json(artist);
-    } catch (error) {
-      console.error("Error creating artist:", error);
-      res.status(400).json({ message: "Invalid request body" });
-    }
+    res.status(201).json({
+      success: true,
+      data: artist,
+    });
   }
 
-  async getSongs(req: Request<{ id: string }>, res: Response): Promise<void> {
-    try {
-      const songs = await this.service.getArtistSongs(req.params.id);
-      res.status(200).json(songs);
-    } catch (error) {
-      console.error("Error fetching artist songs:", error);
-      res.status(500).json({ message: "Internal server error" });
-    }
+  async getSongs(req: Request, res: Response): Promise<void> {
+    const { id } = req.params as { id: string };
+
+    const songs = await this.service.getArtistSongs(id);
+
+    res.status(200).json({
+      success: true,
+      data: songs,
+    });
   }
 
-  async getAlbumsByArtistId(req: Request<{ id: string }>, res: Response) {
-    const { id } = req.params;
+  async getAlbumsByArtistId(req: Request, res: Response): Promise<void> {
+    const { id } = req.params as { id: string };
 
     const albums = await this.service.getAlbumsByArtistId(id);
 
-    return res.json(albums);
+    res.status(200).json({
+      success: true,
+      data: albums,
+    });
   }
 }

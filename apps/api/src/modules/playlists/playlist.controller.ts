@@ -1,9 +1,7 @@
 import type { Request, Response } from "express";
 import { PlaylistService } from "./playlist.service";
 import { createPlaylistSchema } from "./schemas/create-playlist.schema";
-import { ApiError } from "@/errors/ApiErrors";
-
-
+import { ApiError } from "@/errors/ApiError";
 
 export class PlaylistController {
   private playlistService: PlaylistService;
@@ -19,7 +17,7 @@ export class PlaylistController {
 
     return res.status(201).json({
       success: true,
-      data: playlist
+      data: playlist,
     });
   };
 
@@ -34,7 +32,7 @@ export class PlaylistController {
 
     return res.status(201).json({
       success: true,
-      data: playlist
+      data: playlist,
     });
   };
 
@@ -45,13 +43,11 @@ export class PlaylistController {
       throw new ApiError(400, "UserId is required");
     }
 
-    const playlists = await this.playlistService.getUserPlaylists(
-      userId,
-    );
+    const playlists = await this.playlistService.getUserPlaylists(userId);
 
     return res.status(201).json({
       success: true,
-      data: playlists
+      data: playlists,
     });
   };
 
@@ -63,7 +59,7 @@ export class PlaylistController {
 
     return res.status(201).json({
       success: true,
-      data: result
+      data: result,
     });
   };
 
@@ -75,9 +71,9 @@ export class PlaylistController {
 
     await this.playlistService.removeSongFromPlaylist(playlistId, songId);
 
-    return res.status(204).json({
+    return res.status(201).json({
       success: true,
-      message: "Playlist Deleted"
+      message: "Playlist Deleted",
     });
   };
 }

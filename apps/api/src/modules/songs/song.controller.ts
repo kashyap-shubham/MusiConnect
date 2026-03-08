@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { SongsService } from "./song.service";
 import { createSongSchema } from "./schemas/create-song.schema";
 import { updateSongSchema } from "./schemas/update-song.schema";
-import { ApiError } from "@/errors/ApiErrors";
+import { ApiError } from "@/errors/ApiError";
 
 export class SongsController {
   private service = new SongsService();
@@ -75,7 +75,7 @@ export class SongsController {
 
     await this.service.deleteSong(id);
 
-    return res.status(204).json({
+    return res.status(201).json({
       success: true,
       message: "Song deleted",
     });
