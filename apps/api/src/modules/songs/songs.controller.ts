@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { SongsService } from "./song.service";
+import { SongsService } from "./songs.service";
 import { createSongSchema } from "./schemas/create-song.schema";
 import { updateSongSchema } from "./schemas/update-song.schema";
 import { ApiError } from "@/errors/ApiError";

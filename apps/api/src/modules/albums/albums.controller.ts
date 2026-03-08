@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { AlbumService } from "./album.service";
+import { AlbumService } from "./albums.service";
 import { createAlbumSchema } from "./schemas/create-album.schema";
 import { ApiError } from "@/errors/ApiError";
 

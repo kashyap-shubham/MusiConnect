@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import songRoutes from "../modules/songs/song.routes";
-import artistRoutes from "../modules/artists/artist.routes";
-import albumRoutes from "../modules/albums/album.routes";
-import playlistRoutes from "../modules/playlists/playlist.routes";
+import songRoutes from "../modules/songs/songs.routes";
+import artistRoutes from "../modules/artists/artists.routes";
+import albumRoutes from "../modules/albums/albums.routes";
+import playlistRoutes from "../modules/playlists/playlists.routes";
 
 const router: Router = Router();
 

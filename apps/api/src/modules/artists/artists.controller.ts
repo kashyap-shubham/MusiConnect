@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ArtistService } from "./artist.service";
+import { ArtistService } from "./artists.service";
 import { createArtistSchema } from "./schemas/create-artist.schema";
 import { CreateArtistInput } from "./schemas/create-artist.schema";
 import { ApiError } from "@/errors/ApiError";

@@ -1,4 +1,4 @@
-import { SongRepository } from "./song.repository";
+import { SongRepository } from "./songs.repository";
 import { CreateSongInput } from "./schemas/create-song.schema";
 import { UpdateSongInput } from "./schemas/update-song.schema";
 

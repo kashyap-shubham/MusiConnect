@@ -1,4 +1,4 @@
-import { PlaylistRepository } from "./playlist.repository";
+import { PlaylistRepository } from "./playlists.repository";
 import type { CreatePlaylistInput } from "./schemas/create-playlist.schema";
 
 export class PlaylistService {

@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { PlaylistService } from "./playlist.service";
+import { PlaylistService } from "./playlists.service";
 import { createPlaylistSchema } from "./schemas/create-playlist.schema";
 import { ApiError } from "@/errors/ApiError";
 

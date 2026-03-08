@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ArtistController } from "./artist.controller";
+import { ArtistController } from "./artists.controller";
 import { asyncHandler } from "@/utils/asyncHandler";
 
 const router: Router = Router();

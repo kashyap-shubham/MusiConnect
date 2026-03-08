@@ -1,4 +1,4 @@
-import { AlbumRepository } from "./album.repository";
+import { AlbumRepository } from "./albums.repository";
 import type { CreateAlbumInput } from "./schemas/create-album.schema";
 
 export class AlbumService {

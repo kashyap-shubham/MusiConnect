@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { AlbumController } from "./album.controller";
+import { AlbumController } from "./albums.controller";
 import { asyncHandler } from "@/utils/asyncHandler";
 
 const router: Router = Router();

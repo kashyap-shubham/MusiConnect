@@ -1,4 +1,4 @@
-import { prisma } from "../../lib/prisma";
+import { prisma } from "@/lib/prisma";
 import type { CreateAlbumInput } from "./schemas/create-album.schema";
 
 export class AlbumRepository {
