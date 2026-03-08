@@ -2,101 +2,82 @@ import { Request, Response } from "express";
 import { SongsService } from "./song.service";
 import { createSongSchema } from "./schemas/create-song.schema";
 import { updateSongSchema } from "./schemas/update-song.schema";
-
-type SongParams = {
-  id: string;
-};
+import { ApiError } from "@/errors/ApiErrors";
 
 export class SongsController {
   private service = new SongsService();
 
   async getSongs(req: Request, res: Response) {
-    try {
-      const songs = await this.service.getAllSongs();
+    const songs = await this.service.getAllSongs();
 
-      return res.json({
-        success: true,
-        data: songs,
-      });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        message: "Failed to fetch songs",
-      });
-    }
+    return res.status(201).json({
+      success: true,
+      data: songs,
+    });
   }
 
-  async getSongById(req: Request<SongParams>, res: Response) {
-    try {
-      const { id } = req.params;
+  async getSongById(req: Request, res: Response) {
+    // todo => here two db queries are done so later reduce it
+    const { id } = req.params as { id: string };
 
-      const song = await this.service.getSongById(id);
+    const song = await this.service.getSongById(id);
 
-      return res.json({
-        success: true,
-        data: song,
-      });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        message: "Failed to fetch song",
-      });
+    if (!song) {
+      throw new ApiError(404, "Song not found");
     }
+
+    return res.status(201).json({
+      success: true,
+      data: song,
+    });
   }
 
   async createSong(req: Request, res: Response) {
-    try {
-      const data = createSongSchema.parse(req.body);
+    const data = createSongSchema.parse(req.body);
 
-      const song = await this.service.createSong(data);
+    const song = await this.service.createSong(data);
 
-      return res.status(201).json({
-        success: true,
-        data: song,
-      });
-    } catch (error) {
-      console.error(error);
-      return res.status(400).json({
-        message: "Invalid request",
-      });
-    }
+    return res.status(201).json({
+      success: true,
+      data: song,
+    });
   }
 
-  async updateSong(req: Request<SongParams>, res: Response) {
-    try {
-      const { id } = req.params;
+  async updateSong(req: Request, res: Response) {
+    // todo => here two db queries are done so later reduce it
+    const { id } = req.params as { id: string };
 
-      const data = updateSongSchema.parse(req.body);
+    const existingSong = await this.service.getSongById(id);
 
-      const song = await this.service.updateSong(id, data);
-
-      return res.json({
-        success: true,
-        data: song,
-      });
-    } catch (error) {
-      console.error(error);
-      return res.status(400).json({
-        message: "Invalid request",
-      });
+    if (!existingSong) {
+      throw new ApiError(404, "Song not found");
     }
+
+    const data = updateSongSchema.parse(req.body);
+
+    const song = await this.service.updateSong(id, data);
+
+    return res.status(201).json({
+      success: true,
+      data: song,
+    });
   }
 
-  async deleteSong(req: Request<SongParams>, res: Response) {
-    try {
-      const { id } = req.params;
+  async deleteSong(req: Request, res: Response) {
+    // todo => here two db queries are done so later reduce it
+    const { id } = req.params as { id: string };
 
-      await this.service.deleteSong(id);
+    const existingSong = await this.service.getSongById(id);
 
-      return res.json({
-        success: true,
-        message: "Song deleted",
-      });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({
-        message: "Failed to delete song",
-      });
+    if (!existingSong) {
+      throw new ApiError(404, "Song not Found");
     }
+
+    await this.service.deleteSong(id);
+
+    return res.status(204).json({
+      success: true,
+      message: "Song deleted",
+    });
   }
 }

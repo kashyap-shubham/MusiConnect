@@ -1,18 +1,11 @@
 import type { Request, Response } from "express";
 import { PlaylistService } from "./playlist.service";
 import { createPlaylistSchema } from "./schemas/create-playlist.schema";
+import { ApiError } from "@/errors/ApiErrors";
 
-type PlaylistParams = {
-  id: string;
-};
 
-type PlaylistSongParams = {
-  playlistId: string;
-  songId: string;
-};
 
 export class PlaylistController {
-
   private playlistService: PlaylistService;
 
   constructor() {
@@ -20,95 +13,71 @@ export class PlaylistController {
   }
 
   createPlaylist = async (req: Request, res: Response) => {
-    try {
+    const validatedData = createPlaylistSchema.parse(req.body);
 
-      const validatedData = createPlaylistSchema.parse(req.body);
+    const playlist = await this.playlistService.createPlaylist(validatedData);
 
-      const playlist = await this.playlistService.createPlaylist(
-        validatedData
-      );
-
-      return res.status(201).json(playlist);
-
-    } catch (error) {
-
-      console.error("Create playlist error:", error);
-
-      return res.status(400).json({
-        message: "Invalid request",
-      });
-
-    }
+    return res.status(201).json({
+      success: true,
+      data: playlist
+    });
   };
 
-  getPlaylistById = async (
-    req: Request<PlaylistParams>,
-    res: Response
-  ) => {
-
-    const { id } = req.params;
+  getPlaylistById = async (req: Request, res: Response) => {
+    const { id } = req.params as { id: string };
 
     const playlist = await this.playlistService.getPlaylistById(id);
 
     if (!playlist) {
-      return res.status(404).json({
-        message: "Playlist not found",
-      });
+      throw new ApiError(404, "Playlist not Found");
     }
 
-    return res.json(playlist);
-
+    return res.status(201).json({
+      success: true,
+      data: playlist
+    });
   };
 
   getUserPlaylists = async (req: Request, res: Response) => {
-
-    const { userId } = req.query;
+    const { userId } = req.query as { userId: string };
 
     if (!userId) {
-      return res.status(400).json({
-        message: "userId is required",
-      });
+      throw new ApiError(400, "UserId is required");
     }
 
     const playlists = await this.playlistService.getUserPlaylists(
-      userId as string
+      userId,
     );
 
-    return res.json(playlists);
-
+    return res.status(201).json({
+      success: true,
+      data: playlists
+    });
   };
 
-  addSongToPlaylist = async (
-    req: Request<PlaylistParams>,
-    res: Response
-  ) => {
+  addSongToPlaylist = async (req: Request, res: Response) => {
+    const { id } = req.params as { id: string };
+    const { songId } = req.body as { songId: string };
 
-    const { id } = req.params;
-    const { songId } = req.body;
+    const result = await this.playlistService.addSongToPlaylist(id, songId);
 
-    const result = await this.playlistService.addSongToPlaylist(
-      id,
-      songId
-    );
-
-    return res.status(201).json(result);
-
+    return res.status(201).json({
+      success: true,
+      data: result
+    });
   };
 
-  removeSongFromPlaylist = async (
-    req: Request<PlaylistSongParams>,
-    res: Response
-  ) => {
+  removeSongFromPlaylist = async (req: Request, res: Response) => {
+    const { playlistId, songId } = req.params as {
+      playlistId: string;
+      songId: string;
+    };
 
-    const { playlistId, songId } = req.params;
+    await this.playlistService.removeSongFromPlaylist(playlistId, songId);
 
-    await this.playlistService.removeSongFromPlaylist(
-      playlistId,
-      songId
-    );
-
-    return res.status(204).send();
-
+    return res.status(204).json({
+      success: true,
+      message: "Playlist Deleted"
+    });
   };
-
 }

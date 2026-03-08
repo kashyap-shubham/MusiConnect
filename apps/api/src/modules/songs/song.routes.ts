@@ -1,16 +1,19 @@
 import { Router } from "express";
 import { SongsController } from "./song.controller";
+import { asyncHandler } from "@/utils/asyncHandler";
 
 const router:Router = Router();
-const controller = new SongsController();
+const Songcontroller = new SongsController();
 
-router.get("/", controller.getSongs.bind(controller));
-router.get("/:id", controller.getSongById.bind(controller));
 
-router.post("/", controller.createSong.bind(controller));
+router.get("/", asyncHandler(Songcontroller.getSongs.bind(Songcontroller)));
 
-router.patch("/:id", controller.updateSong.bind(controller));
+router.get("/:id", asyncHandler(Songcontroller.getSongById.bind(Songcontroller)));
 
-router.delete("/:id", controller.deleteSong.bind(controller));
+router.post("/", asyncHandler(Songcontroller.createSong.bind(Songcontroller)));
+
+router.patch("/:id", asyncHandler(Songcontroller.updateSong.bind(Songcontroller)));
+
+router.delete("/:id", asyncHandler(Songcontroller.deleteSong.bind(Songcontroller)));
 
 export default router;

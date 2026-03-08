@@ -21,10 +21,7 @@ export class ArtistController {
     }
   }
 
-  async getById(
-    req: Request<{ id: string }>,
-    res: Response
-  ): Promise<void> {
+  async getById(req: Request, res: Response): Promise<void> {
     try {
       const artist = await this.service.getArtistById(req.params.id);
       res.status(200).json(artist);
@@ -36,7 +33,7 @@ export class ArtistController {
 
   async create(
     req: Request<{}, {}, CreateArtistInput>,
-    res: Response
+    res: Response,
   ): Promise<void> {
     try {
       const parsed = createArtistSchema.parse(req.body);
@@ -50,10 +47,7 @@ export class ArtistController {
     }
   }
 
-  async getSongs(
-    req: Request<{ id: string }>,
-    res: Response
-  ): Promise<void> {
+  async getSongs(req: Request<{ id: string }>, res: Response): Promise<void> {
     try {
       const songs = await this.service.getArtistSongs(req.params.id);
       res.status(200).json(songs);
@@ -63,12 +57,11 @@ export class ArtistController {
     }
   }
 
-  async getAlbumsByArtistId (req: Request<{ id: string }>, res: Response) {
+  async getAlbumsByArtistId(req: Request<{ id: string }>, res: Response) {
     const { id } = req.params;
-    
+
     const albums = await this.service.getAlbumsByArtistId(id);
-    
+
     return res.json(albums);
   }
-  
 }
