@@ -1,29 +1,8 @@
 "use client";
 
 import SongCard from "@/components/music/song-card";
+import { mockSongs } from "@/app/(landing)/data/mock-songs";
 
-const mockSongs = [
-  {
-    id: 1,
-    title: "Runaway",
-    artist: "Aurora",
-  },
-  {
-    id: 2,
-    title: "Night Drive",
-    artist: "Lunar Waves",
-  },
-  {
-    id: 3,
-    title: "Dreamscape",
-    artist: "Nova",
-  },
-  {
-    id: 4,
-    title: "Echoes",
-    artist: "SoundLab",
-  },
-];
 
 export default function TrendingTracks() {
   return (
@@ -41,7 +20,8 @@ export default function TrendingTracks() {
         {/* Songs Grid */}
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {mockSongs.map((song) => (
-            <SongCard key={song.id} title={song.title} artist={song.artist} />
+            <SongCard key={song.id} title={song.title} artist={song.artist}
+            cover={song.cover} />
           ))}
         </div>
       </div>
