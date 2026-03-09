@@ -1,3 +1,29 @@
 @import "tailwindcss";
 
+/* Design Tokens */
+:root {
+  --color-background: #0a0a0a;
+  --color-foreground: #ffffff;
 
+  --color-primary: #ff2e88;
+  --color-primary-hover: #e02678;
+
+  --color-muted: #9ca3af;
+  --color-border: rgba(255,255,255,0.1);
+}
+
+/* Tailwind Theme Mapping */
+@theme {
+  --color-background: var(--color-background);
+  --color-foreground: var(--color-foreground);
+
+  --color-primary: var(--color-primary);
+  --color-muted: var(--color-muted);
+  --color-border: var(--color-border);
+}
+
+/* Base Styles */
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
