@@ -14,7 +14,7 @@ export default function SongCard({ title, artist, cover }: SongCardProps) {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div className="group relative overflow-hidden rounded-xl border border-border bg-black/40 p-4 transition hover:bg-black/60">
+    <div className="group relative overflow-hidden rounded-xl border border-border bg-black/40 p-4 transition hover:-translate-y-3 hover:bg-black/60">
       
       {/* Cover */}
       <div className="relative mb-4 h-40 w-full overflow-hidden rounded-lg bg-neutral-800">
