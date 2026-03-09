@@ -5,7 +5,8 @@ import { mockGenres } from "@/app/(landing)/data/mock-genres";
 
 export default function ExploreGenres() {
   return (
-    <section className="py-20">
+    <section className="relative py-24 overflow-hidden">
+      <div className="absolute right-[-150px] top-20 h-[350px] w-[350px] rounded-full bg-purple-500/20 blur-[120px]" />
       <div className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
         <div className="mb-10">

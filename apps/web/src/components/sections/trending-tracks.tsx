@@ -6,7 +6,8 @@ import { mockSongs } from "@/app/(landing)/data/mock-songs";
 
 export default function TrendingTracks() {
   return (
-    <section className="py-20">
+    <section className="relative py-24 overflow-hidden">
+      <div className="absolute -left-40 top-20 h-[350px] w-[350px] rounded-full bg-primary/20 blur-[120px]" />
       <div className="mx-auto max-w-7xl px-6">
         {/* Section Header */}
         <div className="mb-10 flex items-center justify-between">
@@ -20,8 +21,12 @@ export default function TrendingTracks() {
         {/* Songs Grid */}
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {mockSongs.map((song) => (
-            <SongCard key={song.id} title={song.title} artist={song.artist}
-            cover={song.cover} />
+            <SongCard
+              key={song.id}
+              title={song.title}
+              artist={song.artist}
+              cover={song.cover}
+            />
           ))}
         </div>
       </div>
