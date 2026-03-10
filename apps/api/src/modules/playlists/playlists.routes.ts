@@ -2,21 +2,21 @@ import { Router } from "express";
 import { PlaylistController } from "./playlists.controller";
 import { asyncHandler } from "@/utils/asyncHandler";
 
-const router: Router = Router();
+const playlistRouter: Router = Router();
 const playlistController = new PlaylistController();
 
 
-router.get("/", asyncHandler(playlistController.getUserPlaylists));
+playlistRouter.get("/", asyncHandler(playlistController.getUserPlaylists));
 
-router.get("/:id", asyncHandler(playlistController.getPlaylistById));
+playlistRouter.get("/:id", asyncHandler(playlistController.getPlaylistById));
 
-router.post("/", asyncHandler(playlistController.createPlaylist));
+playlistRouter.post("/", asyncHandler(playlistController.createPlaylist));
 
-router.post("/:id/songs", asyncHandler(playlistController.addSongToPlaylist));
+playlistRouter.post("/:id/songs", asyncHandler(playlistController.addSongToPlaylist));
 
-router.delete(
+playlistRouter.delete(
   "/:playlistId/songs/:songId",
   asyncHandler(playlistController.removeSongFromPlaylist),
 );
 
-export default router;
+export default playlistRouter;

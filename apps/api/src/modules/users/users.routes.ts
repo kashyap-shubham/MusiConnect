@@ -4,13 +4,13 @@ import { asyncHandler } from "@/utils/asyncHandler";
 
 
 
-const router: Router = Router();
+const userRouter: Router = Router();
 const controller = new UserController();
 
 
-router.get("/me", asyncHandler(controller.getCurrentUser as any)); //todo => need to refractor type from any to global typesafe
+userRouter.get("/me", asyncHandler(controller.getCurrentUser as any)); //todo => need to refractor type from any to global typesafe
 
-router.get("/:id/playlists", asyncHandler(controller.getUserPlaylists));
+userRouter.get("/:id/playlists", asyncHandler(controller.getUserPlaylists));
 
 
-export default router;
+export default userRouter;
