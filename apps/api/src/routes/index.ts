@@ -1,3 +1,4 @@
+import authRouter from "@/auth/auth.routes";
 import albumRouter from "@/modules/albums/albums.routes";
 import artistRouter from "@/modules/artists/artists.routes";
 import playlistRouter from "@/modules/playlists/playlists.routes";
@@ -13,5 +14,6 @@ router.use("/artists", artistRouter);
 router.use("/albums", albumRouter);
 router.use("/playlists", playlistRouter);
 router.use("/users", userRouter);
+router.use("/auth", authRouter);
 
 export default router;
