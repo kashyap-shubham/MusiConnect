@@ -18,6 +18,7 @@ async function seedUsers() {
       email: "demo@musicapp.com",
       name: "Demo User",
       image: null,
+      googleId: "demo-google-id",
     },
   });
 

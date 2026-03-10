@@ -12,6 +12,7 @@ model User {
   email     String     @unique
   name      String
   image     String?
+  googleId  String     @unique
   playlists Playlist[]
   createdAt DateTime   @default(now())
 }
