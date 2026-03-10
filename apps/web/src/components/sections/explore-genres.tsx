@@ -1,5 +1,7 @@
 "use client";
 
+import SectionHeader from "../ui/section-header";
+
 import GenreCard from "@/components/music/genre-card";
 import { mockGenres } from "@/app/(landing)/data/mock-genres";
 

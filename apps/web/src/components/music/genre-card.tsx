@@ -20,10 +20,10 @@ export default function GenreCard({ name, image }: GenreCardProps) {
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent transition group-hover:from-black/30" />
 
       {/* Text */}
-      <div className="absolute bottom-4 left-4 text-lg font-semibold">
+      <div className="absolute bottom-4 left-4 text-lg font-semibold text-white">
         {name}
       </div>
 

@@ -14,11 +14,9 @@ export default function SongCard({ title, artist, cover }: SongCardProps) {
   const [imageError, setImageError] = useState(false);
 
   return (
-    <div className="group relative overflow-hidden rounded-xl border border-border bg-black/40 p-4 transition hover:-translate-y-3 hover:bg-black/60">
-      
+    <div className="group relative overflow-hidden rounded-xl border border-border bg-white p-4 transition hover:-translate-y-1 hover:shadow-lg">
       {/* Cover */}
-      <div className="relative mb-4 h-40 w-full overflow-hidden rounded-lg bg-neutral-800">
-
+      <div className="relative mb-4 h-40 w-full overflow-hidden rounded-lg bg-zinc-100">
         {cover && !imageError ? (
           <Image
             src={cover}
@@ -34,18 +32,18 @@ export default function SongCard({ title, artist, cover }: SongCardProps) {
         )}
 
         {/* Play Button */}
-        <button className="absolute bottom-3 right-3 flex items-center justify-center rounded-full bg-primary p-2 text-white opacity-0 shadow-lg transition group-hover:opacity-100">
+        <button
+          className="absolute bottom-3 right-3 flex items-center justify-center rounded-full bg-primary p-2
+          text-white opacity-0 translate-y-2 shadow-lg transition group-hover:opacity-100 group-hover:translate-y-0" >
           <Play size={18} />
         </button>
-
       </div>
 
       {/* Song Info */}
       <div className="space-y-1">
-        <p className="font-medium">{title}</p>
+        <p className="font-medium text-zinc-900">{title}</p>
         <p className="text-sm text-muted">{artist}</p>
       </div>
-
     </div>
   );
 }

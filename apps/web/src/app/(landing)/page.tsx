@@ -1,4 +1,6 @@
+import Footer from "@/components/layout/footer";
 import Navbar from "@/components/layout/navbar";
+import CTA from "@/components/sections/cta";
 import ExploreGenres from "@/components/sections/explore-genres";
 import FeaturedArtist from "@/components/sections/featured-artist";
 import Hero from "@/components/sections/hero";
@@ -12,6 +14,8 @@ export default function LandingPage() {
       <TrendingTracks />
       <ExploreGenres />
       <FeaturedArtist />
+      <CTA />
+      <Footer />
     </main>
   );
 }

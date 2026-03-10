@@ -1,43 +1,61 @@
-"use client";
-
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative w-full overflow-hidden py-24">
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 md:grid-cols-2">
+    <section className="relative overflow-hidden py-24">
+      <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2">
+
         {/* Left Content */}
-        <div className="space-y-6">
-          <h1 className="text-4xl font-bold leading-tight md:text-6xl">
-            Music Without <br /> Limits
+        <div className="max-w-xl">
+
+          <h1 className="text-5xl font-semibold leading-tight tracking-tight lg:text-6xl">
+            Discover music from{" "}
+            <span className="bg-linear-to-r from-pink-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
+              independent artists
+            </span>
           </h1>
 
-          <p className="max-w-md text-muted">
-            Discover millions of songs, connect with artists, and experience
-            music like never before.
+          <p className="mt-6 text-lg text-zinc-600">
+            Stream and explore tracks from rising creators around the world.
+            MusiConnect helps artists share their sound and listeners discover
+            something new.
           </p>
 
-          <div className="flex items-center gap-4">
-            <button className="rounded-full bg-primary px-6 py-3 font-medium text-white hover:opacity-90">
-              Sign Up Now
-            </button>
+          {/* CTA Buttons */}
+          <div className="mt-8 flex gap-4">
 
-            <button className="rounded-full border border-border px-6 py-3 text-muted hover:text-foreground">
-              Explore Music
-            </button>
+            <Link
+              href="#"
+              className="rounded-full bg-zinc-900 px-6 py-3 text-sm font-medium text-white transition hover:bg-zinc-800"
+            >
+              Start Listening
+            </Link>
+
+            <Link
+              href="#"
+              className="rounded-full border border-zinc-300 px-6 py-3 text-sm font-medium transition hover:bg-zinc-100"
+            >
+              Explore Artists
+            </Link>
+
           </div>
         </div>
 
-        {/* Right Image */}
-        <div className="relative flex justify-center">
+        {/* Hero Image */}
+        <div className="relative">
+
           <Image
             src="/hero-image.png"
-            alt="music hero"
-            width={500}
+            alt="Music discovery"
+            width={600}
             height={500}
-            className="rounded-xl"
+            className="w-full rounded-xl shadow-lg"
+            priority
           />
+
         </div>
+
       </div>
     </section>
   );

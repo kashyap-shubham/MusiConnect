@@ -10,18 +10,18 @@ export default function FeaturedArtist() {
   return (
     <section className="relative py-28 overflow-hidden">
 
-      {/* Gradient Background Glow */}
-      <div className="absolute -top-40 -left-40 h-[400px] w-[400px] rounded-full bg-primary/20 blur-[120px]" />
-      <div className="absolute bottom-0 right-0 h-[300px] w-[300px] rounded-full bg-purple-500/20 blur-[120px]" />
+      {/* Soft background glow */}
+      <div className="absolute -top-40 -left-40 h-[400px] w-[400px] rounded-full bg-primary/10 blur-[120px]" />
+      <div className="absolute bottom-0 right-0 h-[300px] w-[300px] rounded-full bg-purple-400/10 blur-[120px]" />
 
       <div className="relative mx-auto max-w-7xl px-6">
 
         <div className="grid items-center gap-16 md:grid-cols-2">
 
-          {/* Artist Artwork */}
+          {/* Artist Image */}
           <div className="relative">
 
-            <div className="relative h-[420px] w-full overflow-hidden rounded-2xl shadow-2xl shadow-black/40">
+            <div className="relative h-[420px] w-full overflow-hidden rounded-2xl shadow-lg">
 
               <Image
                 src={artist.image}
@@ -29,9 +29,6 @@ export default function FeaturedArtist() {
                 fill
                 className="object-cover"
               />
-
-              {/* overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
             </div>
 
@@ -48,7 +45,9 @@ export default function FeaturedArtist() {
               </p>
 
               <div className="flex items-center gap-3">
-                <h2 className="text-4xl font-bold">{artist.name}</h2>
+                <h2 className="text-4xl font-semibold">
+                  {artist.name}
+                </h2>
 
                 {artist.verified && (
                   <CheckCircle size={20} className="text-primary" />
@@ -65,10 +64,10 @@ export default function FeaturedArtist() {
 
             </div>
 
-            {/* Player Controls */}
+            {/* Controls */}
             <div className="flex items-center gap-4">
 
-              <button className="flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-white font-medium transition hover:scale-105 hover:opacity-90">
+              <button className="flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-white font-medium transition hover:scale-105">
                 <Play size={18} />
                 Play
               </button>
@@ -81,12 +80,12 @@ export default function FeaturedArtist() {
             </div>
 
             {/* Track List */}
-            <div className="rounded-xl border border-border bg-white/5 backdrop-blur-md">
+            <div className="rounded-xl border border-border bg-white shadow-sm">
 
               {artist.songs.map((song, index) => (
                 <div
                   key={song.id}
-                  className="group flex items-center justify-between border-b border-border px-4 py-3 last:border-none transition hover:bg-white/5"
+                  className="group flex items-center justify-between border-b border-border px-4 py-3 last:border-none transition hover:bg-zinc-50"
                 >
 
                   {/* Left */}
@@ -129,6 +128,7 @@ export default function FeaturedArtist() {
         </div>
 
       </div>
+
     </section>
   );
 }
