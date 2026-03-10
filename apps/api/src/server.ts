@@ -3,16 +3,35 @@ import routes from "./routes";
 import { env } from "./config/env";
 import cors from "cors";
 import { errorHandler } from "./errors/errorHandler";
+import session from "express-session";
+import passport from "@/auth/passport";
+
 
 const app: Application = express();
 
 app.use(express.json());
+
 app.use(
   cors({
     origin: "http://localhost:3000",
     credentials: true,
   }),
 );
+
+app.use(session({
+  secret: env.SESSION_SECRET!,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    secure: false, // true in production
+    sameSite: "lax",
+  },
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 app.use("/api", routes);
 
