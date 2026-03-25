@@ -6,7 +6,7 @@ import FanBenefitsCard from "../ui/FanBenfitCard";
 export default function AppPreview() {
 
     return(
-        <div className="mt-50 flex flex-col items-center text-center">
+        <div className="relative mt-50 flex flex-col items-center text-center">
             <div className="text-[64px] font-semibold text-white/85 tracking-tight leading-[1.05] md:text-[88px]">
                 The Music App
             </div>
