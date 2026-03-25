@@ -9,7 +9,7 @@ export default function Heading() {
       <div className="absolute inset-0 ">
 
         {/* left far */}
-        <div className="absolute left-[4%] top-[47%] -rotate-45">
+        <div className="absolute left-[4%] top-[45%] -rotate-40">
           <div className="h-48 w-50 rounded-2xl bg-linear-to-br from-orange-500/50 to-pink-500/50" />
         </div>
         
@@ -24,7 +24,7 @@ export default function Heading() {
         </div>
 
         {/* right far */}
-        <div className="absolute right-[4%] top-[47%] rotate-45">
+        <div className="absolute right-[4%] top-[45%] rotate-40">
           <div className="h-48 w-50 rounded-2xl bg-linear-to-br from-green-500/40 to-emerald-500/40" />
         </div>
       </div>
@@ -53,19 +53,19 @@ export default function Heading() {
         </div>
 
         {/* heading */}
-        <h1 className=" text-[64px] font-semibold tracking-tight leading-[1.05] md:text-[88px]">
+        <h1 className="mt-4 text-[64px] font-semibold tracking-tight leading-[1.05] md:text-[88px]">
           Music&apos;s <br />
           Social Media
         </h1>
 
-        subtitle
-        <p className="font-bold mt-6 text-lg text-white/70 ">
+        {/* paragraph */}
+        <p className="font-bold mt-10 text-lg text-white/70 ">
           Creators deserve better. Fans deserve more. MusiConnect is built for
           both.
         </p>
 
-        CTA
-        <button className="mt-8 rounded-full border border-white/80 px-7 py-3 text-sm text-white hover:bg-white/15 transition">
+        {/* CTA */}
+        <button className="mt-15 rounded-full border border-white/80 px-7 py-3 text-sm text-white hover:bg-white/15 transition">
           Join to Listen
         </button>
         
