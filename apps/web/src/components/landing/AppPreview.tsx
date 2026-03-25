@@ -13,10 +13,22 @@ export default function AppPreview() {
                 Music-centric social media
             </p>
 
-             {/* phone mock up  */}
-             <div className="relative mt-20">
-                <Image src="/phone_mockup.png" alt="phone-mockup" width={800} height={900} className="relative z-10 select-none"/>
-             </div>
+            <div className="relative mt-20 flex items-center justify-center">
+                
+                {/* left card */}
+                <div className="absolute -left-50 top-50 h-90 w-80 rounded-2xl bg-white/10 shadow-2xl"/>
+
+                {/* phone mock up  */}
+                <div className="relative mt-10">
+                    <Image src="/phone_mockup.png" alt="phone-mockup" width={850} height={900} className="relative z-10 select-none"/>
+                </div>
+
+                {/* right card */}
+                <div className="absolute -right-50 h-90 w-80 rounded-2xl bg-white/10 shadow-2xl"/>
+
+            </div>
+
         </div>
+        
     )
 }
