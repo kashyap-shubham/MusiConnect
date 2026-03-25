@@ -7,7 +7,7 @@ export default function Navbar() {
     <header className="sticky top-6 z-50 flex justify-center">
 
       <nav
-        className="flex items-center justify-between gap-10 h-14 w-250 
+        className="flex items-center justify-between gap-10 h-14 w-200 
         rounded-full border border-white/10 bg-[#363636] px-6 backdrop-blur-xl 
         shadow-[0_10px_40px_rgba(0,0,0,0.35)]">
 
