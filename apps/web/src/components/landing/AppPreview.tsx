@@ -15,7 +15,7 @@ export default function AppPreview() {
                 Music-centric social media
             </p>
 
-            <div className="relative mt-20 flex items-center justify-center">
+            <div className="relative mt-8 flex items-center justify-center">
                 
                 {/* left card */}
                 {/* <div className="absolute -left-50 top-50 h-90 w-80 rounded-4xl bg-white/10 shadow-2xl  */}
@@ -48,7 +48,7 @@ export default function AppPreview() {
                 {/* </div> */}
 
                 {/* phone mock up  */}
-                <div className="relative mt-10">
+                <div className="relative mt-6">
                     <Image src="/phone_mockup.png" alt="phone-mockup" width={850} height={900} className="relative z-10 select-none"/>
                 </div>
 

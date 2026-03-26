@@ -53,19 +53,19 @@ export default function Heading() {
         </div>
 
         {/* heading */}
-        <h1 className="mt-4 text-[64px] font-semibold tracking-tight leading-[1.05] md:text-[88px]">
+        <h1 className="text-[64px] font-semibold tracking-tight leading-[1.05] md:text-[88px]">
           Music&apos;s <br />
           Social Media
         </h1>
 
         {/* paragraph */}
-        <p className="font-bold mt-10 text-lg text-white/70 ">
+        <p className="font-bold mt-8 text-lg text-white/70 ">
           Creators deserve better. Fans deserve more. MusiConnect is built for
           both.
         </p>
 
         {/* CTA */}
-        <button className="mt-15 rounded-full border border-white/80 px-7 py-3 text-sm text-white hover:bg-white/15 transition">
+        <button className="mt-10 rounded-full border border-white/80 px-7 py-3 text-sm text-white hover:bg-white/15 transition">
           Join to Listen
         </button>
         
