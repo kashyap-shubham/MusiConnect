@@ -6,7 +6,7 @@ import FanBenefitsCard from "../ui/FanBenfitCard";
 export default function AppPreview() {
 
     return(
-        <div className="relative mt-50 flex flex-col items-center text-center">
+        <div className="relative mt-70 flex flex-col items-center text-center">
             <div className="text-[64px] font-semibold text-white/85 tracking-tight leading-[1.05] md:text-[88px]">
                 The Music App
             </div>
@@ -49,7 +49,9 @@ export default function AppPreview() {
 
                 {/* phone mock up  */}
                 <div className="relative mt-6">
-                    <Image src="/phone_mockup.png" alt="phone-mockup" width={850} height={900} className="relative z-10 select-none"/>
+                    <Image src="/phone_mockup.png" alt="phone-mockup" width={850} height={900} 
+                    className="relative z-10 select-none"
+                    loading="eager"/>
                 </div>
 
                 
