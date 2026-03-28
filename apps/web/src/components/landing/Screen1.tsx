@@ -2,13 +2,13 @@
 
 import ArtistCard from "../ui/ArtistCard";
 
-export default function Screen() {
+export default function Screen1() {
   const cards = [
     // left most card
     {
       img: "/artists/artist3.jpg",
-      positionClass: "absolute left-[-8%] top-[78%]",
-      rotateClass: "-rotate-50",
+      positionClass: "absolute left-[-8%] top-[76%]",
+      rotateClass: "-rotate-60",
       gradientClass: "bg-linear-to-br from-green-500/40 to-emerald-500/40",
       imageScale: "scale-96",
     },
@@ -59,8 +59,8 @@ export default function Screen() {
     // right most card
     {
       img: "/artists/artist4.jpg",
-      positionClass: "absolute right-[-8%] top-[78%]",
-      rotateClass: "rotate-50",
+      positionClass: "absolute right-[-8%] top-[76%]",
+      rotateClass: "rotate-60",
       gradientClass: "bg-linear-to-br from-green-500/40 to-emerald-500/40",
       imageScale: "scale-96",
     },
@@ -92,7 +92,7 @@ export default function Screen() {
         </p>
 
         {/* CTA */}
-        <button className="mt-16 rounded-full border border-white/80 px-7 py-3 text-sm text-white hover:bg-white/15 transition">
+        <button className="mt-15 rounded-full border border-white/80 px-7 py-3 text-sm text-white hover:bg-white/15 transition">
           Join to Listen
         </button>
 
