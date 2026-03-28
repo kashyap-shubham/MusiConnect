@@ -3,6 +3,7 @@
 import ArtistCard from "../ui/ArtistCard";
 
 export default function Screen1() {
+     
   const cards = [
     // left most card
     {
@@ -69,7 +70,7 @@ export default function Screen1() {
   return (
     <div className="mt-20 flex flex-col justify-center items-center">
 
-      {/* floationg cards */}
+      {/* floating Artists cards */}
       <div className="flex justify-between items-center">
         {cards.map((card, i) => (
           <ArtistCard key={i} {...card} />
