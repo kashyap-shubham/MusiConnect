@@ -2,10 +2,11 @@ import Image from "next/image";
 
 type Props = {
   img: string;
-  positionClass: string;
-  rotateClass: string;
+  positionClass?: string;
+  rotateClass?: string;
   gradientClass?: string;
   imageScale?: string;
+  containerClass?: string;
 };
 
 export default function ArtistCard({
@@ -13,13 +14,14 @@ export default function ArtistCard({
   positionClass,
   rotateClass,
   gradientClass = "bg-white/90",
-  imageScale = "scale-100",
+  imageScale,
+  containerClass = "h-48 w-50"
 }: Props) {
   
   return (
-    <div className={`absolute ${positionClass} ${rotateClass}`}>
+    <div className={`${positionClass} ${rotateClass}`}>
       <div
-        className={`h-48 w-50 rounded-2xl overflow-hidden shadow-xl ${gradientClass}`}>
+        className={`${containerClass} rounded-2xl overflow-hidden shadow-xl ${gradientClass}`}>
         <Image
           src={img}
           alt="artist"
@@ -31,3 +33,6 @@ export default function ArtistCard({
     </div>
   );
 }
+
+
+

@@ -88,7 +88,7 @@ export default function Heading() {
               src="/artists/main.jpg" 
               alt="artist" 
               width={800} 
-              height={600} 
+              height={800} 
               className="object-cover h-full w-full"
             />
           </div>
