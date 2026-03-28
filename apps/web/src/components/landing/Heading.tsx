@@ -1,9 +1,68 @@
 "use client";
 
 import Image from "next/image";
+import ArtistCard from "../ui/ArtistCard";
 
 
 export default function Heading() {
+
+  const cards = [
+
+    // left farthest
+    {
+      img: "/artists/artist3.jpg",
+      positionClass: "left-[-8%] top-[82%]",
+      rotateClass: "-rotate-60",
+      gradientClass:
+        "bg-linear-to-br from-green-500/40 to-emerald-500/40",
+      imageScale: "scale-95",
+    },
+
+    // left far
+    {
+      img: "/artists/artist1.jpg",
+      positionClass: "left-[4%] top-[45%]",
+      rotateClass: "-rotate-40",
+      gradientClass:
+        "bg-linear-to-br from-orange-500/50 to-pink-500/50",
+      imageScale: "scale-96",
+    },
+
+    // left near
+    {
+      img: "/artists/artist5.jpg",
+      positionClass: "left-[22%] top-[28%]",
+      rotateClass: "-rotate-20",
+    },
+
+    // right near 
+    {
+      img: "/artists/artist6.jpg",
+      positionClass: "right-[22%] top-[28%]",
+      rotateClass: "rotate-20",
+      imageScale: "scale-150",
+    },
+
+    // right far
+    {
+      img: "/artists/artist2.jpg",
+      positionClass: "right-[4%] top-[45%]",
+      rotateClass: "rotate-40",
+      gradientClass:
+        "bg-linear-to-br from-green-500/40 to-emerald-500/40",
+      imageScale: "scale-95",
+    },
+
+    // right farthest
+    {
+      img: "/artists/artist4.jpg",
+      positionClass: "right-[-8%] top-[82%]",
+      rotateClass: "rotate-60",
+      gradientClass:
+        "bg-linear-to-br from-green-500/40 to-emerald-500/40",
+      imageScale: "scale-95",
+    },
+  ];
 
   return (
     <section className="px-6 pt-10 relative">
@@ -11,83 +70,10 @@ export default function Heading() {
       {/* floating cards */}
       <div className="absolute inset-0 pointer-events-none">
 
-        {/* left farthest */}
-        <div className="absolute left-[-8%] top-[82%] -rotate-60">
-          <div className="h-48 w-50 rounded-2xl overflow-hidden shadow-xl bg-linear-to-br from-green-500/40 to-emerald-500/40">
-            <Image
-              src="/artists/artist3.jpg"
-              alt="artist"
-              width={800}
-              height={800}
-              className="object-cover scale-95 w-full h-full"
-            />
-          </div>
-        </div>
-
-        {/* left far */}
-        <div className="absolute left-[4%] top-[45%] -rotate-40">
-          <div className="h-48 w-50 rounded-2xl overflow-hidden shadow-xl bg-linear-to-br from-orange-500/50 to-pink-500/50">
-            <Image
-              src="/artists/artist1.jpg"
-              alt="artist"
-              width={300}
-              height={300}
-              className="object-cover scale-96 w-full h-full"
-            />
-          </div>
-        </div>
+        { cards.map((card, i) => (
+          <ArtistCard key={i} {...card} />
+        ))}
         
-        {/* left near */}
-        <div className="absolute left-[22%] top-[28%] -rotate-20">
-          <div className="h-48 w-50 rounded-2xl overflow-hidden shadow-xl bg-white/90">
-            <Image
-              src="/artists/artist5.jpg"
-              alt="artist"
-              width={300}
-              height={300}
-              className="object-cover scale-96 w-full h-full"
-            />
-          </div>
-        </div>
-
-        {/* right near */}
-        <div className="absolute right-[22%] top-[28%] rotate-20">
-          <div className="h-48 w-50 rounded-2xl overflow-hidden shadow-xl bg-white/90">
-            <Image
-              src="/artists/artist6.jpg"
-              alt="artist"
-              width={300}
-              height={300}
-              className="object-cover scale-150 w-full h-full"
-            />
-          </div>
-        </div>
-
-        {/* right far */}
-        <div className="absolute right-[4%] top-[45%] rotate-40">
-          <div className="h-48 w-50 rounded-2xl overflow-hidden shadow-xl bg-linear-to-br from-green-500/40 to-emerald-500/40">
-            <Image
-              src="/artists/artist2.jpg"
-              alt="artist"
-              width={800}
-              height={800}
-              className="object-cover scale-95 w-full h-full"
-            />
-          </div>
-        </div>
-
-        {/* right farthest */}
-        <div className="absolute right-[-8%] top-[82%] rotate-60">
-          <div className="h-48 w-50 rounded-2xl overflow-hidden shadow-xl bg-linear-to-br from-green-500/40 to-emerald-500/40">
-            <Image
-              src="/artists/artist4.jpg"
-              alt="artist"
-              width={800}
-              height={800}
-              className="object-cover scale-95 w-full h-full"
-            />
-          </div>
-        </div>
       </div>
 
 

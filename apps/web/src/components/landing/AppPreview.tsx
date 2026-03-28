@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import CreatorBenefitsCard from "../ui/CreatorBenifitCard";
 import FanBenefitsCard from "../ui/FanBenfitCard";
