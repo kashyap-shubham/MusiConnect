@@ -27,7 +27,7 @@ export default function ArtistCard({
           alt="artist"
           width={800}
           height={800}
-          className={`object-cover w-full h-full ${imageScale}`}
+          className={`object-cover rounded-xl w-full h-full ${imageScale}`}
         />
       </div>
     </div>

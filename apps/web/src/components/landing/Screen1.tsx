@@ -10,7 +10,7 @@ export default function Screen() {
       positionClass: "absolute left-[-8%] top-[78%]",
       rotateClass: "-rotate-50",
       gradientClass: "bg-linear-to-br from-green-500/40 to-emerald-500/40",
-      imageScale: "scale-95",
+      imageScale: "scale-96",
     },
 
     // left far card
@@ -27,12 +27,16 @@ export default function Screen() {
       img: "/artists/artist5.jpg",
       positionClass: "absolute left-[22%] top-[28%]",
       rotateClass: "-rotate-20",
+      gradientClass: "bg-linear-to-br from-red-500/40 to-blue-500/40",
+      imageScale: "scale-96"
     },
 
     // center card
     {
       img: "/artists/main.jpg",
       containerClass: "h-65 w-70",
+      gradientClass: "bg-linear-to-br from-red-500/40 to-cyan-500/40",
+      imageScale: "scale-96"
     },
 
     // right near card
@@ -40,7 +44,7 @@ export default function Screen() {
       img: "/artists/artist6.jpg",
       positionClass: "absolute right-[22%] top-[28%]",
       rotateClass: "rotate-20",
-      imageScale: "scale-150",
+      imageScale: "scale-96",
     },
 
     // right far card
@@ -49,7 +53,7 @@ export default function Screen() {
       positionClass: "absolute right-[4%] top-[45%]",
       rotateClass: "rotate-40",
       gradientClass: "bg-linear-to-br from-green-500/40 to-emerald-500/40",
-      imageScale: "scale-95",
+      imageScale: "scale-96",
     },
 
     // right most card
@@ -58,7 +62,7 @@ export default function Screen() {
       positionClass: "absolute right-[-8%] top-[78%]",
       rotateClass: "rotate-50",
       gradientClass: "bg-linear-to-br from-green-500/40 to-emerald-500/40",
-      imageScale: "scale-95",
+      imageScale: "scale-96",
     },
   ];
 
@@ -73,22 +77,22 @@ export default function Screen() {
       </div>
 
       {/* center content */}
-      <div className="relative mt-18 text-center">
+      <div className="relative mt-20 text-center">
         
         {/* heading */}
-        <h1 className="mt-4 text-[64px] font-semibold tracking-tight leading-[1.05] md:text-[88px]">
+        <h1 className="text-[64px] font-semibold tracking-tight leading-[1.05] md:text-[88px]">
           Music&apos;s <br />
           Social Media
         </h1>
 
         {/* paragraph */}
-        <p className="font-bold mt-8 text-lg text-white/70 ">
+        <p className="font-bold mt-12 text-lg text-white/70 ">
           Creators deserve better. Fans deserve more. MusiConnect is built for
           both.
         </p>
 
         {/* CTA */}
-        <button className="mt-10 rounded-full border border-white/80 px-7 py-3 text-sm text-white hover:bg-white/15 transition">
+        <button className="mt-16 rounded-full border border-white/80 px-7 py-3 text-sm text-white hover:bg-white/15 transition">
           Join to Listen
         </button>
 
