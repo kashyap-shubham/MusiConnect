@@ -7,8 +7,8 @@ export default function Screen() {
     // left most card
     {
       img: "/artists/artist3.jpg",
-      positionClass: "absolute left-[-8%] top-[82%]",
-      rotateClass: "-rotate-60",
+      positionClass: "absolute left-[-8%] top-[78%]",
+      rotateClass: "-rotate-50",
       gradientClass: "bg-linear-to-br from-green-500/40 to-emerald-500/40",
       imageScale: "scale-95",
     },
@@ -55,8 +55,8 @@ export default function Screen() {
     // right most card
     {
       img: "/artists/artist4.jpg",
-      positionClass: "absolute right-[-8%] top-[82%]",
-      rotateClass: "rotate-60",
+      positionClass: "absolute right-[-8%] top-[78%]",
+      rotateClass: "rotate-50",
       gradientClass: "bg-linear-to-br from-green-500/40 to-emerald-500/40",
       imageScale: "scale-95",
     },
@@ -64,12 +64,36 @@ export default function Screen() {
 
   return (
     <div className="mt-20 flex flex-col justify-center items-center">
+
       {/* floationg cards */}
       <div className="flex justify-between items-center">
         {cards.map((card, i) => (
           <ArtistCard key={i} {...card} />
         ))}
       </div>
+
+      {/* center content */}
+      <div className="relative mt-18 text-center">
+        
+        {/* heading */}
+        <h1 className="mt-4 text-[64px] font-semibold tracking-tight leading-[1.05] md:text-[88px]">
+          Music&apos;s <br />
+          Social Media
+        </h1>
+
+        {/* paragraph */}
+        <p className="font-bold mt-8 text-lg text-white/70 ">
+          Creators deserve better. Fans deserve more. MusiConnect is built for
+          both.
+        </p>
+
+        {/* CTA */}
+        <button className="mt-10 rounded-full border border-white/80 px-7 py-3 text-sm text-white hover:bg-white/15 transition">
+          Join to Listen
+        </button>
+
+      </div>
+
     </div>
   );
 }
