@@ -1,27 +1,44 @@
 import Sidebar from "@/components/app/Sidebar"
-import MusicPlayer from "@/components/app/MusicPlayer"
 
-export default function AppLayout({
-  children,
+
+
+export default function AppLayout({ 
+    children, 
 }: {
-  children: React.ReactNode
+    children: React.ReactNode
 }) {
 
-  return (
-    <div className="h-screen flex flex-col bg-black text-white">
+    // temporary static playlists
+    // const playlist = [ 
+    //     {
+    //         id: 1,
+    //         name: "Flow"
+    //     }
+    // ]
 
-      <div className="flex flex-1 overflow-hidden">
+    return (
 
-        <Sidebar />
+        <div className="h-screen text-white flex">
 
-        <main className="flex-1 overflow-y-auto p-6">
-          {children}
+        {/* SIDEBAR */}
+        <aside className="w-64 border-r border-white/10">
+
+            <Sidebar playlists={[]} />
+
+        </aside>
+
+
+
+        {/* MAIN CONTENT */}
+        <main className="flex-1 overflow-y-auto">
+
+            {children}
+
         </main>
 
-      </div>
 
-      <MusicPlayer />
+        </div>
 
-    </div>
-  )
+    )
+
 }
