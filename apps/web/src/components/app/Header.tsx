@@ -1,15 +1,61 @@
 "use client"
 
-import { Search } from "lucide-react"
+import {
+  Search,
+  Bell,
+  ChevronLeft,
+  ChevronRight,
+  Home
+} from "lucide-react"
+
+import { useRouter } from "next/navigation"
+
+
 
 export default function Header() {
+
+  const router = useRouter()
+
+
 
   return (
 
     <div className="flex items-center justify-between mb-10">
 
-      {/* search */}
-      <div className="relative w-80">
+      {/* LEFT */}
+      <div className="flex items-center gap-3">
+
+        <button
+          onClick={() => router.back()}
+          className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition"
+        >
+          <ChevronLeft size={18}/>
+        </button>
+
+
+
+        <button
+          onClick={() => router.forward()}
+          className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition"
+        >
+          <ChevronRight size={18}/>
+        </button>
+
+
+
+        <button
+          onClick={() => router.push("/explore")}
+          className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition"
+        >
+          <Home size={18}/>
+        </button>
+
+      </div>
+
+
+
+      {/* SEARCH */}
+      <div className="relative w-96">
 
         <Search
           size={18}
@@ -36,8 +82,16 @@ export default function Header() {
 
 
 
-      {/* profile */}
-      <div className="flex items-center gap-3">
+      {/* RIGHT */}
+      <div className="flex items-center gap-4">
+
+        <button className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+
+          <Bell size={18}/>
+
+        </button>
+
+
 
         <div className="
           h-9 w-9
@@ -46,6 +100,8 @@ export default function Header() {
         "/>
 
       </div>
+
+
 
     </div>
 
