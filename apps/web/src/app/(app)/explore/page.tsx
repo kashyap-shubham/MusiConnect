@@ -1,10 +1,12 @@
+import Header from "@/components/app/Header";
+
 export default function ExplorePage() {
 
   return (
 
     <div className="p-10">
 
-      Explore Page
+      <Header />
 
     </div>
 
