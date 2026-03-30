@@ -9,10 +9,16 @@ import {
 } from "lucide-react"
 
 import { useRouter } from "next/navigation"
+import ProfileSection from "./header/ProfileSection";
 
 
 
 export default function Header() {
+
+    const user = {
+        name: "Shubham Kashyap",
+        image: ""
+    }
 
   const router = useRouter()
 
@@ -77,41 +83,9 @@ export default function Header() {
             <Bell size={18} />
             </button>
 
-        {/* profile avatar */}
-        {/* <div
-          className="
-          h-9 w-9
-          rounded-full
-          bg-white/10
-          cursor-pointer
-        "
-        /> */}
+        {/* profile section  */}
+        <ProfileSection user={user}/> 
 
-        {/* profile */}
-        <div
-          className="
-            flex items-center gap-3
-            px-3 py-1.5
-            rounded-lg
-            bg-white/5
-            border border-white/10
-            hover:bg-white/10
-            cursor-pointer
-            transition
-            ">
-        
-        {/* avatar */}
-          <div
-            className="
-                h-7 w-7
-                rounded-full
-                bg-white/20
-            "
-          />
-
-          {/* username */}
-          <p className="text-sm">Dummy User</p>
-        </div>
       </div>
     </div>
   );
