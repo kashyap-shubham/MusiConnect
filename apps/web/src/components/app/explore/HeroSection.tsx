@@ -30,7 +30,7 @@ export default function HeroSection({
       className="
         relative
         w-full
-        h-[360px]
+        h-90
         overflow-hidden
         rounded-2xl
         flex
@@ -47,17 +47,15 @@ export default function HeroSection({
         className="
           object-cover
           scale-110
-          blur-3xl
-          opacity-40
-        "
+          blur-xl
+          opacity-60"
       />
 
       {/* dark overlay */}
       <div
         className="
           absolute inset-0
-          bg-black/40
-        "
+          bg-black/20"
       />
 
 
@@ -138,7 +136,7 @@ export default function HeroSection({
           fill
           priority
           className="
-            object-contain
+            object-cover
             object-right
           "
         />
