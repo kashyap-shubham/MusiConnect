@@ -21,7 +21,7 @@ export default function ArtistCard({
 
     <div
       className="
-        min-w-[120px]
+        min-w-30
         space-y-2
         cursor-pointer
         group
@@ -32,8 +32,8 @@ export default function ArtistCard({
       <div
         className="
           relative
-          h-[90px]
-          w-[90px]
+          h-22.5
+          w-22.5
           rounded-lg
           overflow-hidden
           bg-neutral-800

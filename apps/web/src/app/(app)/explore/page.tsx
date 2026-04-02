@@ -1,19 +1,22 @@
+import GenresSection from "@/components/app/explore/GenresSection";
 import HeroSection from "@/components/app/explore/HeroSection";
 import TopArtistsSection from "@/components/app/explore/TopArtistsSection";
+import TopChartsSection from "@/components/app/explore/TopChartsSection";
 import Header from "@/components/app/Header";
+import SectionHeader from "@/components/shared/SectionHeader";
 
 // temporary placeholders
-const GenresSection = () => (
-  <div className="bg-neutral-900 rounded-xl p-4 h-55">
-    Genres
-  </div>
-);
+// const GenresSection = () => (
+//   <div className="bg-neutral-900 rounded-xl p-4 h-55">
+//     <SectionHeader title="Genres" />
+//   </div>
+// );
 
-const TopChartsSection = () => (
-  <div className="bg-neutral-900 rounded-xl p-4 h-55">
-    Top Charts
-  </div>
-);
+// const TopChartsSection = () => (
+//   <div className="bg-neutral-900 rounded-xl p-4 h-55">
+//     <SectionHeader title="Top Charts" />
+//   </div>
+// );
 
 const PlayerCard = () => (
   <div className="bg-neutral-900 rounded-xl p-4 h-full min-h-105">
@@ -26,38 +29,38 @@ const artists = [
   {
     id: "1",
     name: "Travis Scott",
-    imageUrl: "/mock/a1.jpg",
+    imageUrl: "/artists/artist1.jpg",
     monthlyListeners: "44M plays"
   },
   {
     id: "2",
     name: "Billie Eilish",
-    imageUrl: "/mock/a2.jpg",
+    imageUrl: "/artists/artist2.jpg",
     monthlyListeners: "203M plays"
   },
   {
     id: "3",
     name: "Kanye",
-    imageUrl: "/mock/a3.jpg",
-    monthlyListeners: "15M plays"
+    imageUrl: "/artists/artist3.jpg",
+    monthlyListeners: "1M plays"
   },
   {
     id: "4",
     name: "Kanye",
-    imageUrl: "/mock/a3.jpg",
+    imageUrl: "/artists/artist4.jpg",
     monthlyListeners: "15M plays"
   },
   {
     id: "5",
     name: "Kanye",
-    imageUrl: "/mock/a3.jpg",
-    monthlyListeners: "15M plays"
+    imageUrl: "/artists/artist5.jpg",
+    monthlyListeners: "155M plays"
   },
   {
     id: "6",
     name: "Kanye",
-    imageUrl: "/mock/a3.jpg",
-    monthlyListeners: "15M plays"
+    imageUrl: "/artists/artist6.jpg",
+    monthlyListeners: "150M plays"
   },
   
   
@@ -81,7 +84,7 @@ export default function ExplorePage() {
 
 
       {/* DASHBOARD GRID */}
-      <div className="grid grid-cols-[2fr_1fr] gap-6">
+      <div className="grid grid-cols-[minmax(0,2fr)_1fr] gap-6 items-start">
 
 
         {/* LEFT SIDE */}
@@ -104,7 +107,6 @@ export default function ExplorePage() {
 
         {/* RIGHT SIDE */}
         <PlayerCard />
-
 
       </div>
 

@@ -22,7 +22,6 @@ export default function TopArtistsSection({
 
     <section className="space-y-4">
 
-      <SectionHeader title="Top Artists" />
 
       {/* container panel */}
       <div
@@ -32,6 +31,7 @@ export default function TopArtistsSection({
           p-4
         "
       >
+      <SectionHeader title="Top Artists" />
 
         <div
           className="

@@ -29,7 +29,7 @@ export default function HeroSection({
       className="
         relative
         w-full
-        h-90
+        h-80
         overflow-hidden
         rounded-2xl
         flex

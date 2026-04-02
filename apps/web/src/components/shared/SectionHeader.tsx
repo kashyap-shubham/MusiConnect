@@ -13,7 +13,7 @@ export default function SectionHeader({
 
   return (
 
-    <div className="flex items-center justify-between">
+    <div className="flex mb-4 items-center justify-between">
 
       <h2 className="text-lg font-semibold">
         {title}
