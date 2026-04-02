@@ -3,6 +3,7 @@ import HeroSection from "@/components/app/explore/HeroSection";
 import TopArtistsSection from "@/components/app/explore/TopArtistsSection";
 import TopChartsSection from "@/components/app/explore/TopChartsSection";
 import Header from "@/components/app/Header";
+import PlayerCard from "@/components/app/player/PlayerCard";
 import SectionHeader from "@/components/shared/SectionHeader";
 
 // temporary placeholders
@@ -18,11 +19,11 @@ import SectionHeader from "@/components/shared/SectionHeader";
 //   </div>
 // );
 
-const PlayerCard = () => (
-  <div className="bg-neutral-900 rounded-xl p-4 h-full min-h-105">
-    Player
-  </div>
-);
+// const PlayerCard = () => (
+//   <div className="bg-neutral-900 rounded-xl p-4 h-full min-h-105">
+//     Player
+//   </div>
+// );
 
 
 const artists = [
@@ -106,7 +107,23 @@ export default function ExplorePage() {
 
 
         {/* RIGHT SIDE */}
-        <PlayerCard />
+        {/* <PlayerCard /> */}
+        <PlayerCard
+          song={{ 
+            id: "1",
+            title: "Butterfly Effect",
+            artist: "Travis Scott",
+
+            imageUrl: "/artists/main.jpg",
+
+            duration: 245,
+            currentTime: 102
+
+          }}
+
+          isPlaying={false} 
+
+          />
 
       </div>
 
