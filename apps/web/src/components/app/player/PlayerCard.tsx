@@ -2,14 +2,22 @@
 
 import Image from "next/image";
 
-import PlayerControls from "./PlayerControls";
+import { ListMusic } from "lucide-react";
+
 import ProgressBar from "./ProgressBar";
+import PlayerControls from "./PlayerControls";
+
 
 export interface Song {
 
+  id: string
   title: string
   artist: string
+
   imageUrl: string
+
+  duration: number
+  currentTime: number
 
 }
 
@@ -17,21 +25,54 @@ interface Props {
 
   song?: Song
 
+  isPlaying?: boolean
+
+  onPlay?: () => void
+  onPause?: () => void
+
+  onNext?: () => void
+  onPrev?: () => void
+
+  onShuffle?: () => void
+  onRepeat?: () => void
+
 }
 
 export default function PlayerCard({
 
-  song = {
+  song,
+  isPlaying,
 
-    title: "Butterfly Effect",
+  onPlay,
+  onPause,
 
-    artist: "Travis Scott",
+  onNext,
+  onPrev,
 
-    imageUrl: "/mock/player.jpg"
+  onShuffle,
+  onRepeat
+
+}: Props) {
+
+  if (!song) {
+
+    return (
+
+      <div className="
+        bg-neutral-900
+        rounded-xl
+        p-5
+        text-neutral-400
+      ">
+
+        No song playing
+
+      </div>
+
+    );
 
   }
 
-}: Props) {
 
   return (
 
@@ -39,17 +80,24 @@ export default function PlayerCard({
       className="
         bg-neutral-900
         rounded-xl
-        p-6
+        p-5
         flex
         flex-col
         gap-6
       "
     >
 
-      {/* label */}
-      <div className="text-sm text-neutral-400">
+      {/* header */}
+      <div className="flex items-center justify-between">
 
-        Player
+        <span className="text-sm text-neutral-400">
+
+          Player
+
+        </span>
+
+
+        <ListMusic size={18} />
 
       </div>
 
@@ -77,9 +125,9 @@ export default function PlayerCard({
 
 
       {/* info */}
-      <div className="text-center">
+      <div className="text-center space-y-1">
 
-        <div className="font-semibold">
+        <div className="text-lg font-semibold">
 
           {song.title}
 
@@ -94,28 +142,29 @@ export default function PlayerCard({
       </div>
 
 
-      {/* progress */}
-      <ProgressBar />
+      <ProgressBar
+
+        duration={song.duration}
+
+        currentTime={song.currentTime}
+
+      />
 
 
-      {/* controls */}
-      <PlayerControls />
+      <PlayerControls
 
+        isPlaying={isPlaying}
 
-      {/* optional extra controls */}
-      <div className="flex justify-center">
+        onPlay={onPlay}
+        onPause={onPause}
 
-        <button
-          className="
-            text-xs
-            text-neutral-400
-            hover:text-white
-          "
-        >
-          LYRICS
-        </button>
+        onNext={onNext}
+        onPrev={onPrev}
 
-      </div>
+        onShuffle={onShuffle}
+        onRepeat={onRepeat}
+
+      />
 
     </div>
 

@@ -1,59 +1,128 @@
 "use client";
 
 import {
+
   Play,
   Pause,
   SkipBack,
-  SkipForward
+  SkipForward,
+  Shuffle,
+  Repeat,
+  ChevronUp
+
 } from "lucide-react";
 
 interface Props {
+
   isPlaying?: boolean
+
+  onPlay?: () => void
+  onPause?: () => void
+
+  onNext?: () => void
+  onPrev?: () => void
+
+  onShuffle?: () => void
+  onRepeat?: () => void
+
 }
 
 export default function PlayerControls({
-  isPlaying = false
+
+  isPlaying,
+
+  onPlay,
+  onPause,
+
+  onNext,
+  onPrev,
+
+  onShuffle,
+  onRepeat
+
 }: Props) {
 
   return (
 
-    <div className="flex items-center justify-center gap-6">
+    <div
+      className="
+        bg-gradient-to-b
+        from-indigo-500
+        to-indigo-600
+        rounded-xl
+        pt-6
+        pb-4
+        px-6
+        space-y-4
+      "
+    >
 
-      <button className="text-neutral-400 hover:text-white">
+      <div className="flex items-center justify-between">
 
-        <SkipBack size={18} />
+        <button onClick={onRepeat}>
 
-      </button>
+          <Repeat size={18} />
 
-
-      <button
-        className="
-          h-14
-          w-14
-          rounded-full
-          bg-indigo-500
-          flex
-          items-center
-          justify-center
-          shadow-lg
-          hover:scale-105
-          transition
-        "
-      >
-
-        {isPlaying
-          ? <Pause size={22} />
-          : <Play size={22} />
-        }
-
-      </button>
+        </button>
 
 
-      <button className="text-neutral-400 hover:text-white">
+        <button onClick={onPrev}>
 
-        <SkipForward size={18} />
+          <SkipBack size={20} />
 
-      </button>
+        </button>
+
+
+        <button
+          onClick={isPlaying ? onPause : onPlay}
+          className="
+            h-14
+            w-14
+            bg-white
+            text-black
+            rounded-full
+            flex
+            items-center
+            justify-center
+            shadow-md
+          "
+        >
+
+          {isPlaying
+            ? <Pause size={22} />
+            : <Play size={22} />
+          }
+
+        </button>
+
+
+        <button onClick={onNext}>
+
+          <SkipForward size={20} />
+
+        </button>
+
+
+        <button onClick={onShuffle}>
+
+          <Shuffle size={18} />
+
+        </button>
+
+      </div>
+
+
+      <div className="flex items-center justify-center gap-2">
+
+        <ChevronUp size={16} />
+
+        <span className="text-xs tracking-wide">
+
+          LYRICS
+
+        </span>
+
+      </div>
 
     </div>
 
