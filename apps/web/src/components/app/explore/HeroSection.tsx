@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Heart } from "lucide-react";
 
 export interface HeroSectionProps {
+  
   title: string
   subtitle?: string
   label?: string
@@ -23,9 +24,7 @@ export default function HeroSection({
   onSecondaryAction
 
 }: HeroSectionProps) {
-
   return (
-
     <section
       className="
         relative
@@ -37,7 +36,6 @@ export default function HeroSection({
         bg-black
       "
     >
-
       {/* BLURRED BACKGROUND IMAGE */}
       <Image
         src={imageUrl}
@@ -58,7 +56,6 @@ export default function HeroSection({
           bg-black/20"
       />
 
-
       {/* LEFT CONTENT */}
       <div
         className="
@@ -71,29 +68,13 @@ export default function HeroSection({
           px-10
         "
       >
+        {label && <p className="text-sm text-neutral-300">{label}</p>}
 
-        {label && (
+        <h1 className="mt-2 text-5xl font-semibold tracking-tight">{title}</h1>
 
-          <p className="text-sm text-neutral-300">
-            {label}
-          </p>
-
-        )}
-
-        <h1 className="mt-2 text-5xl font-semibold tracking-tight">
-          {title}
-        </h1>
-
-        {subtitle && (
-
-          <p className="mt-2 text-neutral-300">
-            {subtitle}
-          </p>
-
-        )}
+        {subtitle && <p className="mt-2 text-neutral-300">{subtitle}</p>}
 
         <div className="mt-6 flex gap-4">
-
           <button
             onClick={onPrimaryAction}
             className="
@@ -121,15 +102,11 @@ export default function HeroSection({
           >
             <Heart size={18} />
           </button>
-
         </div>
-
       </div>
-
 
       {/* RIGHT IMAGE */}
       <div className="relative w-[55%] h-full z-10">
-
         <Image
           src={imageUrl}
           alt={title}
@@ -145,16 +122,13 @@ export default function HeroSection({
         <div
           className="
             absolute inset-0
-            bg-gradient-to-r
+            bg-linear-to-r
             from-black/70
             via-black/30
             to-transparent
           "
         />
-
       </div>
-
     </section>
-
   );
 }
