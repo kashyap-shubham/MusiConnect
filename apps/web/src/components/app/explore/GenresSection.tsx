@@ -5,26 +5,20 @@ import SectionHeader from "@/components/shared/SectionHeader";
 import VerticalScrollArrow from "@/components/ui/VerticalScrollArrow";
 import cn from "@/lib/cn";
 
-
 export interface Genre {
   id: string;
   name: string;
   color: string;
 }
 
-
 interface Props {
   genres: Genre[];
 }
 
-
 const INITIAL_VISIBLE = 6;
 const SCROLL_AMOUNT = 120;
 
-
-export default function GenresSection({
-  genres
-}: Props) {
+export default function GenresSection({ genres }: Props) {
 
   const [expanded, setExpanded] = useState(false);
 
@@ -36,11 +30,9 @@ export default function GenresSection({
   const scrollRef = useRef<HTMLDivElement>(null);
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-
   const visibleGenres = expanded
     ? genres
     : genres.slice(0, INITIAL_VISIBLE);
-
 
   function checkScroll() {
 
@@ -57,19 +49,13 @@ export default function GenresSection({
     setScrolling(true);
 
     if (scrollTimeoutRef.current) {
-
       clearTimeout(scrollTimeoutRef.current);
-
     }
 
     scrollTimeoutRef.current = setTimeout(() => {
-
       setScrolling(false);
-
     }, 400);
-
   }
-
 
   function scroll(direction: "up" | "down") {
 
@@ -77,40 +63,30 @@ export default function GenresSection({
     if (!el) return;
 
     el.scrollBy({
-
       top:
         direction === "up"
           ? -SCROLL_AMOUNT
           : SCROLL_AMOUNT,
-
       behavior: "smooth",
-
     });
-
   }
-
 
   function toggleExpanded() {
 
     if (expanded && scrollRef.current) {
 
       scrollRef.current.scrollTo({
-
         top: 0,
         behavior: "smooth",
-
       });
 
       setCanScrollUp(false);
-
     }
 
     setExpanded(prev => !prev);
 
     setTimeout(checkScroll, 100);
-
   }
-
 
   return (
 
@@ -133,17 +109,14 @@ export default function GenresSection({
 
         <div
           ref={scrollRef}
-
           onScroll={checkScroll}
 
           className={cn(
-
-            "grid grid-cols-2 gap-3 pr-6",
+            "grid grid-cols-2 gap-3 pr-6 h-[300px]",
 
             expanded
-              ? "max-h-[260px] overflow-y-auto scrollbar-hide"
+              ? "overflow-y-auto scrollbar-hide"
               : "overflow-hidden"
-
           )}
         >
 
@@ -151,22 +124,15 @@ export default function GenresSection({
 
             <div
               key={genre.id}
-
               className={`
                 ${genre.color}
-
                 rounded-lg
                 p-3
-
                 text-sm
                 font-medium
-
                 text-white
-
                 h-16
-
-                flex
-                items-end
+                flex items-end
               `}
             >
 
@@ -190,5 +156,4 @@ export default function GenresSection({
     </div>
 
   );
-
 }

@@ -73,6 +73,67 @@ const genres = [
 ];
 
 
+const topCharts = [
+
+  {
+    id: "1",
+    title: "Blinding Lights",
+    artist: "The Weeknd",
+    imageUrl: "/artists/artist1.jpg",
+    duration: "3:22"
+  },
+
+  {
+    id: "2",
+    title: "As It Was",
+    artist: "Harry Styles",
+    imageUrl: "/artists/artist2.jpg",
+    duration: "2:47"
+  },
+
+  {
+    id: "3",
+    title: "Starboy",
+    artist: "The Weeknd",
+    imageUrl: "/artists/artist3.jpg",
+    duration: "3:50"
+  },
+
+  {
+    id: "4",
+    title: "Levitating",
+    artist: "Dua Lipa",
+    imageUrl: "/artists/artist4.jpg",
+    duration: "3:12"
+  },
+
+  {
+    id: "5",
+    title: "Stay",
+    artist: "Justin Bieber",
+    imageUrl: "/artists/artist5.jpg",
+    duration: "2:30"
+  },
+
+  {
+    id: "6",
+    title: "Peaches",
+    artist: "Justin Bieber",
+    imageUrl: "/artists/artist6.jpg",
+    duration: "3:18"
+  },
+
+  {
+    id: "7",
+    title: "Save Your Tears",
+    artist: "The Weeknd",
+    imageUrl: "/artists/artist1.jpg",
+    duration: "3:35"
+  },
+
+];
+
+
 export default function ExplorePage() {
 
   return (
@@ -103,7 +164,7 @@ export default function ExplorePage() {
             </ErrorBoundary>
 
             <ErrorBoundary>
-              <TopChartsSection />
+              <TopChartsSection songs={topCharts} />
             </ErrorBoundary>
 
           </div>
