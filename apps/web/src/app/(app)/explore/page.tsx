@@ -145,7 +145,7 @@ const playerSong = {
   imageUrl: "/artists/main.jpg",
 
   duration: 245,
-  currentTime: 102,
+  currentTime: 0,
 
 };
 

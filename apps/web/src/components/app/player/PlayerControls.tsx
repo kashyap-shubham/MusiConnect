@@ -49,7 +49,7 @@ export default function PlayerControls({
 
     <div
       className="
-        bg-gradient-to-b
+        bg-linear-to-b
         from-indigo-500
         to-indigo-600
 

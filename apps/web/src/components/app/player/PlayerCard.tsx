@@ -154,6 +154,9 @@ export default function PlayerCard({
 
           currentTime={song?.currentTime ?? 0}
 
+          onSeek={(time) => {
+            console.log("seek to", time)
+          }}
         />
 
         <PlayerControls
