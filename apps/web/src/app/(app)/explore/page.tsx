@@ -134,6 +134,22 @@ const topCharts = [
 ];
 
 
+const playerSong = {
+
+  id: "1",
+
+  title: "Butterfly Effect",
+
+  artist: "Travis Scott",
+
+  imageUrl: "/artists/main.jpg",
+
+  duration: 245,
+  currentTime: 102,
+
+};
+
+
 export default function ExplorePage() {
 
   return (
@@ -149,7 +165,7 @@ export default function ExplorePage() {
         imageUrl="/artists/artist1.jpg"
       />
 
-      <div className="grid grid-cols-[minmax(0,2fr)_1fr] gap-6 items-start">
+      <div className="grid grid-cols-[minmax(0,2fr)_1fr] gap-6 items-stretch">
 
         <div className="space-y-6">
 
@@ -171,20 +187,12 @@ export default function ExplorePage() {
 
         </div>
 
-        <ErrorBoundary>
 
+        <ErrorBoundary>
           <PlayerCard
-            song={{
-              id: "1",
-              title: "Butterfly Effect",
-              artist: "Travis Scott",
-              imageUrl: "/artists/main.jpg",
-              duration: 245,
-              currentTime: 102,
-            }}
+            song={playerSong}
             isPlaying={false}
           />
-
         </ErrorBoundary>
 
       </div>

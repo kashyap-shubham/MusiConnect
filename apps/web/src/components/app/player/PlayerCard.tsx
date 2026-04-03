@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-
 import { ListMusic } from "lucide-react";
 
 import ProgressBar from "./ProgressBar";
@@ -21,6 +20,7 @@ export interface Song {
 
 }
 
+
 interface Props {
 
   song?: Song
@@ -38,6 +38,7 @@ interface Props {
 
 }
 
+
 export default function PlayerCard({
 
   song,
@@ -54,41 +55,23 @@ export default function PlayerCard({
 
 }: Props) {
 
-  if (!song) {
-
-    return (
-
-      <div className="
-        bg-neutral-900
-        rounded-xl
-        p-5
-        text-neutral-400
-      ">
-
-        No song playing
-
-      </div>
-
-    );
-
-  }
-
-
   return (
 
     <div
       className="
         bg-neutral-900
         rounded-xl
-        p-5
+        p-4
+
+        h-full
+
         flex
         flex-col
-        gap-6
       "
     >
 
       {/* header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-3">
 
         <span className="text-sm text-neutral-400">
 
@@ -96,75 +79,99 @@ export default function PlayerCard({
 
         </span>
 
-
         <ListMusic size={18} />
 
       </div>
 
 
-      {/* artwork */}
-      <div
-        className="
-          relative
-          w-full
-          aspect-square
-          rounded-lg
-          overflow-hidden
-          bg-neutral-800
-        "
-      >
+      {/* artwork grows */}
+      <div className="flex-1 flex flex-col">
 
-        <Image
-          src={song.imageUrl}
-          alt={song.title}
-          fill
-          className="object-cover"
+        <div
+          className="
+            relative
+            w-full
+            flex-1
+
+            rounded-lg
+            overflow-hidden
+            bg-neutral-800
+
+            flex
+            items-center
+            justify-center
+          "
+        >
+
+          {song ? (
+
+            <Image
+              src={song.imageUrl}
+              alt={song.title}
+              fill
+              className="object-cover"
+            />
+
+          ) : (
+
+            <span className="text-xs text-neutral-500">
+
+              No song selected
+
+            </span>
+
+          )}
+
+        </div>
+
+
+        {/* song info */}
+        <div className="text-center mt-3">
+
+          <div className="text-base font-semibold truncate">
+
+            {song?.title ?? "Nothing playing"}
+
+          </div>
+
+          <div className="text-sm text-neutral-400 truncate">
+
+            {song?.artist ?? "Select a song"}
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      {/* bottom controls area */}
+      <div className="mt-4 space-y-3">
+
+        <ProgressBar
+
+          duration={song?.duration ?? 0}
+
+          currentTime={song?.currentTime ?? 0}
+
+        />
+
+        <PlayerControls
+
+          isPlaying={isPlaying}
+
+          onPlay={onPlay}
+          onPause={onPause}
+
+          onNext={onNext}
+          onPrev={onPrev}
+
+          onShuffle={onShuffle}
+          onRepeat={onRepeat}
+
         />
 
       </div>
-
-
-      {/* info */}
-      <div className="text-center space-y-1">
-
-        <div className="text-lg font-semibold">
-
-          {song.title}
-
-        </div>
-
-        <div className="text-sm text-neutral-400">
-
-          {song.artist}
-
-        </div>
-
-      </div>
-
-
-      <ProgressBar
-
-        duration={song.duration}
-
-        currentTime={song.currentTime}
-
-      />
-
-
-      <PlayerControls
-
-        isPlaying={isPlaying}
-
-        onPlay={onPlay}
-        onPause={onPause}
-
-        onNext={onNext}
-        onPrev={onPrev}
-
-        onShuffle={onShuffle}
-        onRepeat={onRepeat}
-
-      />
 
     </div>
 
