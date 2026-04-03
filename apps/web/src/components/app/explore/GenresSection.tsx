@@ -1,46 +1,194 @@
 "use client";
 
+import { useRef, useState } from "react";
 import SectionHeader from "@/components/shared/SectionHeader";
-import GenreCard from "./GenreCard";
+import VerticalScrollArrow from "@/components/ui/VerticalScrollArrow";
+import cn from "@/lib/cn";
 
-const genres = [
 
-  { id: "1", name: "Dance Beat", color: "#334155" },
+export interface Genre {
+  id: string;
+  name: string;
+  color: string;
+}
 
-  { id: "2", name: "Electro Pop", color: "#78716c" },
 
-  { id: "3", name: "Alternative Indie", color: "#92400e" },
+interface Props {
+  genres: Genre[];
+}
 
-  { id: "4", name: "Hip Hop", color: "#065f46" },
 
-  { id: "5", name: "Classical Period", color: "#7c3aed" },
+const INITIAL_VISIBLE = 6;
+const SCROLL_AMOUNT = 120;
 
-  { id: "6", name: "Hip Hop Rap", color: "#1d4ed8" },
 
-];
+export default function GenresSection({
+  genres
+}: Props) {
 
-export default function GenresSection() {
+  const [expanded, setExpanded] = useState(false);
+
+  const [canScrollUp, setCanScrollUp] = useState(false);
+  const [canScrollDown, setCanScrollDown] = useState(false);
+
+  const [scrolling, setScrolling] = useState(false);
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+
+  const visibleGenres = expanded
+    ? genres
+    : genres.slice(0, INITIAL_VISIBLE);
+
+
+  function checkScroll() {
+
+    const el = scrollRef.current;
+    if (!el) return;
+
+    setCanScrollUp(el.scrollTop > 0);
+
+    setCanScrollDown(
+      el.scrollTop <
+      el.scrollHeight - el.clientHeight - 5
+    );
+
+    setScrolling(true);
+
+    if (scrollTimeoutRef.current) {
+
+      clearTimeout(scrollTimeoutRef.current);
+
+    }
+
+    scrollTimeoutRef.current = setTimeout(() => {
+
+      setScrolling(false);
+
+    }, 400);
+
+  }
+
+
+  function scroll(direction: "up" | "down") {
+
+    const el = scrollRef.current;
+    if (!el) return;
+
+    el.scrollBy({
+
+      top:
+        direction === "up"
+          ? -SCROLL_AMOUNT
+          : SCROLL_AMOUNT,
+
+      behavior: "smooth",
+
+    });
+
+  }
+
+
+  function toggleExpanded() {
+
+    if (expanded && scrollRef.current) {
+
+      scrollRef.current.scrollTo({
+
+        top: 0,
+        behavior: "smooth",
+
+      });
+
+      setCanScrollUp(false);
+
+    }
+
+    setExpanded(prev => !prev);
+
+    setTimeout(checkScroll, 100);
+
+  }
+
 
   return (
 
-    <section className="space-y-4 self-start">
+    <div className="bg-neutral-900 rounded-xl p-4">
 
-      <SectionHeader title="Genres" />
+      <SectionHeader
+        title="Genres"
+        actionLabel={expanded ? "See less" : "See all"}
+        onAction={toggleExpanded}
+      />
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="relative">
 
-        {genres.map((genre) => (
+        <VerticalScrollArrow
+          direction="up"
+          visible={expanded && canScrollUp}
+          onClick={() => scroll("up")}
+          active={scrolling}
+        />
 
-          <GenreCard
-            key={genre.id}
-            genre={genre}
-          />
+        <div
+          ref={scrollRef}
 
-        ))}
+          onScroll={checkScroll}
+
+          className={cn(
+
+            "grid grid-cols-2 gap-3 pr-6",
+
+            expanded
+              ? "max-h-[260px] overflow-y-auto scrollbar-hide"
+              : "overflow-hidden"
+
+          )}
+        >
+
+          {visibleGenres.map((genre) => (
+
+            <div
+              key={genre.id}
+
+              className={`
+                ${genre.color}
+
+                rounded-lg
+                p-3
+
+                text-sm
+                font-medium
+
+                text-white
+
+                h-16
+
+                flex
+                items-end
+              `}
+            >
+
+              {genre.name}
+
+            </div>
+
+          ))}
+
+        </div>
+
+        <VerticalScrollArrow
+          direction="down"
+          visible={expanded && canScrollDown}
+          onClick={() => scroll("down")}
+          active={scrolling}
+        />
 
       </div>
 
-    </section>
+    </div>
 
   );
+
 }

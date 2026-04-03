@@ -4,6 +4,8 @@ import TopArtistsSection from "@/components/app/explore/TopArtistsSection";
 import TopChartsSection from "@/components/app/explore/TopChartsSection";
 import Header from "@/components/app/Header";
 import PlayerCard from "@/components/app/player/PlayerCard";
+import ErrorBoundary from "@/components/shared/ErrorBoundary";
+
 
 const artists = [
   {
@@ -56,9 +58,27 @@ const artists = [
   },
 ];
 
+
+const genres = [
+  { id: "1", name: "Pop", color: "bg-pink-500" },
+  { id: "2", name: "Hip Hop", color: "bg-purple-500" },
+  { id: "3", name: "Rock", color: "bg-red-500" },
+  { id: "4", name: "EDM", color: "bg-blue-500" },
+  { id: "5", name: "Jazz", color: "bg-yellow-500" },
+  { id: "6", name: "Indie", color: "bg-green-500" },
+  { id: "7", name: "Classical", color: "bg-orange-500" },
+  { id: "8", name: "R&B", color: "bg-indigo-500" },
+  { id: "9", name: "Lo-fi", color: "bg-teal-500" },
+  { id: "10", name: "Metal", color: "bg-gray-500" },
+];
+
+
 export default function ExplorePage() {
+
   return (
+
     <div className="p-10 space-y-8">
+
       <Header />
 
       <HeroSection
@@ -68,36 +88,48 @@ export default function ExplorePage() {
         imageUrl="/artists/artist1.jpg"
       />
 
-      {/* DASHBOARD GRID */}
       <div className="grid grid-cols-[minmax(0,2fr)_1fr] gap-6 items-start">
-        {/* LEFT SIDE */}
+
         <div className="space-y-6">
-          <TopArtistsSection artists={artists} />
 
-          {/* genres + charts */}
+          <ErrorBoundary>
+            <TopArtistsSection artists={artists} />
+          </ErrorBoundary>
+
           <div className="grid grid-cols-2 gap-6">
-            <GenresSection />
 
-            <TopChartsSection />
+            <ErrorBoundary>
+              <GenresSection genres={genres} />
+            </ErrorBoundary>
+
+            <ErrorBoundary>
+              <TopChartsSection />
+            </ErrorBoundary>
+
           </div>
+
         </div>
 
-        {/* RIGHT SIDE */}
-        {/* <PlayerCard /> */}
-        <PlayerCard
-          song={{
-            id: "1",
-            title: "Butterfly Effect",
-            artist: "Travis Scott",
+        <ErrorBoundary>
 
-            imageUrl: "/artists/main.jpg",
+          <PlayerCard
+            song={{
+              id: "1",
+              title: "Butterfly Effect",
+              artist: "Travis Scott",
+              imageUrl: "/artists/main.jpg",
+              duration: 245,
+              currentTime: 102,
+            }}
+            isPlaying={false}
+          />
 
-            duration: 245,
-            currentTime: 102,
-          }}
-          isPlaying={false}
-        />
+        </ErrorBoundary>
+
       </div>
+
     </div>
+
   );
+
 }
