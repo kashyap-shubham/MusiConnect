@@ -112,7 +112,7 @@ export default function GenresSection({ genres }: Props) {
           onScroll={checkScroll}
 
           className={cn(
-            "grid grid-cols-2 gap-3 pr-6 h-[300px]",
+            "grid grid-cols-2 gap-3 pr-6 h-75",
 
             expanded
               ? "overflow-y-auto scrollbar-hide"

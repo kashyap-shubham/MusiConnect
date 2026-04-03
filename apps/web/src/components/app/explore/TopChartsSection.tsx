@@ -115,7 +115,7 @@ export default function TopChartsSection({ songs }: Props) {
           onScroll={checkScroll}
 
           className={cn(
-            "space-y-1 pr-6 h-[300px]",
+            "space-y-1 pr-6 h-75",
 
             expanded
               ? "overflow-y-auto scrollbar-hide"
