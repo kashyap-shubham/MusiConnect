@@ -1,14 +1,15 @@
 "use client";
 
-
 interface Props {
-  title: string
-  onSeeAll?: () => void
+  title: string;
+  actionLabel?: string;
+  onAction?: () => void;
 }
 
 export default function SectionHeader({
   title,
-  onSeeAll
+  actionLabel,
+  onAction,
 }: Props) {
 
   return (
@@ -19,17 +20,21 @@ export default function SectionHeader({
         {title}
       </h2>
 
-      <button
-        onClick={onSeeAll}
-        className="
-          text-sm
-          text-neutral-400
-          hover:text-white
-          transition
-        "
-      >
-        See all
-      </button>
+      {actionLabel && (
+
+        <button
+          onClick={onAction}
+          className="
+            text-sm
+            text-neutral-400
+            hover:text-white
+            transition
+          "
+        >
+          {actionLabel}
+        </button>
+
+      )}
 
     </div>
 

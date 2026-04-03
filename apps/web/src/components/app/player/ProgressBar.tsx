@@ -34,7 +34,7 @@ export default function ProgressBar({
 
     <div className="space-y-2">
 
-      <div className="relative h-[3px] bg-neutral-700 rounded">
+      <div className="relative h-0.75 bg-neutral-700 rounded">
 
         <div
           className="

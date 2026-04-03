@@ -13,7 +13,7 @@ interface Props {
   artist: Artist
 }
 
-export default function ArtistCard({
+export default function ArtistsCard({
   artist
 }: Props) {
 
