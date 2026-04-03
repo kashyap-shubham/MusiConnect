@@ -58,12 +58,6 @@ export default function Sidebar({ playlists }: SidebarProps) {
       },
 
       {
-        label: "Albums",
-        href: "/library/albums",
-        icon: Disc3
-      },
-
-      {
         label: "Favourites",
         href: "/liked",
         icon: Heart
@@ -173,7 +167,7 @@ export default function Sidebar({ playlists }: SidebarProps) {
                 
                 <Link 
                   key={playlist.id}
-                  href={`/playlists/${playlist.id}`}
+                  href={`/playlist/${playlist.id}`}
                   className="block text-white/70 hover:text-white"
                   >
                     {playlist.name}
