@@ -4,6 +4,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Compass, LayoutGrid, Disc3, Mic2, Clock, Heart, Plus } from "lucide-react"
 import cn from "@/lib/cn"
+import { useState } from "react"
+import CreatePlaylistModal from "./CreatePlaylistModal"
 
 
 type Playlist = {
@@ -16,9 +18,34 @@ type SidebarProps = {
 }
 
 
-export default function Sidebar({ playlists }: SidebarProps) {
+export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
 
-    const pathname = usePathname()
+
+    const [playlists, setPlaylists] = useState(initialPlaylists);
+
+    const [openModal, setOpenModal] = useState(false);
+
+    const pathname = usePathname();
+
+    function addPlaylist(name: string) {
+
+      const newPlaylist = {
+
+        id: crypto.randomUUID(),
+
+        name,
+
+      }
+
+      setPlaylists(prev => [
+
+        newPlaylist,
+        ...prev
+
+      ])
+
+    }
+
 
     const menuItems = [
 
@@ -149,13 +176,29 @@ export default function Sidebar({ playlists }: SidebarProps) {
         <div className="flex-1 flex flex-col">
           <p className="text-xs text-white/40 mb-4">PLAYLISTS</p>
 
-          <Link
+          {/* <Link
             href="/playlists/create"
             className="flex items-center gap-3 text-sm text-white/70 hover:text-white"
           >
             <Plus size={18} />
             Create New
-          </Link>
+          </Link> */}
+
+          <button
+            onClick={() => setOpenModal(true)}
+
+            className="
+              flex items-center gap-3
+              text-sm
+              text-white/70
+              hover:text-white">
+
+            <Plus size={18} />
+
+            Create New
+
+          </button>
+  
 
           <div className="mt-4 space-y-2 overflow-y-auto text-sm text-white/70">
 
@@ -178,6 +221,17 @@ export default function Sidebar({ playlists }: SidebarProps) {
             
           </div>
         </div>
+
+        {/* modal */}
+        <CreatePlaylistModal
+
+          open={openModal}
+
+          onClose={() => setOpenModal(false)}
+
+          onCreate={addPlaylist}
+
+        />
       </div>
     );
       
