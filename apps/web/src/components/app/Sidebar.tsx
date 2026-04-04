@@ -6,6 +6,7 @@ import { Compass, LayoutGrid, Disc3, Mic2, Clock, Heart, Plus } from "lucide-rea
 import cn from "@/lib/cn"
 import { useState } from "react"
 import CreatePlaylistModal from "./CreatePlaylistModal"
+import PlaylistMenu from "./PlaylistMenu"
 
 
 type Playlist = {
@@ -206,17 +207,105 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
 
               <p className="text-white/40 text-xs"> No Playlists yet</p>
             ) : (
-              playlists.map((playlist) => (
-                
-                <Link 
-                  key={playlist.id}
-                  href={`/playlist/${playlist.id}`}
-                  className="block text-white/70 hover:text-white"
-                  >
-                    {playlist.name}
+                <div className="mt-4 space-y-2">
 
-                  </Link>
-              ))
+                {playlists.map((playlist) => (
+
+                  <div
+                    key={playlist.id}
+
+                    className="
+                      flex
+                      items-center
+                      justify-between
+
+                      px-1
+
+                      hover:bg-white/5
+
+                      rounded-md
+
+                      group
+                    "
+                  >
+
+                    <Link
+
+                      href={`/playlist/${playlist.id}`}
+
+                      className="
+                        flex-1
+
+                        truncate
+
+                        py-1
+                      "
+                    >
+
+                      {playlist.name}
+
+                    </Link>
+
+
+
+                    <PlaylistMenu
+
+                      onRename={() => {
+
+                        const newName =
+                          prompt("Rename playlist")
+
+                        if (!newName) return
+
+                        setPlaylists(prev =>
+                          prev.map(p =>
+
+                            p.id === playlist.id
+
+                              ? {
+                                  ...p,
+                                  name: newName
+                                }
+
+                              : p
+
+                          )
+
+                        )
+
+                      }}
+
+
+                      onDelete={() => {
+
+                        setPlaylists(prev =>
+                          prev.filter(p =>
+
+                            p.id !== playlist.id
+
+                          )
+
+                        )
+
+                      }}
+
+
+                      onFavourite={() => {
+
+                        console.log(
+                          "favourite playlist",
+                          playlist.id
+                        )
+
+                      }}
+
+                    />
+
+                  </div>
+
+                ))}
+
+              </div>
             )}
             
           </div>
