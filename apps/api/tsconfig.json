@@ -4,6 +4,7 @@
     "rootDir": ".",
     "outDir": "./dist",
     "baseUrl": "./src",
+    "ignoreDeprecations": "6.0",
     "types": ["node"],
     "paths": {
       "@/*": ["*"]
