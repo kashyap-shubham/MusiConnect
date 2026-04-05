@@ -9,12 +9,12 @@ export default function AppLayout({
 }) {
 
     // temporary static playlists
-    // const playlist = [ 
-    //     {
-    //         id: 1,
-    //         name: "Flow"
-    //     }
-    // ]
+    const playlist = [ 
+        {
+            id: "1",
+            name: "Flow"
+        }
+    ]
 
     return (
 
@@ -23,7 +23,7 @@ export default function AppLayout({
         {/* SIDEBAR */}
         <aside className="w-64 border-r border-white/10">
 
-            <Sidebar playlists={[]} />
+            <Sidebar playlists={playlist} />
 
         </aside>
 
