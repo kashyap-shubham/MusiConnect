@@ -19,6 +19,7 @@ import PlaylistMenu from "./PlaylistMenu";
 type Playlist = {
   id: string;
   name: string;
+  userId: string;
 };
 
 type SidebarProps = {
@@ -35,8 +36,8 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
   function addPlaylist(name: string) {
     const newPlaylist = {
       id: crypto.randomUUID(),
-
       name,
+      userId: "",
     };
 
     setPlaylists((prev) => [newPlaylist, ...prev]);
