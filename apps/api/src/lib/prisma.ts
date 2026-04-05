@@ -20,3 +20,5 @@ export const prisma =
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;
 }
+
+// todo: add health check routes to check connection string of db and everthing is working properly

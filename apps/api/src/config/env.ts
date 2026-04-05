@@ -8,6 +8,8 @@ const envSchema = z.object({
 
     DATABASE_URL: z.string().min(1),
 
+    FRONTEND_URL: z.string().min(1),
+
     CDN_URL: z.url(),
 
     GOOGLE_CLIENT_ID: z.string().min(1),
