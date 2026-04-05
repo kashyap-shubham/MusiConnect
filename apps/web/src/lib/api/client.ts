@@ -17,14 +17,16 @@ export async function api<T>(
             },
 
             ...options,
-        }
-    )
+        },
+    );
 
-    if (!res.ok) {
-        throw new Error(`API Error: ${res.status}`);
+    const result = await res.json();
+
+    if (!res.ok || result.success === false) {
+      throw new Error(result.message || `API Error: ${res.status}`);
     }
 
-    return res.json();
+    return result.data;
 }
 
 // todo: use same of types for error response in backend and forntend make a package
