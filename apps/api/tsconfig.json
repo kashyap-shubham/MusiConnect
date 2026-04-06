@@ -3,10 +3,9 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "./dist",
-    "baseUrl": "./src",
     "types": ["node"],
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src", "prisma", "prisma.config.ts"]
