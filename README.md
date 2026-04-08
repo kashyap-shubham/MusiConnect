@@ -1,135 +1,539 @@
-# Turborepo starter
+# MusiConnect
 
-This Turborepo starter is maintained by the Turborepo core team.
+Real-time shared music listening platform where users can listen together in synchronized sessions via invite codes.
 
-## Using this example
+Built with a scalable full-stack architecture using Turborepo.
 
-Run the following command:
+MusiConnect allows users to explore music, create playlists, and listen together in synchronized sessions using a shared session code.
 
-```sh
-npx create-turbo@latest
+This project demonstrates engineering fundamentals including clean backend architecture, type-safe APIs, scalable monorepo structure, and real-time system design thinking.
+
+---
+
+# Demo Concept
+
+Users can:
+
+* discover songs, artists, albums
+* create and manage playlists
+* stream audio from CDN
+* listen together in real-time group sessions
+* share session codes with friends
+
+---
+
+# Tech Stack
+
+## Monorepo
+
+Turborepo
+
+Shared types between frontend and backend
+
+Consistent API contracts
+
+---
+
+## Frontend
+
+Next.js (App Router)
+
+TypeScript
+
+Tailwind CSS v4
+
+Motion (Framer Motion v12)
+
+Lucide icons
+
+Responsive UI
+
+Reusable component architecture
+
+---
+
+## Backend
+
+Express.js
+
+TypeScript
+
+Prisma ORM
+
+PostgreSQL
+
+Zod validation
+
+Clean Architecture pattern
+
+Global error handler
+
+Async handler wrapper
+
+Repository pattern
+
+---
+
+## Infrastructure
+
+Docker
+
+PostgreSQL container
+
+CDN-ready audio storage
+
+Environment-based configuration
+
+Scalable architecture design
+
+---
+
+# System Design Overview
+
+High level architecture:
+
+Client → Next.js frontend → Express API → PostgreSQL database
+↓
+CDN storage
+
+Future realtime layer:
+
+Client → WebSocket → Server → broadcast → session users
+
+---
+
+# Key Engineering Decisions
+
+Monorepo architecture using Turborepo
+
+Clean Architecture backend
+
+Type-safe contracts across stack
+
+Repository pattern for database access
+
+Service layer for business logic
+
+Controller layer for request handling
+
+Zod runtime validation
+
+Prisma typed queries
+
+Scalable folder structure
+
+Environment-based configuration
+
+Prepared for realtime features
+
+---
+
+# Monorepo Structure
+
+```
+musiconnect/
+
+apps/
+web/                     → Next.js frontend
+api/                     → Express backend
+
+packages/
+types/                   → shared types
+
+docker/
+docker-compose.yml
+
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+# Backend Architecture
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+Each module follows consistent structure:
 
 ```
-cd my-turborepo
+modules/
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+song/
+controller/
+service/
+repository/
+schema/
+routes/
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
+artist/
+controller/
+service/
+repository/
+schema/
+routes/
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+album/
+playlist/
+user/
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+shared/
+middleware/
+config/
+utils/
+errors/
 
 ```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+---
+
+# Database Schema
+
+Core entities:
+
+User
+
+Artist
+
+Album
+
+Song
+
+Playlist
+
+PlaylistSong (join table)
+
+Relationships:
+
+Artist → Albums → Songs
+
+User → Playlists
+
+Playlist → Songs (many-to-many)
+
+Design decisions:
+
+Normalized relational schema
+
+Clear entity boundaries
+
+Efficient joins
+
+Scalable indexing support
+
+---
+
+# Features
+
+## Core Features
+
+Browse songs
+
+Browse artists
+
+Browse albums
+
+Create playlists
+
+Add songs to playlist
+
+Remove songs from playlist
+
+View artist details
+
+View album details
+
+Explore catalog
+
+Global music player UI
+
+Type-safe API integration
+
+Reusable UI components
+
+---
+
+## Realtime Features (planned)
+
+Create listening session
+
+Join session via code
+
+Host controlled playback
+
+Synced play/pause
+
+Synced seek
+
+Synced track change
+
+Room-based socket architecture
+
+Low latency state synchronization
+
+---
+
+# Installation
+
+## Clone repository
+
+```
+git clone <repo_url>
+
+cd musiconnect
 ```
 
-### Remote Caching
+---
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+# Running Locally (without Docker)
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+Install dependencies:
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+pnpm install
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+Create PostgreSQL database:
 
 ```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+musiconnect_db
 ```
 
-## Useful Links
+Run Prisma migrations:
 
-Learn more about the power of Turborepo:
+```
+cd apps/api
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+pnpm prisma migrate dev
+```
+
+Start backend:
+
+```
+pnpm dev
+```
+
+Start frontend:
+
+```
+cd ../web
+
+pnpm dev
+```
+
+App runs on:
+
+```
+http://localhost:3000
+```
+
+API runs on:
+
+```
+http://localhost:5000
+```
+
+---
+
+# Running with Docker
+
+Start services:
+
+```
+docker compose up --build
+```
+
+Services:
+
+postgres
+
+api
+
+web
+
+Stop services:
+
+```
+docker compose down
+```
+
+---
+
+# API Overview
+
+Songs
+
+GET /api/songs
+
+GET /api/songs/:id
+
+POST /api/songs
+
+PATCH /api/songs/:id
+
+DELETE /api/songs/:id
+
+---
+
+Artists
+
+GET /api/artists
+
+GET /api/artists/:id
+
+GET /api/artists/:id/songs
+
+GET /api/artists/:id/albums
+
+POST /api/artists
+
+---
+
+Albums
+
+GET /api/albums
+
+GET /api/albums/:id
+
+GET /api/albums/:id/songs
+
+POST /api/albums
+
+---
+
+Playlists
+
+POST /api/playlists
+
+GET /api/playlists
+
+GET /api/playlists/:id
+
+POST /api/playlists/:id/songs
+
+DELETE /api/playlists/:playlistId/songs/:songId
+
+---
+
+# Shared Types
+
+packages/types ensures consistent API contracts between frontend and backend.
+
+Benefits:
+
+type safety across stack
+
+reduces integration bugs
+
+single source of truth
+
+improves maintainability
+
+---
+
+# Error Handling Strategy
+
+Global error middleware
+
+Consistent response format
+
+asyncHandler wrapper
+
+centralized error utilities
+
+predictable API behaviour
+
+---
+
+# Scalability Considerations
+
+Stateless backend services
+
+CDN based audio delivery
+
+room-based realtime architecture
+
+database indexing support
+
+modular service architecture
+
+ready for horizontal scaling
+
+supports caching layer integration
+
+supports queue-based async jobs
+
+---
+
+# Future Improvements
+
+Google OAuth authentication
+
+JWT access token + refresh token
+
+WebSocket realtime sync implementation
+
+Redis caching layer
+
+Search functionality
+
+Pagination support
+
+Queue system for upcoming songs
+
+Audio streaming optimization
+
+CI/CD pipeline
+
+Unit tests
+
+Integration tests
+
+Load testing
+
+Kubernetes deployment
+
+rate limiting middleware
+
+observability (logs + metrics)
+
+---
+
+# Why this project is valuable for engineering portfolio
+
+Demonstrates real-world backend architecture
+
+Shows system design thinking
+
+Uses scalable monorepo structure
+
+Implements type-safe contracts
+
+Follows production-ready coding patterns
+
+Shows ability to design realtime systems
+
+Demonstrates strong separation of concerns
+
+Uses modern stack used in startups
+
+Shows ability to structure large codebases
+
+Demonstrates practical full-stack skills
+
+---
+
+# Author
+
+Shubham Kashyap
+
+Software engineer focused on:
+
+scalable backend systems
+
+system design
+
+realtime applications
+
+type-safe full-stack architecture
+
+---
+
+# License
+
+MIT
