@@ -7,6 +7,9 @@
   "exports": {
     ".": "./src/index.ts"
   },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*"
+  },
   "license": "ISC",
   "packageManager": "pnpm@10.30.3"
 }
