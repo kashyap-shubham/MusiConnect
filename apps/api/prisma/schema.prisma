@@ -15,6 +15,7 @@ model User {
   googleId  String     @unique
   playlists Playlist[]
   createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Artist {
@@ -24,12 +25,15 @@ model Artist {
   albums    Album[]
   songs     SongArtist[]
   createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([name])
 }
 
 model Album {
-  id            String   @id @default(uuid())
+  id            String    @id @default(uuid())
   title         String
-  coverImageKey String?
+  imageKey      String?
   releaseDate   DateTime
   artistId      String
 
@@ -38,6 +42,9 @@ model Album {
   songs Song[]
 
   createdAt DateTime @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([artistId])
 }
 
 model Song {
@@ -46,6 +53,7 @@ model Song {
   duration  Int
   audioKey  String
   albumId   String?
+  imageKey  String?
 
   album Album? @relation(fields: [albumId], references: [id])
 
@@ -54,6 +62,10 @@ model Song {
   playlists PlaylistSong[]
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([title])
+  @@index([albumId])
 }
 
 model SongArtist {
@@ -70,12 +82,16 @@ model Playlist {
   id        String         @id @default(uuid())
   name      String
   userId    String
+  isPublic  Boolean        @default(false)
 
   user  User @relation(fields: [userId], references: [id])
 
   songs PlaylistSong[]
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }
 
 model PlaylistSong {
