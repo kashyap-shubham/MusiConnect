@@ -1,6 +1,6 @@
 export interface AlbumDTO {
     id: string;
-    titile: string;
+    title: string;
     artistId: string;
     imageUrl: string;
     releaseYear?: number;
