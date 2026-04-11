@@ -13,49 +13,37 @@ import { errorHandler } from "./errors/errorHandler";
 
 const app: Application = express();
 
-/*
-| Trust Proxy
-
+/* Trust Proxy
 | Required when deploying behind reverse proxy (nginx, vercel, railway, etc.)
 | Ensures secure cookies work correctly in production
 */
 app.set("trust proxy", 1);
 
-/*
-| Security Headers
-
+/* Security Headers
 | Adds HTTP security headers to protect against:
 | XSS, clickjacking, MIME sniffing, etc.
 */
 app.use(helmet());
 
-/*
-| Compression
-
+/* Compression
 | Compresses HTTP responses (gzip) to improve performance
 */
 app.use(compression());
 
-/*
-| Request Logging
-
+/* Request Logging
 | Logs incoming requests (method, url, status)
 | Useful for debugging and monitoring
 */
 app.use(morgan("dev"));
 
-/*
-| Body Parsers
-
+/* Body Parsers
 | Parses incoming request body
 | Limit size to prevent large payload abuse
 */
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-/*
-| CORS Configuration
-
+/* CORS Configuration
 | Allows frontend to communicate with backend
 | credentials:true required for cookies (session auth)
 */
@@ -66,9 +54,7 @@ app.use(
   }),
 );
 
-/*
-| Rate Limiting
-
+/* Rate Limiting
 | Prevents abuse (bruteforce, spam, DDOS small scale)
 | Limits number of requests per IP
 */
@@ -78,11 +64,9 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again later.",
 });
 
-app.use(limiter);
+app.use(limiter);  // Todo : (optional) we may use individual rate limiter of each api
 
-/*
-| Session Configuration
-
+/* Session Configuration
 | Required for Passport Google OAuth
 | Stores user session securely in cookies
 */
@@ -99,24 +83,18 @@ app.use(
   }),
 );
 
-/*
-| Passport Authentication
-
+/* Passport Authentication
 | Initializes passport and connects it with session
 */
 app.use(passport.initialize());
 app.use(passport.session());
 
-/*
-| API Routes
-
+/* API Routes
 | All application routes prefixed with /api
 */
 app.use("/api", routes);
 
-/*
-| Global Error Handler
-
+/* Global Error Handler
 | Handles all thrown errors in one place
 */
 app.use(errorHandler);

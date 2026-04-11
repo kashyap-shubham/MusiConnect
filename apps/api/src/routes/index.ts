@@ -1,19 +1,26 @@
-import authRouter from "@/auth/auth.routes";
-import albumRouter from "@/modules/albums/albums.routes";
-import artistRouter from "@/modules/artists/artists.routes";
-import playlistRouter from "@/modules/playlists/playlists.routes";
-import songRouter from "@/modules/songs/songs.routes";
-import userRouter from "@/modules/users/users.routes";
 import { Router } from "express";
 
+import authRouter from "@/auth/auth.routes";
+import userRouter from "@/modules/users/users.routes";
+
+import artistRouter from "@/modules/artists/artists.routes";
+import albumRouter from "@/modules/albums/albums.routes";
+import songRouter from "@/modules/songs/songs.routes";
+
+import playlistRouter from "@/modules/playlists/playlists.routes";
 
 const router: Router = Router();
 
-router.use("/songs", songRouter);
+// Auth & User Routes
+router.use("/auth", authRouter);
+router.use("/users", userRouter);
+
+// Music Catalog Routes
 router.use("/artists", artistRouter);
 router.use("/albums", albumRouter);
+router.use("/songs", songRouter);
+
+// User Library Routes
 router.use("/playlists", playlistRouter);
-router.use("/users", userRouter);
-router.use("/auth", authRouter);
 
 export default router;
