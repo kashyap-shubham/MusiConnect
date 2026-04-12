@@ -15,8 +15,8 @@ export class UserService {
   }
 
   async getUserPlaylists(userId: string) {
-    const playlist = await this.userRepository.getUserPlaylists(userId);
+    const playlists = await this.userRepository.getUserPlaylists(userId);
 
-    return playlist;
+    return playlists;
   }
 }
