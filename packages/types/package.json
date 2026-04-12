@@ -11,5 +11,5 @@
     "@repo/typescript-config": "workspace:*"
   },
   "license": "ISC",
-  "packageManager": "pnpm@10.30.3"
+  "packageManager": "pnpm@10.33.0"
 }

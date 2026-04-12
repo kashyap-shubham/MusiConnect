@@ -5,11 +5,11 @@ import passport from "@/auth/passport";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import compression from "compression";
-import morgan from "morgan";
 
 import routes from "./routes";
 import { env } from "./config/env";
 import { errorHandler } from "./errors/errorHandler";
+import { httpLogger } from "@repo/logger";
 
 const app: Application = express();
 
@@ -34,7 +34,7 @@ app.use(compression());
 | Logs incoming requests (method, url, status)
 | Useful for debugging and monitoring
 */
-app.use(morgan("dev"));
+app.use(httpLogger);
 
 /* Body Parsers
 | Parses incoming request body

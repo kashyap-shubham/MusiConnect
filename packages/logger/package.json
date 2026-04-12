@@ -1,0 +1,19 @@
+{
+  "name": "@repo/logger",
+  "version": "1.0.0",
+  "description": "logger for application",
+  "private": true,
+  "types": "src/index.js",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0",
+  "dependencies": {
+    "pino": "^10.3.1",
+    "pino-http": "^11.0.0"
+  },
+  "devDependencies": {
+    "@repo/typescript-config": "workspace:*"
+  }
+}
