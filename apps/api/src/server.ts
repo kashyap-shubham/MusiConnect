@@ -25,6 +25,17 @@ app.set("trust proxy", 1);
 */
 app.use(helmet());
 
+/* CORS Configuration
+| Allows frontend to communicate with backend
+| credentials:true required for cookies (session auth)
+*/
+app.use(
+  cors({
+    origin: env.FRONTEND_URL,
+    credentials: true,
+  }),
+);
+
 /* Compression
 | Compresses HTTP responses (gzip) to improve performance
 */
@@ -43,16 +54,6 @@ app.use(httpLogger);
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true }));
 
-/* CORS Configuration
-| Allows frontend to communicate with backend
-| credentials:true required for cookies (session auth)
-*/
-app.use(
-  cors({
-    origin: env.FRONTEND_URL,
-    credentials: true,
-  }),
-);
 
 /* Rate Limiting
 | Prevents abuse (bruteforce, spam, DDOS small scale)
