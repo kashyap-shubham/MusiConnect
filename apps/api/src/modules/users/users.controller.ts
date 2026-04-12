@@ -2,44 +2,42 @@ import { Request, Response } from "express";
 import { UserService } from "./users.service";
 import { ApiError } from "@/errors/ApiError";
 
-export interface AuthRequest extends Request {
-  user: {
-    id: string;
-  };
-}
-
 export class UserController {
-    private userService: UserService;
 
-    constructor() {
-        this.userService = new UserService();
+  private userService: UserService;
+
+  constructor() {
+    this.userService = new UserService();
+  }
+
+  getCurrentUser = async (req: Request, res: Response) => {
+
+    const userId = req.user!.id;
+
+    const user = await this.userService.getUserById(userId);
+
+    if (!user) {
+      throw new ApiError(404, "User not found");
     }
 
-    getCurrentUser = async (req: AuthRequest, res: Response) => {
-        const { id } = req.user;
+    return res.status(200).json({
+      success: true,
+      data: user
+    });
 
-        const user = await this.userService.getUserById(id);
+  };
 
-        if (!user) {
-            throw new ApiError(404, "User Not Found");
-        }
+  getCurrentUserPlaylists = async (req: Request, res: Response) => {
 
-        return res.status(200).json({
-            success: true,
-            data: user,
-        });
-    }
+    const userId = req.user!.id;
 
-    getUserPlaylists = async (req: Request, res: Response) => {
-        const { id } = req.params as { id: string };
+    const playlists = await this.userService.getUserPlaylists(userId);
 
-        const playlist = await this.userService.getUserPlaylists(id);
+    return res.status(200).json({
+      success: true,
+      data: playlists
+    });
 
+  };
 
-        return res.status(200).json({
-            success: true,
-            data: playlist
-        });
-    }
-    
 }

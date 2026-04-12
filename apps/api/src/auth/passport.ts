@@ -3,7 +3,7 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
 import { prisma } from "@/lib/prisma";
 import { env } from "@/config/env";
-import { AuthUser } from "@/types/auth.type";
+import { AuthUser } from "@/types/auth.types";
 
 /*
 |--------------------------------------------------------------------------

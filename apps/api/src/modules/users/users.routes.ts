@@ -9,9 +9,9 @@ const userRouter: Router = Router();
 const controller = new UserController();
 
 
-userRouter.get("/me", requireAuth, asyncHandler(controller.getCurrentUser)); //todo => need to refractor type from any to global typesafe
+userRouter.get("/me", requireAuth, asyncHandler(controller.getCurrentUser));
 
-userRouter.get("/:id/playlists", requireAuth, asyncHandler(controller.getUserPlaylists));
+userRouter.get("/me/playlists", requireAuth, asyncHandler(controller.getCurrentUserPlaylists));
 
 
 export default userRouter;

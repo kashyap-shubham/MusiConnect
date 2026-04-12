@@ -45,7 +45,7 @@ app.use(compression());
 | Logs incoming requests (method, url, status)
 | Useful for debugging and monitoring
 */
-app.use(httpLogger);
+app.use(httpLogger);  // Todo: right now is printed on the screen but in production change the strategy to file or cloud
 
 /* Body Parsers
 | Parses incoming request body
