@@ -1,5 +1,10 @@
 import { Router } from "express";
 import passport from "./passport";
+import { env } from "@/config/env";
+import { requireAuth } from "@/middleware/requireAuth";
+import { asyncHandler } from "@/utils/asyncHandler";
+import { success } from "zod";
+import { ApiError } from "@/errors/ApiError";
 
 const authRouter:Router = Router();
 
@@ -19,50 +24,58 @@ authRouter.get(
 authRouter.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "/login",
+    failureRedirect: `${env.FRONTEND_URL}/login`,
   }),
-  (req, res) => {
-    res.redirect("http://localhost:3000/songs");
+  (_req, res) => {
+    res.redirect(`${env.FRONTEND_URL}/explore`);
   }
 );
 
 /**
  * Get current user
  */
-authRouter.get("/me", (req, res) => {
-  if (!req.user) {
-    return res.status(401).json({
-      success: false,
-      message: "Not authenticated",
+authRouter.get(
+  "/me",
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    res.json({
+      success: true,
+      data: req.user,
     });
-  }
-
-  res.json({
-    success: true,
-    data: req.user,
-  });
-});
+  })
+);
 
 /**
  * Logout
  */
-authRouter.post("/logout", (req, res) => {
-  req.logout((err) => {
-    if (err) {
-      return res.status(500).json({
-        success: false,
-        message: "Logout failed",
-      });
-    }
-
-    req.session.destroy(() => {
-      res.clearCookie("connect.sid");
-      res.json({
-        success: true,
-        message: "Logged out",
+authRouter.post(
+  "/logout",
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    await new Promise<void>((resolve, reject) => {
+      req.logout((err) => {
+        if (err) return reject(err);
+        resolve();
       });
     });
-  });
-});
+
+    req.session.destroy((err) => {
+      if (err) {
+        throw new ApiError(401, err.message);
+      }
+      res.clearCookie("connect.sid", {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: env.NODE_ENV === "production",
+      });
+
+      res.json({
+        success: true,
+        data: null,
+      });
+    });
+
+  })
+);
 
 export default authRouter;

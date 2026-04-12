@@ -6,16 +6,9 @@ export function requireAuth(
   _res: Response,
   next: NextFunction
 ) {
-
   if (!req.user) {
-    return next(
-      new ApiError(
-        401,
-        "Unauthorized - Please login first"
-      )
-    );
+    return next(new ApiError(401, "Unauthorized - Please login first"));
   }
 
   next();
-
 }
