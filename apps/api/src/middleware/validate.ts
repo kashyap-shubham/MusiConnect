@@ -10,16 +10,14 @@ type RequestSchema = z.ZodType<{
 
 class RequestValidator {
 
-  validate(schema: RequestSchema) {
+  validate = (schema: RequestSchema) => {
 
     return (req: Request, res: Response, next: NextFunction): void => {
 
       const result = schema.safeParse({
-
         body: req.body,
         query: req.query,
         params: req.params
-
       });
 
       if (!result.success) {
@@ -28,34 +26,24 @@ class RequestValidator {
           .map(issue => issue.message)
           .join(", ");
 
-        return next(
-          new ApiError(400, message)
-        );
+        return next(new ApiError(400, message));
 
       }
 
       const data = result.data;
 
-      if (data.body !== undefined) {
-        req.body = data.body;
-      }
-
-      if (data.query !== undefined && typeof data.query === "object") {
-        req.query = data.query as typeof req.query;
-      }
-
-      if (data.params !== undefined && typeof data.params === "object") {
-        req.params = data.params as typeof req.params;
-      }
+      if (data.body !== undefined) req.body = data.body;
+      if (data.query !== undefined) req.query = data.query as typeof req.query;
+      if (data.params !== undefined) req.params = data.params as typeof req.params;
 
       next();
 
     };
 
-  }
+  };
 
 }
 
 const validator = new RequestValidator();
 
-export const validate = validator.validate.bind(validator);
+export const validate = validator.validate;
