@@ -1,22 +1,27 @@
 import { z } from "zod";
 
 export const createAlbumSchema = z.object({
-  title: z
-    .string()
-    .min(1, "Album title is required")
-    .max(255),
 
-  artistId: z
-    .string(),
-    // todo => in production enable this .uuid("Invalid artist id"),
+  body: z.object({
 
-  releaseDate: z
-    .iso
-    .datetime(),
+    title: z
+      .string()
+      .min(1, "Album title required")
+      .max(255),
 
-  coverImageKey: z
-    .string()
-    .optional()
+    imageKey: z
+      .string()
+      .optional(),
+
+    releaseDate: z
+      .iso.datetime("Invalid release date"),
+
+    artistId: z
+      .uuid("Invalid artist id")
+
+  })
+
 });
 
-export type CreateAlbumInput = z.infer<typeof createAlbumSchema>;
+
+export type CreateAlbumInput = z.infer<typeof createAlbumSchema>["body"];
