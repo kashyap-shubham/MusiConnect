@@ -1,80 +1,156 @@
-import { prisma } from "../../lib/prisma";
-import { Prisma } from "../../generated/prisma";
+import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma";
+
 import { CreateSongInput } from "./schemas/create-song.schema";
 import { UpdateSongInput } from "./schemas/update-song.schema";
 
+
 export const songWithRelations = Prisma.validator<Prisma.SongDefaultArgs>()({
-  include: {
-    album: true,
-    artists: {
-      include: {
-        artist: true,
-      },
-    },
-  },
-});
+
+    include: {
+
+      album: true,
+
+      artists: {
+
+        include: {
+
+          artist: true
+
+        }
+
+      }
+
+    }
+
+  });
+
 
 export type SongWithRelations = Prisma.SongGetPayload<typeof songWithRelations>;
 
 export class SongRepository {
 
+
   async findAll(): Promise<SongWithRelations[]> {
-    return prisma.song.findMany(songWithRelations);
+
+    return prisma.song.findMany(
+      songWithRelations
+    );
+
   }
+
 
   async findById(id: string): Promise<SongWithRelations | null> {
+
     return prisma.song.findUnique({
+
       where: { id },
-      ...songWithRelations,
+
+      ...songWithRelations
+
     });
+
   }
+
 
   async create(data: CreateSongInput): Promise<SongWithRelations> {
+
     return prisma.song.create({
+
       data: {
+
         title: data.title,
+
         duration: data.duration,
-        albumId: data.albumId,
+
         audioKey: data.audioKey,
 
+        imageKey: data.imageKey,
+
+        albumId: data.albumId,
+
+
         artists: {
-          create: data.artistIds.map((artistId) => ({
-            artist: {
-              connect: { id: artistId },
-            },
-          })),
-        },
+
+          create: data.artistIds.map(
+
+            artistId => ({
+
+              artist: {
+
+                connect: { id: artistId }
+
+              }
+
+            })
+
+          )
+
+        }
+
       },
-      ...songWithRelations,
+
+      ...songWithRelations
+
     });
+
   }
 
+
   async update(id: string, data: UpdateSongInput): Promise<SongWithRelations> {
+
     const { artistIds, ...songData } = data;
 
     return prisma.song.update({
+
       where: { id },
+
       data: {
+
         ...songData,
 
-        ...(artistIds && {
+
+        ...(artistIds && artistIds.length > 0 && {
+
           artists: {
+
             deleteMany: {},
-            create: artistIds.map((artistId) => ({
-              artist: {
-                connect: { id: artistId },
-              },
-            })),
-          },
-        }),
+
+            create: artistIds.map(
+
+              artistId => ({
+
+                artist: {
+
+                  connect: { id: artistId }
+
+                }
+
+              })
+
+            )
+
+          }
+
+        })
+
       },
-      ...songWithRelations,
+
+      ...songWithRelations
+
     });
+
   }
 
+
   async delete(id: string) {
+
     return prisma.song.delete({
-      where: { id },
+
+      where: { id }
+
     });
+
   }
+
 }
