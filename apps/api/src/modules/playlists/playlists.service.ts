@@ -1,5 +1,6 @@
 import { PlaylistRepository } from "./playlists.repository";
 import type { CreatePlaylistInput } from "./schemas/create-playlist.schema";
+import { ApiError } from "@/errors/ApiError";
 
 export class PlaylistService {
 
@@ -9,30 +10,81 @@ export class PlaylistService {
     this.playlistRepository = new PlaylistRepository();
   }
 
-  async createPlaylist(data: CreatePlaylistInput) {
-    return this.playlistRepository.create(data);
+
+  async createPlaylist(
+    userId: string,
+    data: CreatePlaylistInput
+  ) {
+
+    return this.playlistRepository.create({
+      ...data,
+      userId
+    });
+
   }
+
 
   async getPlaylistById(id: string) {
+
     return this.playlistRepository.findById(id);
+
   }
+
 
   async getUserPlaylists(userId: string) {
+
     return this.playlistRepository.findByUserId(userId);
+
   }
 
-  async addSongToPlaylist(playlistId: string, songId: string) {
+
+  async addSongToPlaylist(
+    userId: string,
+    playlistId: string,
+    songId: string
+  ) {
+
+    const playlist =
+      await this.playlistRepository.findById(playlistId);
+
+    if (!playlist) {
+      throw new ApiError(404, "Playlist not found");
+    }
+
+    if (playlist.userId !== userId) {
+      throw new ApiError(403, "Not allowed to modify this playlist");
+    }
+
     return this.playlistRepository.addSongToPlaylist(
       playlistId,
       songId
     );
+
   }
 
-  async removeSongFromPlaylist(playlistId: string, songId: string) {
+
+  async removeSongFromPlaylist(
+    userId: string,
+    playlistId: string,
+    songId: string
+  ) {
+
+    const playlist =
+      await this.playlistRepository.findById(playlistId);
+
+    if (!playlist) {
+      throw new ApiError(404, "Playlist not found");
+    }
+
+    if (playlist.userId !== userId) {
+      throw new ApiError(403, "Not allowed to modify this playlist");
+    }
+
     return this.playlistRepository.removeSongFromPlaylist(
       playlistId,
       songId
     );
+
   }
 
 }
