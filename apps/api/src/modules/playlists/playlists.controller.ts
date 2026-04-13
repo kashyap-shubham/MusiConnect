@@ -104,4 +104,20 @@ export class PlaylistController {
 
   };
 
+  deletePlaylist = async (req: Request, res: Response) => {
+    const userId = req.user!.id;
+
+    const {playlistId} = req.params as {playlistId: string;};
+
+    await this.playlistService.deletePlaylist(
+      userId,
+      playlistId
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Playlist deleted Successfully"
+    });
+  };
+
 }

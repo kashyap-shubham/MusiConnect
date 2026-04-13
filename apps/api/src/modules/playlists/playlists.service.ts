@@ -87,4 +87,23 @@ export class PlaylistService {
 
   }
 
+
+  async deletePlaylist(
+    userId: string,
+    playlistId: string
+  ) {
+
+    const playlist = await this.playlistRepository.findById(playlistId);
+
+    if (!playlist) {
+      throw new ApiError(404, "Playlist Not found");
+    }
+
+    if (playlist.userId != userId) {
+      throw new ApiError(403, "Not allowed to delete this playlist");
+    }
+
+    return this.playlistRepository.delete(playlistId);
+  }
+
 }
