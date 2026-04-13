@@ -8,14 +8,16 @@ import { updateUserSchema } from "./schemas/update-user.schema";
 
 
 const userRouter: Router = Router();
-const controller = new UserController();
+const userController = new UserController();
 
+// get user information
+userRouter.get("/me", requireAuth, asyncHandler(userController.getCurrentUser));
 
-userRouter.get("/me", requireAuth, asyncHandler(controller.getCurrentUser));
+// get user playlists
+userRouter.get("/me/playlists", requireAuth, asyncHandler(userController.getCurrentUserPlaylists));
 
-userRouter.get("/me/playlists", requireAuth, asyncHandler(controller.getCurrentUserPlaylists));
-
-userRouter.patch("/me", requireAuth,validate(updateUserSchema), asyncHandler(controller.updateCurrentUser));
+// update user details
+userRouter.patch("/me", requireAuth, validate(updateUserSchema), asyncHandler(userController.updateCurrentUser));
 
 
 export default userRouter;

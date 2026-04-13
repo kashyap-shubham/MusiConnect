@@ -1,12 +1,48 @@
 import { z } from "zod";
 
 export const updateSongSchema = z.object({
-  title: z.string().min(1).optional(),
-  duration: z.number().int().positive().optional(),
-  albumId: z.uuid().optional().nullable(),
-  audioKey: z.string().optional(),
 
-  artistIds: z.array(z.uuid()).optional(),
+  params: z.object({
+
+    id: z
+      .uuid("Invalid song id")
+
+  }),
+
+  body: z.object({
+
+    title: z
+      .string()
+      .min(1)
+      .max(255)
+      .optional(),
+
+    duration: z
+      .number()
+      .int()
+      .positive()
+      .optional(),
+
+    audioKey: z
+      .string()
+      .optional(),
+
+    imageKey: z
+      .string()
+      .optional(),
+
+    albumId: z
+      .string()
+      .uuid()
+      .nullable()
+      .optional(),
+
+    artistIds: z
+      .array(
+        z.uuid()
+      )
+      .optional()
+
+  })
+
 });
-
-export type UpdateSongInput = z.infer<typeof updateSongSchema>;

@@ -1,19 +1,30 @@
 import { Router } from "express";
 import { SongsController } from "./songs.controller";
 import { asyncHandler } from "@/utils/asyncHandler";
+import { requireAuth } from "@/middleware/requireAuth";
+import { validate } from "@/middleware/validate";
+import { createSongSchema } from "./schemas/create-song.schema";
+import { updateSongSchema } from "./schemas/update-song.schema";
+import { songIdParamSchema } from "./schemas/song-param.schema";
 
 const songRouter:Router = Router();
-const Songcontroller = new SongsController();
+const songController = new SongsController();
 
 
-songRouter.get("/", asyncHandler(Songcontroller.getSongs.bind(Songcontroller)));
+// get all songs list
+songRouter.get("/", asyncHandler(songController.getSongs));
 
-songRouter.get("/:id", asyncHandler(Songcontroller.getSongById.bind(Songcontroller)));
+// get song by id
+songRouter.get("/:id", validate(songIdParamSchema), asyncHandler(songController.getSongById));
 
-songRouter.post("/", asyncHandler(Songcontroller.createSong.bind(Songcontroller)));
+// create song endpoint 
+songRouter.post("/", requireAuth, validate(createSongSchema), asyncHandler(songController.createSong));
 
-songRouter.patch("/:id", asyncHandler(Songcontroller.updateSong.bind(Songcontroller)));
+// update song metadata
+songRouter.patch("/:id", requireAuth, validate(updateSongSchema), asyncHandler(songController.updateSong));
 
-songRouter.delete("/:id", asyncHandler(Songcontroller.deleteSong.bind(Songcontroller)));
+// delete song and metadata
+songRouter.delete("/:id", requireAuth, validate(songIdParamSchema), asyncHandler(songController.deleteSong));
+
 
 export default songRouter;
