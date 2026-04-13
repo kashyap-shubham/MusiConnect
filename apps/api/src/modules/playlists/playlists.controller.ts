@@ -1,4 +1,4 @@
-import type { Request, Response } from "express";
+import { Request, Response } from "express";
 import { PlaylistService } from "./playlists.service";
 import { ApiError } from "@/errors/ApiError";
 

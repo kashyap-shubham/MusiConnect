@@ -1,83 +1,102 @@
 import { Request, Response } from "express";
 import { SongsService } from "./songs.service";
-import { createSongSchema } from "./schemas/create-song.schema";
-import { updateSongSchema } from "./schemas/update-song.schema";
 import { ApiError } from "@/errors/ApiError";
 
+
+type IdParam = {
+  id: string;
+};
+
 export class SongsController {
-  private service = new SongsService();
 
-  async getSongs(req: Request, res: Response) {
-    const songs = await this.service.getAllSongs();
+  private songService: SongsService;
 
-    return res.status(201).json({
-      success: true,
-      data: songs,
-    });
+  constructor() {
+    this.songService = new SongsService();
   }
+  
+  getSongs = async (_req: Request, res: Response) => {
 
-  async getSongById(req: Request, res: Response) {
-    // todo => here two db queries are done so later reduce it
-    const { id } = req.params as { id: string };
+    const songs = await this.songService.getAllSongs();
 
-    const song = await this.service.getSongById(id);
+    return res.status(200).json({
+
+      success: true,
+
+      data: songs
+
+    });
+
+  };
+
+
+  getSongById = async (req: Request, res: Response) => {
+
+    const { id } = req.params as IdParam;
+
+    const song = await this.songService.getSongById(id);
 
     if (!song) {
       throw new ApiError(404, "Song not found");
     }
 
-    return res.status(201).json({
+    return res.status(200).json({
+
       success: true,
-      data: song,
+
+      data: song
+
     });
-  }
 
-  async createSong(req: Request, res: Response) {
-    const data = createSongSchema.parse(req.body);
+  };
 
-    const song = await this.service.createSong(data);
 
-    return res.status(201).json({
-      success: true,
-      data: song,
-    });
-  }
+  createSong = async (req: Request, res: Response) => {
 
-  async updateSong(req: Request, res: Response) {
-    // todo => here two db queries are done so later reduce it
-    const { id } = req.params as { id: string };
-
-    const existingSong = await this.service.getSongById(id);
-
-    if (!existingSong) {
-      throw new ApiError(404, "Song not found");
-    }
-
-    const data = updateSongSchema.parse(req.body);
-
-    const song = await this.service.updateSong(id, data);
+    const song = await this.songService.createSong(req.body);
 
     return res.status(201).json({
+
       success: true,
-      data: song,
+
+      data: song
+
     });
-  }
 
-  async deleteSong(req: Request, res: Response) {
-    // todo => here two db queries are done so later reduce it
-    const { id } = req.params as { id: string };
+  };
 
-    const existingSong = await this.service.getSongById(id);
 
-    if (!existingSong) {
-      throw new ApiError(404, "Song not Found");
-    }
+  updateSong = async (req: Request, res: Response) => {
 
-    await this.service.deleteSong(id);
+    const { id } = req.params as IdParam;
 
-    return res.status(201).json({
+    const song = await this.songService.updateSong(id, req.body);
+
+    return res.status(200).json({
+
       success: true,
-      message: "Song deleted",
+
+      data: song
+
     });
-  }
+
+  };
+
+
+  deleteSong = async (req: Request, res: Response) => {
+
+    const { id } = req.params as IdParam;
+
+    await this.songService.deleteSong(id);
+
+    return res.status(200).json({
+
+      success: true,
+
+      message: "Song deleted"
+
+    });
+
+  };
+
 }
