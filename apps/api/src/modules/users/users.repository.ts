@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-export class UsersRepository {
+export class UserRepository {
 
   async findById(id: string) {
 
@@ -69,7 +69,6 @@ export class UsersRepository {
     data: {
       name?: string;
       image?: string | null;
-      email?: string;
     }) {
 
     return prisma.user.update({

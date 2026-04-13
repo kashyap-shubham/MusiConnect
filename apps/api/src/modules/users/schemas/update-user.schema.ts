@@ -12,13 +12,9 @@ export const updateUserSchema = z.object({
       .optional(),
 
     image: z
+      .string()
       .url("Image must be a valid URL")
       .nullable()
-      .optional(),
-
-    email: z
-      .email("Invalid email format")
-      .max(50, "Email must be less than 50 characters")
       .optional()
 
   })

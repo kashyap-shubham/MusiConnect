@@ -1,11 +1,11 @@
 import { ApiError } from "@/errors/ApiError";
-import { UsersRepository } from "./users.repository";
+import { UserRepository } from "./users.repository";
 
 export class UserService {
-  private userRepository: UsersRepository;
+  private userRepository: UserRepository;
 
   constructor() {
-    this.userRepository = new UsersRepository();
+    this.userRepository = new UserRepository();
   }
 
   async getUserById(id: string) {
@@ -20,7 +20,7 @@ export class UserService {
     return playlists;
   }
 
-  async updateUserProfile(userId: string, data: {name?: string, image?: string | null, email?: string}) {
+  async updateUserProfile(userId: string, data: {name?: string, image?: string | null}) {
     return this.userRepository.updateUser(userId, data)
   }
 }
