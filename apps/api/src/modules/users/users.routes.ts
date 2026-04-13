@@ -13,5 +13,7 @@ userRouter.get("/me", requireAuth, asyncHandler(controller.getCurrentUser));
 
 userRouter.get("/me/playlists", requireAuth, asyncHandler(controller.getCurrentUserPlaylists));
 
+userRouter.patch("/me", requireAuth, asyncHandler(controller.updateCurrentUser));
+
 
 export default userRouter;

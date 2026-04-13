@@ -19,4 +19,8 @@ export class UserService {
 
     return playlists;
   }
+
+  async updateUserProfile(userId: string, data: {name?: string, image?: string | null, email?: string}) {
+    return this.userRepository.updateUser(userId, data)
+  }
 }

@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-export class UserRepository {
+export class UsersRepository {
 
   async findById(id: string) {
 
@@ -57,6 +57,32 @@ export class UserRepository {
           }
         }
 
+      }
+
+    });
+
+  }
+
+
+  async updateUser(
+    userId: string,
+    data: {
+      name?: string;
+      image?: string | null;
+      email?: string;
+    }) {
+
+    return prisma.user.update({
+
+      where: { id: userId },
+
+      data,
+
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        image: true
       }
 
     });

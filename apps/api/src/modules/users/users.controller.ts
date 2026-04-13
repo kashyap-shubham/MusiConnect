@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { UserService } from "./users.service";
 import { ApiError } from "@/errors/ApiError";
+import { success } from "zod";
 
 export class UserController {
 
@@ -38,6 +39,18 @@ export class UserController {
       data: playlists
     });
 
+  };
+
+  updateCurrentUser = async (req: Request, res: Response) => {
+
+    const userId = req.user!.id;
+    const { name, image, email } = req.body;
+    const updateUser = await this.userService.updateUserProfile(userId , {name, image, email});
+
+    return res.status(200).json({
+        success: true,
+        data: updateUser
+    });
   };
 
 }
