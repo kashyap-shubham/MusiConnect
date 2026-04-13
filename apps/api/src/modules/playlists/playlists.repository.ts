@@ -1,57 +1,152 @@
-import { prisma } from "../../lib/prisma";
-import type { CreatePlaylistInput } from "./schemas/create-playlist.schema";
+import { prisma } from "@/lib/prisma";
+
+export interface CreatePlaylistRepoInput {
+  name: string;
+  description?: string;
+  userId: string;
+}
 
 export class PlaylistRepository {
 
-  async create(data: CreatePlaylistInput) {
+  async create(data: CreatePlaylistRepoInput) {
+
     return prisma.playlist.create({
+
       data: {
         name: data.name,
-        userId: data.userId,
+        description: data.description,
+        userId: data.userId
       },
+
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        userId: true,
+        createdAt: true
+      }
+
     });
+
   }
+
 
   async findById(id: string) {
+
     return prisma.playlist.findUnique({
+
       where: { id },
-      include: {
+
+      select: {
+
+        id: true,
+        name: true,
+        description: true,
+        userId: true,
+        createdAt: true,
+
         songs: {
-          include: {
-            song: true,
-          },
-        },
-      },
+
+          select: {
+
+            songId: true,
+
+            song: {
+
+              select: {
+                id: true,
+                title: true,
+                imageUrl: true,
+                duration: true
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
     });
+
   }
+
 
   async findByUserId(userId: string) {
+
     return prisma.playlist.findMany({
+
       where: { userId },
+
       orderBy: {
-        createdAt: "desc",
+        createdAt: "desc"
       },
+
+      select: {
+
+        id: true,
+        name: true,
+        description: true,
+        createdAt: true,
+
+        _count: {
+          select: {
+            songs: true
+          }
+        }
+
+      }
+
     });
+
   }
 
-  async addSongToPlaylist(playlistId: string, songId: string) {
-    return prisma.playlistSong.create({
-      data: {
-        playlistId,
-        songId,
-      },
-    });
-  }
 
-  async removeSongFromPlaylist(playlistId: string, songId: string) {
-    return prisma.playlistSong.delete({
+  async addSongToPlaylist(
+    playlistId: string,
+    songId: string
+  ) {
+
+    return prisma.playlistSong.upsert({
+
       where: {
         playlistId_songId: {
           playlistId,
-          songId,
-        },
+          songId
+        }
       },
+
+      update: {},
+
+      create: {
+        playlistId,
+        songId
+      }
+
     });
+
+  }
+
+
+  async removeSongFromPlaylist(
+    playlistId: string,
+    songId: string
+  ) {
+
+    return prisma.playlistSong.delete({
+
+      where: {
+
+        playlistId_songId: {
+          playlistId,
+          songId
+        }
+
+      }
+
+    });
+
   }
 
 }
