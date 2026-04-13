@@ -1,22 +1,40 @@
 import { Router } from "express";
+
 import { ArtistController } from "./artists.controller";
+
 import { asyncHandler } from "@/utils/asyncHandler";
+import { requireAuth } from "@/middleware/requireAuth";
+import { validate } from "@/middleware/validate";
+
+import { createArtistSchema } from "./schemas/create-artist.schema";
+import { updateArtistSchema } from "./schemas/update-artist.schema";
+import { artistIdParamSchema } from "./schemas/artist-param.schema";
+
 
 const artistRouter: Router = Router();
+
 const controller = new ArtistController();
 
+// get all artists
+artistRouter.get("/", asyncHandler(controller.getAll));
 
-artistRouter.get("/", asyncHandler(controller.getAll.bind(controller)));
+// get artist by id
+artistRouter.get("/:artistId", validate(artistIdParamSchema), asyncHandler(controller.getById));
 
-artistRouter.get("/:id", asyncHandler(controller.getById.bind(controller)));
+// get artist's song
+artistRouter.get("/:artistId/songs", validate(artistIdParamSchema), asyncHandler(controller.getSongsByArtistId));
 
-artistRouter.post("/", asyncHandler(controller.create.bind(controller)));
+// get artist's albums
+artistRouter.get("/:artistId/albums", validate(artistIdParamSchema), asyncHandler(controller.getAlbumsByArtistId));
 
-artistRouter.get("/:id/songs", asyncHandler(controller.getSongs.bind(controller)));
+// create artist
+artistRouter.post("/", requireAuth, validate(createArtistSchema), asyncHandler(controller.create));
 
-artistRouter.get(
-  "/:id/albums",
-  asyncHandler(controller.getAlbumsByArtistId.bind(controller)),
-);
+// update artist
+artistRouter.patch("/:artistId", requireAuth, validate(updateArtistSchema), asyncHandler(controller.update));
+
+// delete artist
+artistRouter.delete("/:artistId", requireAuth, validate(artistIdParamSchema), asyncHandler(controller.delete));
+
 
 export default artistRouter;
