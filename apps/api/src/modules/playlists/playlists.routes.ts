@@ -1,22 +1,25 @@
 import { Router } from "express";
 import { PlaylistController } from "./playlists.controller";
 import { asyncHandler } from "@/utils/asyncHandler";
+import { requireAuth } from "@/middleware/requireAuth";
+import { validate } from "@/middleware/validate";
+import { createPlaylistSchema } from "./schemas/create-playlist.schema";
+import { addSongToPlaylistSchema } from "./schemas/add-song-to-playlist.schema";
+
 
 const playlistRouter: Router = Router();
+
 const playlistController = new PlaylistController();
 
 
-playlistRouter.get("/", asyncHandler(playlistController.getUserPlaylists));
+playlistRouter.get("/", requireAuth, asyncHandler(playlistController.getUserPlaylists));
 
-playlistRouter.get("/:id", asyncHandler(playlistController.getPlaylistById));
+playlistRouter.get("/:id", requireAuth, asyncHandler(playlistController.getPlaylistById));
 
-playlistRouter.post("/", asyncHandler(playlistController.createPlaylist));
+playlistRouter.post("/", requireAuth, validate(createPlaylistSchema), asyncHandler(playlistController.createPlaylist));
 
-playlistRouter.post("/:id/songs", asyncHandler(playlistController.addSongToPlaylist));
+playlistRouter.post("/:playlistId/songs", requireAuth, validate(addSongToPlaylistSchema), asyncHandler(playlistController.addSongToPlaylist));
 
-playlistRouter.delete(
-  "/:playlistId/songs/:songId",
-  asyncHandler(playlistController.removeSongFromPlaylist),
-);
+playlistRouter.delete("/:playlistId/songs/:songId", requireAuth, asyncHandler(playlistController.removeSongFromPlaylist));
 
 export default playlistRouter;

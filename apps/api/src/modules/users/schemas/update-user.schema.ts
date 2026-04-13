@@ -12,7 +12,6 @@ export const updateUserSchema = z.object({
       .optional(),
 
     image: z
-      .string()
       .url("Image must be a valid URL")
       .nullable()
       .optional()
