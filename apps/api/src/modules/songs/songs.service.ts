@@ -4,25 +4,30 @@ import { UpdateSongInput } from "./schemas/update-song.schema";
 
 export class SongsService {
 
-  private repository = new SongRepository();
+  private songRepository: SongRepository;
+
+  constructor() {
+    this.songRepository = new SongRepository();
+
+  }
 
   async getAllSongs() {
-    return this.repository.findAll();
+    return this.songRepository.findAll();
   }
 
   async getSongById(id: string) {
-    return this.repository.findById(id);
+    return this.songRepository.findById(id);
   }
 
   async createSong(data: CreateSongInput) {
-    return this.repository.create(data);
+    return this.songRepository.create(data);
   }
 
   async updateSong(id: string, data: UpdateSongInput) {
-    return this.repository.update(id, data);
+    return this.songRepository.update(id, data);
   }
 
   async deleteSong(id: string) {
-    return this.repository.delete(id);
+    return this.songRepository.delete(id);
   }
 }

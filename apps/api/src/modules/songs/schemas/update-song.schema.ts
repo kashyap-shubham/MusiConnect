@@ -32,7 +32,6 @@ export const updateSongSchema = z.object({
       .optional(),
 
     albumId: z
-      .string()
       .uuid()
       .nullable()
       .optional(),
@@ -46,3 +45,5 @@ export const updateSongSchema = z.object({
   })
 
 });
+
+export type UpdateSongInput = z.infer<typeof updateSongSchema>["body"];
