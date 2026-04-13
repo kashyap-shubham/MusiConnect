@@ -31,10 +31,10 @@ export class PlaylistController {
 
   getPlaylistById = async (req: Request, res: Response) => {
 
-    const { id } = req.params as { id: string };
+    const { playlistId } = req.params as { playlistId: string };
 
     const playlist =
-      await this.playlistService.getPlaylistById(id);
+      await this.playlistService.getPlaylistById(playlistId);
 
     if (!playlist) {
       throw new ApiError(404, "Playlist not found");

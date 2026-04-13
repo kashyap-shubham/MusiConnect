@@ -5,7 +5,7 @@ import { requireAuth } from "@/middleware/requireAuth";
 import { validate } from "@/middleware/validate";
 import { createPlaylistSchema } from "./schemas/create-playlist.schema";
 import { addSongToPlaylistSchema } from "./schemas/add-song-to-playlist.schema";
-import { removeSongFromPlaylistSchema } from "./schemas/remove-song-from-playlist";
+import { removeSongFromPlaylistSchema } from "./schemas/remove-song-from-playlist.schema";
 import { deletePlaylistSchema } from "./schemas/delete-playlist.schema";
 
 

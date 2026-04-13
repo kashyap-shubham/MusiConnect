@@ -84,7 +84,7 @@ model Playlist {
   userId    String
   isPublic  Boolean        @default(false)
 
-  user  User @relation(fields: [userId], references: [id])
+  user  User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   songs PlaylistSong[]
 
