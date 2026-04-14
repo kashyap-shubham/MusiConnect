@@ -9,6 +9,7 @@ import { validate } from "@/middleware/validate";
 import { createAlbumSchema } from "./schemas/create-album.schema";
 import { updateAlbumSchema } from "./schemas/update-album.schema";
 import { albumIdParamSchema } from "./schemas/album-param.schema";
+import { paginationQuerySchema } from "@/utils/pagination.schema";
 
 
 const albumRouter: Router = Router();
@@ -17,7 +18,7 @@ const controller = new AlbumController();
 
 
 // get all the albums
-albumRouter.get("/", asyncHandler(controller.getAlbums));
+albumRouter.get("/", validate(paginationQuerySchema), asyncHandler(controller.getAlbums));
 
 
 // get album by id

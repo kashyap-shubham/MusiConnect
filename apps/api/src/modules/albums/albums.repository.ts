@@ -122,6 +122,48 @@ export class AlbumRepository {
   }
 
 
+  async findAllPaginated(skip: number, take: number) {
+
+    const [albums, total] = await Promise.all([
+      prisma.album.findMany({
+        skip,
+        take,
+        orderBy: {
+          releaseDate: "desc"
+        },
+
+        select: {
+          id: true,
+          title: true,
+          imageKey: true,
+          releaseDate: true,
+
+          artist: {
+            select: {
+              id: true,
+              name: true
+            }
+          },
+
+          _count: {
+            select: {
+              songs: true
+            }
+          }
+        }
+      }),
+      
+      prisma.album.count()
+    ]);
+    
+    return {
+      data: albums,
+      total
+    };
+
+  }
+
+
   async findById(id: string) {
 
     return prisma.album.findUnique({
