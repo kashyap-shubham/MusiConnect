@@ -17,10 +17,10 @@ const playlistController = new PlaylistController();
 playlistRouter.post("/", requireAuth, validate(createPlaylistSchema), asyncHandler(playlistController.createPlaylist));
 
 // get all playlist of current user
-playlistRouter.get("/", requireAuth, asyncHandler(playlistController.getUserPlaylists));
+playlistRouter.get("/", requireAuth, asyncHandler(playlistController.getUserPlaylists)); // Todo => pagination is optional
 
 // get particular playlist details
-playlistRouter.get("/:playlistId", requireAuth, asyncHandler(playlistController.getPlaylistById));
+playlistRouter.get("/:playlistId", requireAuth, asyncHandler(playlistController.getPlaylistById));  // Todo => pagination is optional
 
 // add songs to the playlist
 playlistRouter.post("/:playlistId/songs", requireAuth, validate(addSongToPlaylistSchema), asyncHandler(playlistController.addSongToPlaylist));
