@@ -14,28 +14,28 @@ import { paginationQuerySchema } from "@/utils/pagination.schema";
 
 const artistRouter: Router = Router();
 
-const controller = new ArtistController();
+const artistController = new ArtistController();
 
 // get all artists
-artistRouter.get("/", validate(paginationQuerySchema), asyncHandler(controller.getAll));
+artistRouter.get("/", validate(paginationQuerySchema), asyncHandler(artistController.getAll));
 
 // get artist by id
-artistRouter.get("/:artistId", validate(artistIdParamSchema), asyncHandler(controller.getById));
+artistRouter.get("/:artistId", validate(artistIdParamSchema), asyncHandler(artistController.getById));
 
 // get artist's song
-artistRouter.get("/:artistId/songs", validate(artistIdParamSchema), asyncHandler(controller.getSongsByArtistId));
+artistRouter.get("/:artistId/songs", validate(artistIdParamSchema), asyncHandler(artistController.getSongsByArtistId)); //Todo => needs to add song meta data mapper here and in albums and playlist and songs etc.
 
 // get artist's albums
-artistRouter.get("/:artistId/albums", validate(artistIdParamSchema), asyncHandler(controller.getAlbumsByArtistId));
+artistRouter.get("/:artistId/albums", validate(artistIdParamSchema), asyncHandler(artistController.getAlbumsByArtistId));
 
 // create artist
-artistRouter.post("/", requireAuth, validate(createArtistSchema), asyncHandler(controller.create));
+artistRouter.post("/", requireAuth, validate(createArtistSchema), asyncHandler(artistController.create));
 
 // update artist
-artistRouter.patch("/:artistId", requireAuth, validate(updateArtistSchema), asyncHandler(controller.update));
+artistRouter.patch("/:artistId", requireAuth, validate(updateArtistSchema), asyncHandler(artistController.update));
 
 // delete artist
-artistRouter.delete("/:artistId", requireAuth, validate(artistIdParamSchema), asyncHandler(controller.delete));
+artistRouter.delete("/:artistId", requireAuth, validate(artistIdParamSchema), asyncHandler(artistController.delete));
 
 
 export default artistRouter;
