@@ -3,6 +3,9 @@ import type { Request, Response } from "express";
 import { AlbumService } from "./albums.service";
 
 import { ApiError } from "@/errors/ApiError";
+import { getPagination } from "@/utils/pagination";
+import { success } from "zod";
+import { paginatedResponse } from "@/utils/paginatedResponse";
 
 
 type AlbumIdParam = {
@@ -33,19 +36,33 @@ export class AlbumController {
 
   };
 
+  // without pagination
+  // getAlbums = async (_req: Request, res: Response) => {
 
-  getAlbums = async (_req: Request, res: Response) => {
+  //   const albums = await this.albumService.getAlbums();
 
-    const albums = await this.albumService.getAlbums();
+  //   return res.status(200).json({
+
+  //     success: true,
+
+  //     data: albums
+
+  //   });
+
+  // };
+
+
+  // with pagination
+  getAlbums = async (req: Request, res: Response) => {
+    const {page, limit, skip, take} = getPagination(req.query);
+
+    const {data, total} = await this.albumService.getAlbumsPaginated(skip, take);
 
     return res.status(200).json({
-
       success: true,
-
-      data: albums
-
+      ...paginatedResponse(data, total, page, limit)
     });
-
+  
   };
 
 

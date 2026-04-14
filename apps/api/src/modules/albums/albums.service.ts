@@ -35,6 +35,11 @@ export class AlbumService {
 
   }
 
+  
+  async getAlbumsPaginated(skip: number, take: number) {
+    return this.albumRepository.findAllPaginated(skip, take);
+  }
+
 
   async getAlbumById(id: string) {
 

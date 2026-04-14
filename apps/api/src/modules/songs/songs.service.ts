@@ -15,7 +15,7 @@ export class SongsService {
     return this.songRepository.findAll();
   }
 
-  async getSongsPaginated(skip: number, take: number) {
+  async getAllSongsPaginated(skip: number, take: number) {
     return this.songRepository.findAllPaginated(skip, take);
   }
   
