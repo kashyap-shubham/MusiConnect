@@ -15,10 +15,8 @@ export class SongsService {
     return this.songRepository.findAll();
   }
 
-  async getSongsPaginated(page: number, limit: number) {
-    const skip = (page - 1) * limit;
-
-    return this.songRepository.findAllPaginated(skip, limit);
+  async getSongsPaginated(skip: number, take: number) {
+    return this.songRepository.findAllPaginated(skip, take);
   }
   
   async getSongById(id: string) {

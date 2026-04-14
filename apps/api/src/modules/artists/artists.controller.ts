@@ -38,9 +38,9 @@ export class ArtistController {
 
   // with pagination 
   getAll = async (req: Request, res: Response) => {
-    const {page, limit} = getPagination(req.query);
+    const {page, limit, skip, take} = getPagination(req.query);
 
-    const {data, total} = await this.artistService.getArtistsPaginated(page, limit);
+    const {data, total} = await this.artistService.getArtistsPaginated(skip, take);
 
     return res.status(200).json({
       success: true,

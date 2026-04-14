@@ -38,7 +38,7 @@ export class SongsController {
   
     const {page, limit, skip, take} = getPagination(req.query);
   
-    const {data, total} = await this.songService.getSongsPaginated(page, limit);
+    const {data, total} = await this.songService.getSongsPaginated(skip, take);
   
     return res.status(200).json({
       success: true,

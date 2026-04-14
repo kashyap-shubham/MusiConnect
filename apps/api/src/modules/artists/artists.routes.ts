@@ -9,6 +9,7 @@ import { validate } from "@/middleware/validate";
 import { createArtistSchema } from "./schemas/create-artist.schema";
 import { updateArtistSchema } from "./schemas/update-artist.schema";
 import { artistIdParamSchema } from "./schemas/artist-param.schema";
+import { paginationQuerySchema } from "@/utils/pagination.schema";
 
 
 const artistRouter: Router = Router();
@@ -16,7 +17,7 @@ const artistRouter: Router = Router();
 const controller = new ArtistController();
 
 // get all artists
-artistRouter.get("/", asyncHandler(controller.getAll));
+artistRouter.get("/", validate(paginationQuerySchema), asyncHandler(controller.getAll));
 
 // get artist by id
 artistRouter.get("/:artistId", validate(artistIdParamSchema), asyncHandler(controller.getById));

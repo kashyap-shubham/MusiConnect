@@ -6,13 +6,14 @@ import { validate } from "@/middleware/validate";
 import { createSongSchema } from "./schemas/create-song.schema";
 import { updateSongSchema } from "./schemas/update-song.schema";
 import { songIdParamSchema } from "./schemas/song-param.schema";
+import { paginationQuerySchema } from "@/utils/pagination.schema";
 
 const songRouter:Router = Router();
 const songController = new SongsController();
 
 
 // get all songs list
-songRouter.get("/", asyncHandler(songController.getSongs));
+songRouter.get("/", validate(paginationQuerySchema), asyncHandler(songController.getSongs));
 
 // get song by id
 songRouter.get("/:id", validate(songIdParamSchema), asyncHandler(songController.getSongById));
