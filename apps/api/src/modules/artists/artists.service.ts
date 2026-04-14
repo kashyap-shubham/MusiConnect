@@ -17,6 +17,12 @@ export class ArtistService {
         return this.artistRepository.findAll();
     }
 
+    async getArtistsPaginated(page: number, limit: number) {
+        const skip = (page - 1) * limit;
+
+        return this.artistRepository.findAllPaginated(skip, limit);
+    }
+
     async getArtistById(id: string) {
         const artist = await this.artistRepository.findById(id);
 

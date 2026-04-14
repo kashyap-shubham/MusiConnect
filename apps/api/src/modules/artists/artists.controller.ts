@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import { ArtistService } from "./artists.service";
 
 import { ApiError } from "@/errors/ApiError";
+import { getPagination } from "@/utils/pagination";
+import { paginatedResponse } from "@/utils/paginatedResponse";
 
 
 type ArtistIdParam = {
@@ -18,19 +20,32 @@ export class ArtistController {
     this.artistService = new ArtistService();
   }
 
+  // without pagination
+  // getAll = async (_req: Request, res: Response) => {
 
-  getAll = async (_req: Request, res: Response) => {
+  //   const artists = await this.artistService.getAllArtist();
 
-    const artists = await this.artistService.getAllArtist();
+  //   return res.status(200).json({
+
+  //     success: true,
+
+  //     data: artists
+
+  //   });
+
+  // };
+
+
+  // with pagination 
+  getAll = async (req: Request, res: Response) => {
+    const {page, limit} = getPagination(req.query);
+
+    const {data, total} = await this.artistService.getArtistsPaginated(page, limit);
 
     return res.status(200).json({
-
       success: true,
-
-      data: artists
-
+      ...paginatedResponse(data, total, page, limit)
     });
-
   };
 
 
