@@ -19,6 +19,40 @@ export class ArtistRepository {
     });
   }
 
+
+  async findAllPaginated(skip: number, take: number) {
+    const [artists, total] = await Promise.all([
+
+      prisma.artist.findMany({
+        skip,
+        take,
+        orderBy: {
+          createdAt: "desc"
+        },
+        select: {
+          id: true,
+          name: true,
+          image: true,
+          createdAt: true,
+
+          _count: {
+            select: {
+              songs: true,
+              albums: true,
+            }
+          }
+        }
+      }),
+      prisma.artist.count()
+    ]);
+
+    return {
+      data: artists,
+      total
+    }
+  }
+
+
   async findById(id: string) {
     return prisma.artist.findUnique({
       where: { id },
