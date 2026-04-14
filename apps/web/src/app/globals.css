@@ -26,3 +26,26 @@
 body {
     min-height: 100vh;
 }
+
+@keyframes float {
+
+  0% { transform: translateY(0px); }
+
+  50% { transform: translateY(-18px); }
+
+  100% { transform: translateY(0px); }
+
+}
+
+.animate-float {
+
+  animation: float 7s ease-in-out infinite;
+
+}
+
+.animate-float-delayed {
+
+  animation: float 9s ease-in-out infinite;
+  animation-delay: 1s;
+
+}
