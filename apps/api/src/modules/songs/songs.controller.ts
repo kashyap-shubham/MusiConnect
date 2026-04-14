@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { SongsService } from "./songs.service";
 import { ApiError } from "@/errors/ApiError";
+import { getPagination } from "@/utils/pagination";
+import { paginatedResponse } from "@/utils/paginatedResponse";
 
 
 type IdParam = {
@@ -8,28 +10,43 @@ type IdParam = {
 };
 
 export class SongsController {
-
+  
   private songService: SongsService;
-
+  
   constructor() {
     this.songService = new SongsService();
   }
   
-  getSongs = async (_req: Request, res: Response) => {
+  // without pagination 
+  // getSongs = async (_req: Request, res: Response) => {
+    
+  //   const songs = await this.songService.getAllSongs();
+    
+  //   return res.status(200).json({
+      
+  //     success: true,
+      
+  //     data: songs
+      
+  //   });
+    
+  // };
 
-    const songs = await this.songService.getAllSongs();
 
+  // with pagination
+  getSongs = async (req: Request, res: Response) => {
+  
+    const {page, limit, skip, take} = getPagination(req.query);
+  
+    const {data, total} = await this.songService.getSongsPaginated(page, limit);
+  
     return res.status(200).json({
-
       success: true,
-
-      data: songs
-
+      ...paginatedResponse(data, total, page, limit)
     });
-
   };
 
-
+  
   getSongById = async (req: Request, res: Response) => {
 
     const { id } = req.params as IdParam;

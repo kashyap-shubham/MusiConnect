@@ -30,4 +30,10 @@ export class SongsService {
   async deleteSong(id: string) {
     return this.songRepository.delete(id);
   }
+
+  async getSongsPaginated(page: number, limit: number) {
+    const skip = (page - 1) * limit;
+
+    return this.songRepository.findAllPaginated(skip, limit);
+  }
 }
