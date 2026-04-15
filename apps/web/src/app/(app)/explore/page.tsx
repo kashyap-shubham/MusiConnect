@@ -154,7 +154,7 @@ export default function ExplorePage() {
 
   return (
 
-    <div className="p-10 space-y-8">
+    <div className="space-y-8">
 
       {/* <Header /> */}
 
