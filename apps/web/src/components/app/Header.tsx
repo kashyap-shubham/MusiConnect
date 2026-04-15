@@ -16,6 +16,7 @@ export default function Header({ user }: HeaderProps) {
 
   return (
     <div className="flex items-center justify-between mb-10">
+
       {/* LEFT NAVIGATION */}
       <div className="flex items-center gap-3">
         <button
@@ -25,6 +26,7 @@ export default function Header({ user }: HeaderProps) {
           <ChevronLeft size={18} />
         </button>
 
+        {/* RIGHT NAVIGATION */}
         <button
           onClick={() => router.forward()}
           className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition"
