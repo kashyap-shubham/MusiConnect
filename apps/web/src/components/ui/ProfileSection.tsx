@@ -1,21 +1,17 @@
 "use client"
-
-import { UserDTO } from "@repo/types"
+import { UserDTO } from "@repo/types";
 import Image from "next/image"
 
 
 type Props = {
-  user?: UserDTO
+  user?: UserDTO;
 }
 
-export default function ProfileSection({
-  user
-}: Props) {
+export default function ProfileSection({ user }: Props) {
 
   if (!user) {
 
     return (
-
       <div className="
         flex items-center gap-3
         px-3 py-1.5
@@ -40,8 +36,6 @@ export default function ProfileSection({
 
   }
 
-
-
   return (
 
     <div className="
@@ -57,34 +51,30 @@ export default function ProfileSection({
 
       {/* avatar/image */}
       <div className="
+        relative
         h-7 w-7
         overflow-hidden
         bg-white/20
       ">
 
-        {!user.image && (
+        {user.image && (
 
           <Image
-            alt="user-image"
-            width={6}
-            height={7}
+            alt={user.name}
             src={user.image}
-            className="h-full w-full object-cover"
+            fill
+            className="object-cover"
           />
-
         )}
 
       </div>
-
-
 
       {/* name */}
       <p className="text-sm">
         {user.name}
       </p>
-
+    
     </div>
-
   )
 
 }

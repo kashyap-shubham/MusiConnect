@@ -1,67 +1,42 @@
-import Header from "@/components/app/Header"
-import Sidebar from "@/components/app/Sidebar"
-
-import { getCurrentUserServer } from "@/lib/api/server-auth.api"
-import { getPlaylistsServer } from "@/lib/api/server-playlist.api"
-
-import { redirect } from "next/navigation"
+import Header from "@/components/app/Header";
+import Sidebar from "@/components/app/Sidebar";
+import { getCurrentUserServer } from "@/lib/api/server-auth.api";
+import { getPlaylistsServer } from "@/lib/api/server-playlist.api";
+import { redirect } from "next/navigation";
 
 
-export default async function AppLayout({
-  children,
+export default async function AppLayout({ 
+    children, 
 }: {
-  children: React.ReactNode
+    children: React.ReactNode
 }) {
 
-  const user = await getCurrentUserServer()
+    // verify session
+    const user = await getCurrentUserServer();
 
-  if (!user) {
-    redirect("/signin")   // fix path
-  }
+    if (!user) {
+        redirect("signin")
+    }
+    
+    // fetch sidebar playlist data
+    const playlists = await getPlaylistsServer(user.id)
 
-  const playlists = await getPlaylistsServer(user.id)
+    return (
+        <div className="h-screen flex text-white">
+    
+            {/* SIDEBAR */}
+            <aside className="w-64 border-r border-white/10">
+                <Sidebar playlists={playlists} />
+            </aside>
 
+            {/* <Header user={user}/> */}
+            
+            {/* MAIN CONTENT */}
+            <main className="flex-1 overflow-y-auto">
+                {children}
+            </main>
 
-  return (
-
-    <div className="h-screen flex text-white">
-
-
-      {/* SIDEBAR */}
-
-      <aside className="w-64 border-r border-white/10">
-
-        <Sidebar playlists={playlists} />
-
-      </aside>
-
-
-
-      {/* RIGHT SIDE */}
-
-      <div className="flex pt-5 flex-1 flex-col">
-
-
-        {/* HEADER */}
-
-        <Header user={user} />
-
-
-
-        {/* PAGE CONTENT */}
-
-        <main className="flex-1 overflow-y-auto">
-
-          {children}
-
-        </main>
-
-
-      </div>
-
-
-    </div>
-
-  )
+        </div>
+    );
 
 }
