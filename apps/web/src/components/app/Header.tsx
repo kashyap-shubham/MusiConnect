@@ -1,17 +1,16 @@
 "use client";
-
 import { Search, Bell, ChevronLeft, ChevronRight, Home } from "lucide-react";
-
 import { useRouter } from "next/navigation";
 import ProfileSection from "../ui/ProfileSection";
+import { UserDTO } from "@repo/types";
 
-export default function Header({ user }) {
-  // const user = {
-  //   name: "Shubham Kashyap",
-  //   image: "",
-  // };
 
-  console.log(user);
+type HeaderProps = {
+  user: UserDTO
+}
+
+export default function Header({ user }: HeaderProps) {
+
 
   const router = useRouter();
 

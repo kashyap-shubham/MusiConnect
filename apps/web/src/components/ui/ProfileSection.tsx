@@ -1,14 +1,11 @@
 "use client"
 
+import { UserDTO } from "@repo/types"
 import Image from "next/image"
 
-type User = {
-  name: string
-  image?: string
-}
 
 type Props = {
-  user?: User
+  user?: UserDTO
 }
 
 export default function ProfileSection({
