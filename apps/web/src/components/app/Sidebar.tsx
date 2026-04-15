@@ -1,16 +1,7 @@
 "use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Compass,
-  LayoutGrid,
-  Disc3,
-  Mic2,
-  Clock,
-  Heart,
-  Plus,
-} from "lucide-react";
+import {Compass, LayoutGrid, Disc3, Mic2, Clock, Heart, Plus} from "lucide-react";
 import cn from "@/lib/utils/cn";
 import { useState } from "react";
 import CreatePlaylistModal from "./CreatePlaylistModal";

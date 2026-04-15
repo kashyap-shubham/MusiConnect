@@ -156,8 +156,6 @@ export default function ExplorePage() {
 
     <div className="space-y-8">
 
-      {/* <Header /> */}
-
       <HeroSection
         title="In My Feelings"
         subtitle="Camila Cabello · 63 Million Plays"

@@ -11,7 +11,6 @@ type HeaderProps = {
 
 export default function Header({ user }: HeaderProps) {
 
-
   const router = useRouter();
 
   return (

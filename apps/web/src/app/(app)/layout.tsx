@@ -33,7 +33,7 @@ export default async function AppLayout({
             <div className="flex flex-1 flex-col">
 
                 {/* Header */}
-                <div className="px-10 pt-8">
+                <div className="px-10 pt-6">
                     <Header user={user}/>
                 </div>
                 
