@@ -3,7 +3,6 @@ import passport from "./passport";
 import { env } from "@/config/env";
 import { requireAuth } from "@/middleware/requireAuth";
 import { asyncHandler } from "@/utils/asyncHandler";
-import { success } from "zod";
 import { ApiError } from "@/errors/ApiError";
 
 const authRouter:Router = Router();

@@ -1,32 +1,27 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-
-
 export async function api<T>(
-    path: string,
-    options?: RequestInit
+  url: string,
+  options?: RequestInit
 ): Promise<T> {
-    
-    const res = await fetch(
-        `${API_URL}${path}`, 
-        {
-            credentials: "include",
 
-            headers: {
-                "Content-Type": "application/json",
-                ...options?.headers,
-            },
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}${url}`,
+    {
+      ...options,
 
-            ...options,
-        },
-    );
+      credentials: "include", // IMPORTANT
 
-    const result = await res.json();
-
-    if (!res.ok || result.success === false) {
-      throw new Error(result.message || `API Error: ${res.status}`);
+      headers: {
+        "Content-Type": "application/json",
+        ...(options?.headers || {}),
+      },
     }
+  );
 
-    return result.data;
+  const result = await res.json();
+
+  if (!res.ok || result.success === false) {
+    throw new Error(result.message || `API Error: ${res.status}`);
+  }
+
+  return result.data;
 }
-
-// todo: use same of types for error response in backend and forntend make a package
