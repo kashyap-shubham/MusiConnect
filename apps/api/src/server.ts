@@ -65,7 +65,12 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again later.",
 });
 
-app.use(limiter);  // Todo : (optional) we may use individual rate limiter of each api
+if (env.NODE_ENV === "production") {
+
+  app.use(limiter);         // Todo : (optional) we may use individual rate limiter of each api
+
+}
+
 
 /* Session Configuration
 | Required for Passport Google OAuth
