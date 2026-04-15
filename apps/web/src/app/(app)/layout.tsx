@@ -24,17 +24,25 @@ export default async function AppLayout({
     return (
         <div className="h-screen flex text-white">
     
-            {/* SIDEBAR */}
+            {/* Sidebar */}
             <aside className="w-64 border-r border-white/10">
                 <Sidebar playlists={playlists} />
             </aside>
 
-            {/* <Header user={user}/> */}
-            
-            {/* MAIN CONTENT */}
-            <main className="flex-1 overflow-y-auto">
-                {children}
-            </main>
+            {/* RIGHT COLUMN */}
+            <div className="flex flex-1 flex-col">
+
+                {/* Header */}
+                <div className="px-10 pt-8">
+                    <Header user={user}/>
+                </div>
+                
+                {/* Page Content */}
+                <main className="flex-1 overflow-y-auto px-10 pb-10">
+                    {children}
+                </main>
+                
+            </div>
 
         </div>
     );
