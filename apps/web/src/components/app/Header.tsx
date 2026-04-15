@@ -5,11 +5,13 @@ import { Search, Bell, ChevronLeft, ChevronRight, Home } from "lucide-react";
 import { useRouter } from "next/navigation";
 import ProfileSection from "../ui/ProfileSection";
 
-export default function Header() {
-  const user = {
-    name: "Shubham Kashyap",
-    image: "",
-  };
+export default function Header({ user }) {
+  // const user = {
+  //   name: "Shubham Kashyap",
+  //   image: "",
+  // };
+
+  console.log(user);
 
   const router = useRouter();
 

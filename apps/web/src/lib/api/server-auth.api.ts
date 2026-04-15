@@ -1,4 +1,5 @@
-import { headers } from "next/headers"
+import { headers } from "next/headers";
+import { UserDTO } from "@repo/types";
 
 export type User = {
   id: string
@@ -7,7 +8,8 @@ export type User = {
   image?: string
 }
 
-export async function getCurrentUserServer(): Promise<User | null> {
+
+export async function getCurrentUserServer(): Promise<UserDTO | null> {
 
   const cookie = (await headers()).get("cookie")
 

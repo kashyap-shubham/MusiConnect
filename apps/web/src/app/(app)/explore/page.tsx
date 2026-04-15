@@ -156,7 +156,7 @@ export default function ExplorePage() {
 
     <div className="p-10 space-y-8">
 
-      <Header />
+      {/* <Header /> */}
 
       <HeroSection
         title="In My Feelings"

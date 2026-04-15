@@ -65,10 +65,12 @@ export default function ProfileSection({
         bg-white/20
       ">
 
-        {user.image && (
+        {!user.image && (
 
           <Image
             alt="user-image"
+            width={6}
+            height={7}
             src={user.image}
             className="h-full w-full object-cover"
           />
