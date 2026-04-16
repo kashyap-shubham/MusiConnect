@@ -4,6 +4,7 @@ import { env } from "@/config/env";
 import { requireAuth } from "@/middleware/requireAuth";
 import { asyncHandler } from "@/utils/asyncHandler";
 import { ApiError } from "@/errors/ApiError";
+import { prisma } from "@/lib/prisma";
 
 const authRouter:Router = Router();
 
@@ -33,10 +34,21 @@ authRouter.get(
     if (!user) {
       return next(new ApiError(401, "Authentication failed"));
     }
-    req.session.regenerate(err => {
+    req.session.regenerate(async err => {
       if (err) {
         return next(err);
       }
+      // store device session
+      await prisma.session.create({
+        data: {
+          userId: user.id,
+          sessionId: req.sessionID,
+          userAgent: req.headers["user-agent"],
+          ip: req.ip,
+          expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+        },
+      });
+      
       req.login(user, err => {
         if (err) {
           return next(err);
@@ -68,6 +80,12 @@ authRouter.post(
   "/logout",
   requireAuth,
   asyncHandler(async (req, res) => {
+
+    // delete session when logout
+    await prisma.session.deleteMany({
+      where: {sessionId: req.sessionID},
+    });
+    
     await new Promise<void>((resolve, reject) => {
       req.logout((err) => {
         if (err) return reject(err);
