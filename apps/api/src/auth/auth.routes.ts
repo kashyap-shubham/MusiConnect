@@ -38,24 +38,32 @@ authRouter.get("/google/callback", passport.authenticate("google", {
       if (!user) {
         return next(new ApiError(401, "Authentication failed"));
       }
-
-      // check active session before creating new one 
-      const activeSession = await prisma.session.findMany({
+      
+      // remove expired sessions first
+      await prisma.session.deleteMany({
         where: {
           userId: user.id,
           expiresAt: {
-            gt: new Date(),
+            lt: new Date(),
           },
         },
       });
 
-      if (activeSession.length >= MAX_DEVICES) {
+
+      // count active session before creating new one 
+      const activeSessionsCount = await prisma.session.count({
+        where: {
+          userId: user.id,
+        },
+      });
+
+      if (activeSessionsCount >= MAX_DEVICES) {
         // block login
         return res.redirect(`${env.FRONTEND_URL}/signin?error=device_limit`);
       }
 
       // regenrate session id
-      req.session.regenerate(async err => {
+      req.session.regenerate(err => {
   
         if (err) {
           return next(err);
@@ -106,7 +114,7 @@ authRouter.get("/google/callback", passport.authenticate("google", {
     } catch (err) {
         next(err);
     }
-    
+
   }
 );
 
