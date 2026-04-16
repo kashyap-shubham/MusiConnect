@@ -8,29 +8,38 @@ export async function requireAuth(
   next: NextFunction
 ) {
   
-  if (!req.user) {
-    return next(new ApiError(401, "Unauthorized - Please login first"));
-  }
-
-  const session = await prisma.session.findUnique({
-    where: {
-      sessionId: req.sessionID,
-    },
-  });
-
-  if (!session) {
-    throw new ApiError(401, "Session Expired"); 
-  }
-
-  if (session.expiresAt < new Date()) {
-    await prisma.session.delete({
+  try {
+    
+    if (!req.user) {
+      return next(new ApiError(401, "Unauthorized - Please login first"));
+    }
+  
+    const session = await prisma.session.findUnique({
       where: {
-        sessionId: req.sessionID
+        sessionId: req.sessionID,
       },
+      select: {
+        expiresAt: true,
+      }
     });
+  
+    if (!session) {
+      return next(new ApiError(401, "Session Expired")); 
+    }
+  
+    if (session.expiresAt < new Date()) {
+      await prisma.session.delete({
+        where: {
+          sessionId: req.sessionID
+        },
+      });
+  
+      return next(new ApiError(401, "Session Expired"));
+    } 
+  
+    next();
 
-    throw new ApiError(401, "Session Expired");
-  } 
-
-  next();
+  } catch (error) {
+    next(error);
+  }
 }
