@@ -78,13 +78,16 @@ if (env.NODE_ENV === "production") {
 */
 app.use(
   session({
+    name: "connect.sid",
     secret: env.SESSION_SECRET!,
     resave: false,
     saveUninitialized: false,
+    rolling: true,
     cookie: {
       httpOnly: true, // prevents JS access to cookie
       secure: env.NODE_ENV === "production", // HTTPS only in production
       sameSite: "lax", // protects against CSRF
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
     },
   }),
 );

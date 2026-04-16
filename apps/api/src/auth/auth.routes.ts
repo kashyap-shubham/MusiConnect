@@ -14,6 +14,8 @@ authRouter.get(
   "/google",
   passport.authenticate("google", {
     scope: ["profile", "email"],
+    prompt: "login",
+    accessType: "offline",
   })
 );
 
@@ -23,10 +25,25 @@ authRouter.get(
 authRouter.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: `${env.FRONTEND_URL}/login`,
+    failureRedirect: `${env.FRONTEND_URL}/signin`,
   }),
-  (_req, res) => {
-    res.redirect(`${env.FRONTEND_URL}/explore`);
+  (req, res, next) => {
+
+    const user = req.user;
+    if (!user) {
+      return next(new ApiError(401, "Authentication failed"));
+    }
+    req.session.regenerate(err => {
+      if (err) {
+        return next(err);
+      }
+      req.login(user, err => {
+        if (err) {
+          return next(err);
+        }
+        res.redirect(`${env.FRONTEND_URL}/explore`);
+      });
+    });
   }
 );
 
@@ -60,12 +77,13 @@ authRouter.post(
 
     req.session.destroy((err) => {
       if (err) {
-        throw new ApiError(401, err.message);
+        throw new ApiError(500, "Logout failed");
       }
       res.clearCookie("connect.sid", {
         httpOnly: true,
         sameSite: "lax",
         secure: env.NODE_ENV === "production",
+        path: "/",
       });
 
       res.json({

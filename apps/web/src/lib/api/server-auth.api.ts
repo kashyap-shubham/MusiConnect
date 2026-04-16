@@ -11,27 +11,33 @@ export type User = {
 
 export async function getCurrentUserServer(): Promise<UserDTO | null> {
 
-  const cookie = (await headers()).get("cookie")
+  try {
 
-  if (!cookie) return null
+    const cookie = (await headers()).get("cookie")
+  
+    if (!cookie) return null
+  
+    const res = await fetch(
+  
+      `${process.env.API_URL}/auth/me`,
+  
+      {
+        headers: {
+          cookie,
+        },
+  
+        cache: "no-store",
+      }
+    )
+  
+    if (!res.ok) return null
+  
+    const result = await res.json()
+  
+    return result.data
 
-  const res = await fetch(
-
-    `${process.env.NEXT_PUBLIC_API_URL}/auth/me`,
-
-    {
-      headers: {
-        cookie,
-      },
-
-      cache: "no-store",
-    }
-  )
-
-  if (!res.ok) return null
-
-  const result = await res.json()
-
-  return result.data
+  } catch{
+    return null
+  }
 
 }
