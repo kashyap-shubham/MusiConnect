@@ -138,7 +138,7 @@ authRouter.get(
 authRouter.post("/logout", requireAuth, asyncHandler(async (req, res) => {
 
     // delete session when logout
-    await prisma.session.deleteMany({
+    await prisma.session.delete({
       where: {sessionId: req.sessionID},
     });
 
@@ -168,5 +168,94 @@ authRouter.post("/logout", requireAuth, asyncHandler(async (req, res) => {
 
   })
 );
+
+
+authRouter.get("/sessions", requireAuth, asyncHandler(async (req, res) => {
+  
+  const user = req.user
+  
+  if (!user) {
+    throw new ApiError(401, "Unauthorized");
+  }
+
+  await prisma.session.deleteMany({
+    where: {
+      userId: user.id,
+      expiresAt: {
+        lt: new Date(),
+      },
+    },
+  });
+
+  const sessions = await prisma.session.findMany({
+    where: {
+      userId: user.id,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      id: true,
+      sessionId: true,
+      userAgent: true,
+      ip: true,
+      createdAt: true,
+      expiresAt: true,
+    },
+
+  });
+
+  res.status(200).json({
+    success: true,
+    data: sessions
+  });
+  
+}));
+
+
+authRouter.post("/logout-all", requireAuth, asyncHandler(async (req, res) => {
+
+  const user = req.user;
+  
+  if (!user) {
+    throw new ApiError(401, "Unauthorized");
+  }
+
+  await prisma.session.deleteMany({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  await new Promise<void>((resolve, reject) => {
+    req.logout(err => {
+      if (err) {
+        return reject(err);
+      }
+      resolve();
+    });
+  });
+
+  req.session.destroy(err => {
+    if (err) {
+      throw new ApiError(500, "Logout failed");
+    }
+
+    res.clearCookie("connect.sid", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: env.NODE_ENV === "production",
+      path: "/",
+    });
+
+    res.status(200).json({
+      success: true,
+      data: null,
+    });
+
+  });
+
+}));
+
 
 export default authRouter;
