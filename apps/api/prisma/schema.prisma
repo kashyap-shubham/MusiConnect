@@ -16,6 +16,7 @@ model User {
   playlists Playlist[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
+  sessions  Session[]
 }
 
 model Artist {
@@ -103,4 +104,19 @@ model PlaylistSong {
   song     Song     @relation(fields: [songId], references: [id], onDelete: Cascade)
 
   @@id([playlistId, songId])
+}
+
+
+model Session {
+  id      String      @id @default(uuid())
+  userId  String
+  sessionId String    @unique
+  userAgent String?
+  ip        String?
+  createdAt DateTime  @default(now())
+  expiresAt DateTime
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
 }
