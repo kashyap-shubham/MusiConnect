@@ -6,18 +6,15 @@ import cn from "@/lib/utils/cn";
 import { useState } from "react";
 import CreatePlaylistModal from "./CreatePlaylistModal";
 import PlaylistMenu from "./PlaylistMenu";
+import { PlaylistDTO } from "@repo/types";
 
-type Playlist = {
-  id: string;
-  name: string;
-  userId: string;
-};
 
 type SidebarProps = {
-  playlists: Playlist[];
+  playlists: PlaylistDTO[];
 };
 
 export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
+
   const [playlists, setPlaylists] = useState(initialPlaylists);
 
   const [openModal, setOpenModal] = useState(false);
@@ -25,10 +22,16 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
   const pathname = usePathname();
 
   function addPlaylist(name: string) {
-    const newPlaylist = {
+
+    const now = new Date().toISOString();
+    const optimisticID = crypto.randomUUID()
+    const newPlaylist: PlaylistDTO = {
       id: crypto.randomUUID(),
       name,
       userId: "",
+      isPublic: false,
+      createdAt: now,
+      updatedAt: now,
     };
 
     setPlaylists((prev) => [newPlaylist, ...prev]);
@@ -74,19 +77,9 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
     },
   ];
 
-  // function linkClass(href: string) {
-
-  //   return `
-  //     flex items-center gap-3 text-sm transition
-  //     ${pathname === href
-  //       ? "text-white"
-  //       : "text-white/70 hover:text-white"}
-  //   `
-
-  // }
-
   return (
     <div className="h-screen flex flex-col px-6 py-8">
+      
       {/* LOGO */}
       <h1 className="text-xl font-semibold mb-10">MusiConnect</h1>
 
@@ -116,6 +109,7 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
             );
           })}
         </div>
+
       </div>
 
       {/* LIBRARY */}
@@ -148,15 +142,8 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
 
       {/* PLAYLISTS */}
       <div className="flex-1 flex flex-col">
+        
         <p className="text-xs text-white/40 mb-4">PLAYLISTS</p>
-
-        {/* <Link
-            href="/playlists/create"
-            className="flex items-center gap-3 text-sm text-white/70 hover:text-white"
-          >
-            <Plus size={18} />
-            Create New
-          </Link> */}
 
         <button
           onClick={() => setOpenModal(true)}
@@ -164,44 +151,34 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
               flex items-center gap-3
               text-sm
               text-white/70
-              hover:text-white"
-        >
+              hover:text-white">
+
           <Plus size={18} />
           Create New
         </button>
 
         <div className="mt-4 space-y-2 overflow-y-auto text-sm text-white/70">
-          {playlists.length === 0 ? (
-            <p className="text-white/40 text-xs"> No Playlists yet</p>
-          ) : (
+          {playlists.length === 0 ? (<p className="text-white/40 text-xs"> No Playlists yet</p>) : 
+          (
             <div className="mt-4 space-y-2">
               {playlists.map((playlist) => (
-                <div
-                  key={playlist.id}
+                <div key={playlist.id}
                   className="
                       flex
                       items-center
                       justify-between
-
                       px-1
-
                       hover:bg-white/5
-
                       rounded-md
+                      group">
 
-                      group
-                    "
-                >
                   <Link
                     href={`/playlist/${playlist.id}`}
                     className="
                         flex-1
-
                         truncate
+                        py-1">
 
-                        py-1
-                      "
-                  >
                     {playlist.name}
                   </Link>
 
@@ -233,6 +210,7 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
                   />
                 </div>
               ))}
+
             </div>
           )}
         </div>

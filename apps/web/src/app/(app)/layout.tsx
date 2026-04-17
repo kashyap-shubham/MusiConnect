@@ -24,7 +24,7 @@ export default async function AppLayout({
     
     // verify session
     if (!user) {
-        redirect("signin");
+        redirect("/signin");
     }
     
 

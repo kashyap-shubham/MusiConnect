@@ -17,9 +17,7 @@ export async function api<T>(
     }
   )
   
-  /*
-  handle empty response (204)
-  */
+  // handle empty response
   if (res.status === 204) {
 
     return null as T
@@ -29,16 +27,9 @@ export async function api<T>(
   const result = await res.json()
 
 
-  /*
-  error handling
-  */
+  // unified error handling
   if (!res.ok || result.success === false) {
-    throw new Error(
-      result?.message
-      || result?.error
-      || `API Error: ${res.status}`
-
-    )
+    throw new Error(result?.message || result?.error || `API Error: ${res.status}`);
   }
 
   return result.data
