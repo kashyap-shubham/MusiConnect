@@ -1,27 +1,32 @@
 import pino from "pino";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export const logger = pino({
 
-  level:
+  level: isProd ? "info" : "debug",
 
-    process.env.NODE_ENV === "production"
-      ? "info"
-      : "debug",
+  /*
+  cleaner logs in dev
+  */
+  transport: isProd
 
-  transport:
+    ? undefined
 
-    process.env.NODE_ENV === "production"
-      ? undefined
-      : {
+    : {
 
-          target: "pino-pretty",
+        target: "pino-pretty",
 
-          options: {
+        options: {
 
-            colorize: true
+          colorize: true,
 
-          }
+          translateTime: "HH:MM:ss",
 
-        }
+          ignore: "pid,hostname",
+
+        },
+
+      },
 
 });

@@ -1,20 +1,42 @@
 import pinoHttp from "pino-http";
 import { logger } from "./logger";
 
-export const httpLogger = pinoHttp({
+export const httpLogger = pinoHttp({logger,
 
-  logger,
+  // only log important request data
+  serializers: {
 
-  customSuccessMessage(req) {
+    req(req) {
+      return {
+        method: req.method,
+        url: req.url,
+      };
+    },
 
-    return `${req.method} ${req.url} completed`;
+    res(res) {
+      return {
+        statusCode: res.statusCode,
+      };
+    },
+  },
+
+
+  // success log format
+  customSuccessMessage(req, res) {
+
+    return `${req.method} ${req.url} ${res.statusCode}`;
 
   },
 
-  customErrorMessage(req) {
 
-    return `${req.method} ${req.url} failed`;
+  // error log format
+  customErrorMessage(req, res) {
 
-  }
+    return `${req.method} ${req.url} ${res.statusCode}`;
+
+  },
+
+  // remove noisy logs
+  quietReqLogger: true,
 
 });

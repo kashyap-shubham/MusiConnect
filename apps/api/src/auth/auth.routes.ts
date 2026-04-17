@@ -5,6 +5,7 @@ import { requireAuth } from "@/middleware/requireAuth";
 import { asyncHandler } from "@/utils/asyncHandler";
 import { ApiError } from "@/errors/ApiError";
 import { prisma } from "@/lib/prisma";
+import { logger } from "@repo/logger";
 
 const authRouter:Router = Router();
 
@@ -74,7 +75,7 @@ authRouter.get("/google/callback", passport.authenticate("google", {
           if (err) {
             return next(err);
           }
-    
+          
           // enforece device limtit and if reached then delete last session
           // const existingSessions = await prisma.session.findMany({
           //   where: {userId: user.id},
@@ -132,44 +133,45 @@ authRouter.get(
   })
 );
 
-/**
- * Logout
- */
+// Logout
 authRouter.post("/logout", requireAuth, asyncHandler(async (req, res) => {
 
-    // delete session when logout
-    await prisma.session.delete({
-      where: {sessionId: req.sessionID},
+  // delete session when logout
+  logger.debug({sessionId: req.sessionID},"logout session:",);
+  const deleted = await prisma.session.deleteMany({
+    where: {sessionId: req.sessionID},
+  });
+
+  await new Promise<void>((resolve, reject) => {
+    req.logout((err) => {
+      if (err) return reject(err);
+      resolve();
+    });
+  });
+
+  logger.debug({count: deleted.count}, "deleted sessions:");
+
+  req.session.destroy((err) => {
+    if (err) {
+      throw new ApiError(500, "Logout failed");
+    }
+    res.clearCookie("connect.sid", {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: env.NODE_ENV === "production",
+      path: "/",
     });
 
-    await new Promise<void>((resolve, reject) => {
-      req.logout((err) => {
-        if (err) return reject(err);
-        resolve();
-      });
+    res.status(200).json({
+      success: true,
+      data: null,
     });
+  });
 
-    req.session.destroy((err) => {
-      if (err) {
-        throw new ApiError(500, "Logout failed");
-      }
-      res.clearCookie("connect.sid", {
-        httpOnly: true,
-        sameSite: "lax",
-        secure: env.NODE_ENV === "production",
-        path: "/",
-      });
-
-      res.json({
-        success: true,
-        data: null,
-      });
-    });
-
-  })
-);
+}));
 
 
+// view all sessions
 authRouter.get("/sessions", requireAuth, asyncHandler(async (req, res) => {
   
   const user = req.user
@@ -213,6 +215,7 @@ authRouter.get("/sessions", requireAuth, asyncHandler(async (req, res) => {
 }));
 
 
+// logout from all the sessions
 authRouter.post("/logout-all", requireAuth, asyncHandler(async (req, res) => {
 
   const user = req.user;
