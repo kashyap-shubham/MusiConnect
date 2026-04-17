@@ -5,7 +5,7 @@ export async function getCurrentUserServer(
   cookie: string,
 ): Promise<UserDTO | null> {
   try {
-    return await serverApi<UserDTO>("auth/me", cookie);
+    return await serverApi<UserDTO>("/auth/me", cookie);
   } catch {
     return null;
   }

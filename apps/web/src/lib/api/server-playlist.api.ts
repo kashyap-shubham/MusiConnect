@@ -5,7 +5,7 @@ export async function getPlaylistsServer(
   cookie: string,
 ): Promise<PlaylistDTO[]> {
   try {
-    return await serverApi<PlaylistDTO[]>("playlists", cookie);
+    return await serverApi<PlaylistDTO[]>("/playlists", cookie);
   } catch {
     return [];
   }
