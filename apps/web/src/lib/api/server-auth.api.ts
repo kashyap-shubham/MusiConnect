@@ -1,22 +1,10 @@
-import { headers } from "next/headers";
 import { UserDTO } from "@repo/types";
 
-export type User = {
-  id: string
-  email: string
-  name: string
-  image?: string
-}
 
-
-export async function getCurrentUserServer(): Promise<UserDTO | null> {
+export async function getCurrentUserServer(cookie: string): Promise<UserDTO | null> {
 
   try {
-
-    const cookie = (await headers()).get("cookie")
-  
-    if (!cookie) return null
-  
+ 
     const res = await fetch(
   
       `${process.env.API_URL}/auth/me`,
@@ -28,16 +16,16 @@ export async function getCurrentUserServer(): Promise<UserDTO | null> {
   
         cache: "no-store",
       }
-    )
+    );
   
-    if (!res.ok) return null
+    if (!res.ok) return null;
   
-    const result = await res.json()
+    const result = await res.json();
   
-    return result.data
+    return result.data;
 
   } catch{
-    return null
+    return null;
   }
 
 }

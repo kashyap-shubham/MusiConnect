@@ -2,6 +2,7 @@ import Header from "@/components/app/Header";
 import Sidebar from "@/components/app/Sidebar";
 import { getCurrentUserServer } from "@/lib/api/server-auth.api";
 import { getPlaylistsServer } from "@/lib/api/server-playlist.api";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 
@@ -11,15 +12,21 @@ export default async function AppLayout({
     children: React.ReactNode
 }) {
 
-    // verify session
-    const user = await getCurrentUserServer();
+    const cookie = (await headers()).get("cookie");
 
+    if (!cookie) {
+        redirect("/signin");
+    }
+    const [user, playlists] = await Promise.all([
+        getCurrentUserServer(cookie),
+        getPlaylistsServer(cookie),
+    ]);
+    
+    // verify session
     if (!user) {
         redirect("signin");
     }
     
-    // fetch sidebar playlist data
-    const playlists = await getPlaylistsServer();
 
     return (
         <div className="h-screen flex text-white">
