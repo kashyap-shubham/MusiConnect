@@ -1,6 +1,6 @@
 import { headers } from "next/headers"
 
-export async function getPlaylistsServer(userId: string) {
+export async function getPlaylistsServer() {
 
   const cookie = (await headers()).get("cookie")
 
@@ -8,7 +8,7 @@ export async function getPlaylistsServer(userId: string) {
 
   const res = await fetch(
 
-    `${process.env.NEXT_PUBLIC_API_URL}/playlists?userId=${userId}`,
+    `${process.env.API_URL}/playlists`,
 
     {
       headers: {

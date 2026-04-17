@@ -15,11 +15,11 @@ export default async function AppLayout({
     const user = await getCurrentUserServer();
 
     if (!user) {
-        redirect("signin")
+        redirect("signin");
     }
     
     // fetch sidebar playlist data
-    const playlists = await getPlaylistsServer(user.id)
+    const playlists = await getPlaylistsServer();
 
     return (
         <div className="h-screen flex text-white">

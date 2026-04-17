@@ -5,7 +5,7 @@ import { requireAuth } from "@/middleware/requireAuth";
 import { asyncHandler } from "@/utils/asyncHandler";
 import { ApiError } from "@/errors/ApiError";
 import { prisma } from "@/lib/prisma";
-import { logger } from "@repo/logger";
+
 
 const authRouter:Router = Router();
 
@@ -137,7 +137,6 @@ authRouter.get(
 authRouter.post("/logout", requireAuth, asyncHandler(async (req, res) => {
 
   // delete session when logout
-  logger.debug({sessionId: req.sessionID},"logout session:",);
   const deleted = await prisma.session.deleteMany({
     where: {sessionId: req.sessionID},
   });
@@ -149,7 +148,6 @@ authRouter.post("/logout", requireAuth, asyncHandler(async (req, res) => {
     });
   });
 
-  logger.debug({count: deleted.count}, "deleted sessions:");
 
   req.session.destroy((err) => {
     if (err) {

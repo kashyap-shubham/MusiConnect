@@ -65,7 +65,6 @@ export class PlaylistRepository {
       select: {
         id: true,
         name: true,
-        description: true,
         createdAt: true,
 
         _count: {
