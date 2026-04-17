@@ -24,7 +24,6 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
   function addPlaylist(name: string) {
 
     const now = new Date().toISOString();
-    const optimisticID = crypto.randomUUID()
     const newPlaylist: PlaylistDTO = {
       id: crypto.randomUUID(),
       name,

@@ -2,7 +2,6 @@ import { prisma } from "@/lib/prisma";
 
 export interface CreatePlaylistRepoInput {
   name: string;
-  description?: string;
   userId: string;
 }
 
@@ -11,16 +10,19 @@ export class PlaylistRepository {
     return prisma.playlist.create({
       data: {
         name: data.name,
-        description: data.description,
         userId: data.userId,
       },
 
       select: {
         id: true,
         name: true,
-        description: true,
-        userId: true,
         createdAt: true,
+
+        _count: {
+          select: {
+            songs: true,
+          }
+        }
       },
     });
   }
@@ -32,7 +34,6 @@ export class PlaylistRepository {
       select: {
         id: true,
         name: true,
-        description: true,
         userId: true,
         createdAt: true,
 

@@ -6,14 +6,9 @@ export const createPlaylistSchema = z.object({
 
     name: z
       .string()
+      .trim()
       .min(1, "Playlist name is required")
       .max(255, "Playlist name too long"),
-
-    description: z
-      .string()
-      .max(500)
-      .optional()
-
   })
 
 });
