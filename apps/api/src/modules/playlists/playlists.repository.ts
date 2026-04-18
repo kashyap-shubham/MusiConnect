@@ -1,13 +1,14 @@
 import { prisma } from "@/lib/prisma";
+import { CreatePlaylistInput } from "./schemas/create-playlist.schema";
 
-export interface CreatePlaylistRepoInput {
-  name: string;
+export type CreatePlaylistRepoInput = CreatePlaylistInput & {
   userId: string;
 }
 
 export class PlaylistRepository {
+  
   async create(data: CreatePlaylistRepoInput) {
-    return prisma.playlist.create({
+    const playlist = await prisma.playlist.create({
       data: {
         name: data.name,
         userId: data.userId,
@@ -17,46 +18,111 @@ export class PlaylistRepository {
         id: true,
         name: true,
         createdAt: true,
-
+        
         _count: {
           select: {
-            songs: true,
+            songs: true
           }
         }
-      },
+      }
     });
+
+    return {
+      id: playlist.id,
+      name: playlist.name,
+      createdAt: playlist.createdAt,
+      songsCount: playlist._count.songs 
+    }
+
   }
 
-  async findById(id: string) {
-    return prisma.playlist.findUnique({
-      where: { id },
+  async findDetailsPlaylistId(playlistId: string) {
+
+    const playlist = await prisma.playlist.findUnique({
+      where: {id: playlistId},
 
       select: {
         id: true,
         name: true,
-        userId: true,
         createdAt: true,
-
         songs: {
+          orderBy: {
+            addedAt: "asc"
+          },
           select: {
-            songId: true,
-
+            addedAt: true,
             song: {
               select: {
                 id: true,
                 title: true,
-                imageUrl: true,
                 duration: true,
-              },
-            },
-          },
-        },
-      },
+                imageKey: true,
+                album: {
+                  select: {
+                    id: true,
+                    title: true,
+                  }
+                },
+                artists: {
+                  select: {
+                    artist: {
+                      select: {
+                        id: true,
+                        name: true
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     });
+
+    if (!playlist) {
+      return null;
+    }
+
+    return {
+      id: playlist.id,
+      name: playlist.name,
+      createdAt: playlist.createdAt,
+      songs: playlist.songs.map(s => ({
+        id: s.song.id,
+        title: s.song.title,
+        duration: s.song.duration,
+        imageKey: s.song.imageKey,
+        album: s.song.album,
+        artists: s.song.artists.map(a => a.artist),
+        addedAt: s.addedAt
+      }))
+    };
   }
 
+
+  async findOwnershipById(playlistId: string) {
+
+    return prisma.playlist.findUnique({
+
+      where: { id: playlistId },
+
+      select: {
+
+        id: true,
+
+        userId: true
+
+      }
+
+    })
+
+  }
+
+
   async findByUserId(userId: string) {
-    return prisma.playlist.findMany({
+      
+      const playlists = await prisma.playlist.findMany({
       where: { userId },
 
       orderBy: {
@@ -75,6 +141,42 @@ export class PlaylistRepository {
         },
       },
     });
+
+    return playlists.map(p => ({
+      id: p.id,
+      name: p.name,
+      createdAt: p.createdAt,
+      songsCount: p._count.songs
+    }))
+
+  }
+
+
+  async updateName(playlistId: string, name: string) {
+
+    const playlist = await prisma.playlist.update({
+      where: {id: playlistId},
+      data: {name},
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+
+        _count: {
+          select: {
+            songs: true
+          }
+        }
+      }
+    });
+
+    return {
+      id: playlist.id,
+      name: playlist.name,
+      createdAt: playlist.createdAt,
+      songsCount: playlist._count.songs
+    }
+
   }
 
   async addSongToPlaylist(playlistId: string, songId: string) {
@@ -105,7 +207,7 @@ export class PlaylistRepository {
   }
 
   async delete(playlistId: string) {
-    return prisma.playlist.delete({
+    await prisma.playlist.delete({
       where: { id: playlistId },
     });
   }
