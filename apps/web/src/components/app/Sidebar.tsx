@@ -229,7 +229,7 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
                       group">
 
                   <Link
-                    href={`/playlists/${playlist.id}`}
+                    href={`/playlist/${playlist.id}`}
                     className={cn("flex-1 truncate py-1", 
                         pathname === `/playlists/${playlist.id}` ? "text-white" : "text-white/70 hover:text-white"
                     )}>
