@@ -7,6 +7,7 @@ import { createPlaylistSchema } from "./schemas/create-playlist.schema";
 import { addSongToPlaylistSchema } from "./schemas/add-song-to-playlist.schema";
 import { removeSongFromPlaylistSchema } from "./schemas/remove-song-from-playlist.schema";
 import { deletePlaylistSchema } from "./schemas/delete-playlist.schema";
+import { updatePlaylistSchema } from "./schemas/update-playlist.schema";
 
 
 const playlistRouter: Router = Router();
@@ -20,7 +21,10 @@ playlistRouter.post("/", requireAuth, validate(createPlaylistSchema), asyncHandl
 playlistRouter.get("/", requireAuth, asyncHandler(playlistController.getUserPlaylists)); // Todo => pagination is optional
 
 // get particular playlist details
-playlistRouter.get("/:playlistId", requireAuth, asyncHandler(playlistController.getPlaylistById));  // Todo => pagination is optional
+playlistRouter.get("/:playlistId", requireAuth, asyncHandler(playlistController.getPlaylistDetails));  // Todo => pagination is optional
+
+// rename playlist
+playlistRouter.patch("/:playlistId", requireAuth, validate(updatePlaylistSchema), asyncHandler(playlistController.renamePlaylist));
 
 // add songs to the playlist
 playlistRouter.post("/:playlistId/songs", requireAuth, validate(addSongToPlaylistSchema), asyncHandler(playlistController.addSongToPlaylist));
