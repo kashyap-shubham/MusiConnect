@@ -14,7 +14,7 @@ export function renamePlaylist(
   playlistId: string,
   name: string,
 ): Promise<PlaylistDTO> {
-  return api<PlaylistDTO>(`playlists/${playlistId}`, {
+  return api<PlaylistDTO>(`/playlists/${playlistId}`, {
     method: "PATCH",
     body: JSON.stringify({
       name,
@@ -23,7 +23,7 @@ export function renamePlaylist(
 }
 
 export async function deletePlaylist(playlistId: string): Promise<void> {
-  return api<void>(`playlists/${playlistId}`, {
+  return api<void>(`/playlists/${playlistId}`, {
     method: "DELETE",
   });
 }
