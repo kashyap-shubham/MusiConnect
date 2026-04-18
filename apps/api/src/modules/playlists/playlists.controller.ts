@@ -15,8 +15,7 @@ export class PlaylistController {
 
     const userId = req.user!.id;
 
-    const playlist =
-      await this.playlistService.createPlaylist(
+    const playlist = await this.playlistService.createPlaylist(
         userId,
         req.body
       );
@@ -29,16 +28,12 @@ export class PlaylistController {
   };
 
 
-  getPlaylistById = async (req: Request, res: Response) => {
+  getPlaylistDetails = async (req: Request, res: Response) => {
 
     const { playlistId } = req.params as { playlistId: string };
+    const userId = req.user!.id;
 
-    const playlist =
-      await this.playlistService.getPlaylistById(playlistId);
-
-    if (!playlist) {
-      throw new ApiError(404, "Playlist not found");
-    }
+    const playlist = await this.playlistService.getPlaylistDetails(userId, playlistId);
 
     return res.status(200).json({
       success: true,
@@ -52,8 +47,7 @@ export class PlaylistController {
 
     const userId = req.user!.id;
 
-    const playlists =
-      await this.playlistService.getUserPlaylists(userId);
+    const playlists = await this.playlistService.getUserPlaylists(userId);
 
     return res.status(200).json({
       success: true,
@@ -61,6 +55,19 @@ export class PlaylistController {
     });
 
   };
+
+
+  renamePlaylist = async (req: Request, res: Response) => {
+    
+    const { playlistId } = req.params as {playlistId: string};
+    
+    const playlist = await this.playlistService.renamePlaylist(req.user!.id, playlistId, req.body.name);
+
+    return res.status(200).json({
+      success: true,
+      data: playlist,
+    })
+  }
 
 
   addSongToPlaylist = async (req: Request, res: Response) => {
