@@ -7,6 +7,7 @@ import { useState } from "react";
 import CreatePlaylistModal from "./CreatePlaylistModal";
 import PlaylistMenu from "./PlaylistMenu";
 import { PlaylistDTO } from "@repo/types";
+import { createPlaylist, deletePlaylist, renamePlaylist } from "@/lib/api/client-playlist.api";
 
 
 type SidebarProps = {
@@ -21,19 +22,75 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
 
   const pathname = usePathname();
 
-  function addPlaylist(name: string) {
+  async function handleCreatePlaylist(name: string) {
 
-    const now = new Date().toISOString();
-    const newPlaylist: PlaylistDTO = {
-      id: crypto.randomUUID(),
+    const optimisticId = crypto.randomUUID();
+    
+    const optimisticPlaylist: PlaylistDTO = {
+      id: optimisticId,
       name,
-      userId: "",
-      isPublic: false,
-      createdAt: now,
-      updatedAt: now,
-    };
+      createdAt: new Date().toISOString(),
+      songsCount: 0
+    }
+  
+    setPlaylists((prev) => [optimisticPlaylist, ...prev]);
 
-    setPlaylists((prev) => [newPlaylist, ...prev]);
+    try {
+      const realPlaylist = await createPlaylist(name);
+
+      setPlaylists(prev => prev.map(p => p.id === optimisticId ? realPlaylist : p));
+
+    } catch (error) {
+      setPlaylists(prev => prev.filter(p => p.id !== optimisticId));
+    }
+  }
+
+  async function handleRenamePlaylist(playlistId: string, newName: string) {
+    
+    const previous = [...playlists];
+
+    setPlaylists(prev =>
+      prev.map(p =>
+        p.id === playlistId
+          ? {
+              ...p,
+              name: newName
+            }
+          : p
+      )
+    )
+
+
+
+    try {
+
+      await renamePlaylist(playlistId, newName)
+
+    } catch {
+
+      setPlaylists(previous)
+
+    }
+
+  }
+
+  async function handleDeletePlaylist(playlistId: string) {
+
+    const previous = [...playlists];
+    
+    setPlaylists(prev =>
+      prev.filter(p =>
+        p.id !== playlistId
+      )
+    )
+
+    try {
+      await deletePlaylist(playlistId)
+
+    } catch {
+      setPlaylists(previous)
+    }
+
   }
 
   const menuItems = [
@@ -172,37 +229,27 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
                       group">
 
                   <Link
-                    href={`/playlist/${playlist.id}`}
-                    className="
-                        flex-1
-                        truncate
-                        py-1">
+                    href={`/playlists/${playlist.id}`}
+                    className={cn("flex-1 truncate py-1", 
+                        pathname === `/playlists/${playlist.id}` ? "text-white" : "text-white/70 hover:text-white"
+                    )}>
 
                     {playlist.name}
                   </Link>
 
                   <PlaylistMenu
-                    onRename={() => {
+                    onRename={async () => {
                       const newName = prompt("Rename playlist");
 
-                      if (!newName) return;
+                      if (!newName?.trim()) return;
 
-                      setPlaylists((prev) =>
-                        prev.map((p) =>
-                          p.id === playlist.id
-                            ? {
-                                ...p,
-                                name: newName,
-                              }
-                            : p,
-                        ),
-                      );
+                      await handleRenamePlaylist(playlist.id, newName);
                     }}
-                    onDelete={() => {
-                      setPlaylists((prev) =>
-                        prev.filter((p) => p.id !== playlist.id),
-                      );
+                      
+                    onDelete={async () => {
+                      await handleDeletePlaylist(playlist.id);
                     }}
+
                     onFavourite={() => {
                       console.log("favourite playlist", playlist.id);
                     }}
@@ -219,7 +266,7 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
       <CreatePlaylistModal
         open={openModal}
         onClose={() => setOpenModal(false)}
-        onCreate={addPlaylist}
+        onCreate={handleCreatePlaylist}
       />
     </div>
   );

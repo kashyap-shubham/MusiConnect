@@ -28,6 +28,6 @@ export interface PlaylistSongDTO {
 export interface PlaylistDetailsDTO {
   id: string;
   name: string;
-  createAt: string;
+  createdAt: string;
   songs: PlaylistSongDTO[]
 }

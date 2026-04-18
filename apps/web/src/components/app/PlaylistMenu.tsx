@@ -2,12 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 
-import {
-  MoreHorizontal,
-  Pencil,
-  Trash2,
-  Star
-} from "lucide-react"
+import { MoreHorizontal, Pencil, Trash2, Star } from "lucide-react"
 
 
 interface Props {
@@ -19,41 +14,23 @@ interface Props {
 }
 
 
-export default function PlaylistMenu({
+export default function PlaylistMenu({ onRename, onDelete, onFavourite }: Props) {
 
-  onRename,
-  onDelete,
-  onFavourite
+  const [open, setOpen] = useState(false);
 
-}: Props) {
+  const [position, setPosition] = useState({ top: 0, left: 0 });
 
-  const [open, setOpen] =
-    useState(false)
-
-  const [position, setPosition] =
-    useState({
-
-      top: 0,
-      left: 0
-
-    })
-
-  const buttonRef =
-    useRef<HTMLButtonElement>(null)
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
 
-  function openMenu(
-    e: React.MouseEvent
-  ) {
+  function openMenu(e: React.MouseEvent) {
 
     e.preventDefault()
     e.stopPropagation()
 
-    const rect =
-      buttonRef.current?.getBoundingClientRect()
+    const rect = buttonRef.current?.getBoundingClientRect()
 
     if (!rect) return
-
 
     setPosition({
 
