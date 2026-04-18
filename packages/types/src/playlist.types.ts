@@ -4,3 +4,30 @@ export interface PlaylistDTO {
   createdAt: string;
   songsCount: number;
 }
+
+
+export interface PlaylistSongDTO {
+  id: string;
+  title: string;
+  duration: number;
+  imageKey: string | null;
+  addedAt: string;
+
+  album: {
+    id: string;
+    title: string;
+  } | null;
+
+  artists: {
+    id: string;
+    name: string;
+  } [];
+}
+
+
+export interface PlaylistDetailsDTO {
+  id: string;
+  name: string;
+  createAt: string;
+  songs: PlaylistSongDTO[]
+}
