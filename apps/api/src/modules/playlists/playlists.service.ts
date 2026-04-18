@@ -10,6 +10,19 @@ export class PlaylistService {
     this.playlistRepository = new PlaylistRepository();
   }
 
+  private async ensureOwnership(userId: string, playlistId: string) {
+
+    const playlist = await this.playlistRepository.findOwnershipById(playlistId);
+
+    if (!playlist) {
+      throw new ApiError(404, "Playlist not found");
+    }
+
+    if (playlist.userId !== userId) {
+      throw new ApiError(403, "Not allowed to modify this playlist");
+    }
+  }
+
 
   async createPlaylist(
     userId: string,
@@ -24,9 +37,17 @@ export class PlaylistService {
   }
 
 
-  async getPlaylistById(id: string) {
+  async getPlaylistDetails(userId: string, playlistId: string) {
 
-    return this.playlistRepository.findById(id);
+    await this.ensureOwnership(userId, playlistId);
+
+    const playlist = await this.playlistRepository.findDetailsPlaylistId(playlistId);
+
+    if (!playlist) {
+      throw new ApiError(404, "Playlist not found");
+    }
+
+    return playlist;
 
   }
 
@@ -38,22 +59,21 @@ export class PlaylistService {
   }
 
 
+  async renamePlaylist(userId: string, playlistId: string, name: string) {
+
+    await this.ensureOwnership(userId, playlistId);
+
+    return this.playlistRepository.updateName(playlistId, name);
+  };
+
+
   async addSongToPlaylist(
     userId: string,
     playlistId: string,
     songId: string
   ) {
 
-    const playlist =
-      await this.playlistRepository.findById(playlistId);
-
-    if (!playlist) {
-      throw new ApiError(404, "Playlist not found");
-    }
-
-    if (playlist.userId !== userId) {
-      throw new ApiError(403, "Not allowed to modify this playlist");
-    }
+    await this.ensureOwnership(userId, playlistId);
 
     return this.playlistRepository.addSongToPlaylist(
       playlistId,
@@ -69,16 +89,7 @@ export class PlaylistService {
     songId: string
   ) {
 
-    const playlist =
-      await this.playlistRepository.findById(playlistId);
-
-    if (!playlist) {
-      throw new ApiError(404, "Playlist not found");
-    }
-
-    if (playlist.userId !== userId) {
-      throw new ApiError(403, "Not allowed to modify this playlist");
-    }
+    await this.ensureOwnership(userId, playlistId);
 
     return this.playlistRepository.removeSongFromPlaylist(
       playlistId,
@@ -93,17 +104,10 @@ export class PlaylistService {
     playlistId: string
   ) {
 
-    const playlist = await this.playlistRepository.findById(playlistId);
+    await this.ensureOwnership(userId, playlistId);
 
-    if (!playlist) {
-      throw new ApiError(404, "Playlist Not found");
-    }
+    await this.playlistRepository.delete(playlistId)
 
-    if (playlist.userId != userId) {
-      throw new ApiError(403, "Not allowed to delete this playlist");
-    }
-
-    return this.playlistRepository.delete(playlistId);
   }
 
 }
