@@ -69,9 +69,6 @@ export default function ArtistsPage() {
 
     <div className="p-10 space-y-8">
 
-      <Header />
-
-
       {/* page title */}
       <div>
 

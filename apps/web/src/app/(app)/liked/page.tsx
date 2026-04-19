@@ -68,7 +68,6 @@ export default function LikedPage() {
 
     <div className="p-10 space-y-8">
 
-      <Header />
 
       {/* page header */}
       <div>

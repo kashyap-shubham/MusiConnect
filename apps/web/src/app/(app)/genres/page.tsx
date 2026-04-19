@@ -69,9 +69,6 @@ export default function GenresPage() {
 
     <div className="p-10 space-y-8">
 
-      <Header />
-
-
       {/* title */}
       <div>
 

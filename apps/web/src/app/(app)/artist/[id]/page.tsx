@@ -68,8 +68,6 @@ export default function ArtistPage() {
 
     <div className="p-10 space-y-8">
 
-      <Header />
-
 
       {/* artist header */}
       <div className="flex gap-6 items-center">

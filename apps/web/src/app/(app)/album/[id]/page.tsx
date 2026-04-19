@@ -59,8 +59,6 @@ export default function AlbumPage() {
 
     <div className="p-10 space-y-8">
 
-      <Header />
-
 
       {/* album header */}
       <div className="flex gap-6 items-center">

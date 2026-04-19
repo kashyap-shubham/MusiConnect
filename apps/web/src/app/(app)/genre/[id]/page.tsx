@@ -42,8 +42,6 @@ export default function GenrePage() {
 
     <div className="p-10 space-y-8">
 
-      <Header />
-
       <div>
 
         <h1 className="text-3xl font-semibold">
