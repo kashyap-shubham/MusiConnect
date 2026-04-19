@@ -17,6 +17,7 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   sessions  Session[]
+  ListeningHistory    ListeningHistory[]
 }
 
 model Artist {
@@ -44,6 +45,7 @@ model Album {
 
   createdAt DateTime @default(now())
   updatedAt     DateTime  @updatedAt
+    
 
   @@index([artistId])
 }
@@ -64,6 +66,7 @@ model Song {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  ListeningHistory    ListeningHistory[]
 
   @@index([title])
   @@index([albumId])
@@ -119,4 +122,21 @@ model Session {
 
   @@index([userId])
   @@index([expiresAt])
+}
+
+
+model ListeningHistory {
+  id        String        @id @default(uuid())
+  userId    String
+  songId    String
+  playedAt  DateTime      @default(now())
+  positionSeconds   Int?
+  durationPlayed    Int?
+  sessionId String
+  user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  song      Song  @relation(fields: [songId], references: [id], onDelete: Cascade)
+
+  @@index([userId, playedAt])
+  @@index([songId])
+  @@index([userId, songId])
 }
