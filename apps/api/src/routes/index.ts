@@ -8,6 +8,7 @@ import albumRouter from "@/modules/albums/albums.routes";
 import songRouter from "@/modules/songs/songs.routes";
 
 import playlistRouter from "@/modules/playlists/playlists.routes";
+import listeningHistoryRouter from "@/modules/listening-history/listening-history.routes";
 
 const router: Router = Router();
 
@@ -22,5 +23,8 @@ router.use("/songs", songRouter);
 
 // User Library Routes
 router.use("/playlists", playlistRouter);
+
+// ListeningHistory Routes
+router.use("/songs", listeningHistoryRouter)
 
 export default router;
