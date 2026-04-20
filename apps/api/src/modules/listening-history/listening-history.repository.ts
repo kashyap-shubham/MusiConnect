@@ -20,7 +20,7 @@ export class ListeningHistoryRepository {
 
         const history = await prisma.listeningHistory.findMany({
 
-            where: {id: userId},
+            where: {userId},
             orderBy: {
                 playedAt: "desc"
             },
