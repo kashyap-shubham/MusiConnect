@@ -132,7 +132,7 @@ model ListeningHistory {
   playedAt  DateTime      @default(now())
   positionSeconds   Int?
   durationPlayed    Int?
-  sessionId String
+  sessionId String?
   user      User  @relation(fields: [userId], references: [id], onDelete: Cascade)
   song      Song  @relation(fields: [songId], references: [id], onDelete: Cascade)
 
