@@ -20,7 +20,7 @@ export default function Header({ user }: HeaderProps) {
       <div className="flex items-center gap-3">
         <button
           onClick={() => router.back()}
-          className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition"
+          className="p-2 rounded-full bg-white/5 hover:bg-white/50 transition hover:cursor-pointer"
         >
           <ChevronLeft size={18} />
         </button>
@@ -28,7 +28,7 @@ export default function Header({ user }: HeaderProps) {
         {/* RIGHT NAVIGATION */}
         <button
           onClick={() => router.forward()}
-          className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition"
+          className="p-2 rounded-full bg-white/5 hover:bg-white/50 transition hover:cursor-pointer"
         >
           <ChevronRight size={18} />
         </button>
@@ -38,7 +38,7 @@ export default function Header({ user }: HeaderProps) {
       <div className="flex items-center gap-3">
         <button
           onClick={() => router.push("/explore")}
-          className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition"
+          className="p-2 rounded-full bg-white/5 hover:bg-white/50 transition hover:cursor-pointer"
         >
           <Home size={18} />
         </button>
@@ -69,7 +69,7 @@ export default function Header({ user }: HeaderProps) {
 
       {/* RIGHT SIDE */}
       <div className="flex items-center gap-4">
-        <button className="p-2 rounded-full bg-white/5 hover:bg-white/10 transition">
+        <button className="p-2 rounded-full bg-white/5 hover:bg-white/50 transition hover:cursor-pointer">
           <Bell size={18} />
         </button>
 

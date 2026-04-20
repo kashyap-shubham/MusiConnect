@@ -137,7 +137,7 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
     <div className="h-screen flex flex-col px-6 py-8">
       
       {/* LOGO */}
-      <h1 className="text-xl font-semibold mb-10">MusiConnect</h1>
+      <h1 className="text-xl font-semibold mb-10 cursor-pointer">MusiConnect</h1>
 
       {/* MENU */}
       <div className="mb-8">
@@ -207,7 +207,7 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
               flex items-center gap-3
               text-sm
               text-white/70
-              hover:text-white">
+              hover:text-white hover:cursor-pointer">
 
           <Plus size={18} />
           Create New

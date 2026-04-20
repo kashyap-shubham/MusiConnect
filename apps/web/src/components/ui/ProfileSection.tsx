@@ -86,9 +86,10 @@ export default function ProfileSection({ user }: Props) {
         rounded-lg
         bg-white/5
         border border-white/10
-        hover:bg-white/10
+        hover:bg-white/15
         transition
         w-52
+        hover: cursor-pointer
       "
       >
         {/* avatar */}

@@ -15,20 +15,8 @@ export async function getPlaylistsServer(
 export async function getPlaylistDetailsServer(cookie: string, playlistId: string): Promise<PlaylistDetailsDTO | null> {
 
   try {
-    const res = await fetch(`${process.env.API_URL}/playlists/${playlistId}`,
-      {
-        headers: {
-          cookie
-        },
-        cache: "no-store"
-      }
-    );
 
-    if (!res.ok) return null;
-
-    const result = await res.json();
-
-    return result.data;
+    return await serverApi<PlaylistDetailsDTO>(`/playlists/${playlistId}`, cookie);
 
   } catch {
     return null;
