@@ -1,32 +1,37 @@
 import Image from "next/image";
 
-interface Song {
+interface SongRowData {
 
-  id: string
-  title: string
-  artist: string
-  imageUrl: string
-  duration?: string
+  id: string;
+  title: string;
+  artist: string;
+  imageUrl: string;
+  duration?: string;
 
 }
 
 interface Props {
 
-  index: number
-  song: Song
+  index: number;
+  song: SongRowData;
+  onClick?: () => void;
+  rightSlot?: React.ReactNode;
 
 }
 
 export default function SongRow({
 
   index,
-  song
+  song,
+  onClick,
+  rightSlot
 
 }: Props) {
 
   return (
 
     <div
+      onClick={onClick}
       className="
         flex
         items-center
@@ -39,7 +44,7 @@ export default function SongRow({
       "
     >
 
-      {/* number */}
+      {/* index */}
       <div className="text-sm text-neutral-400 w-4">
         {index}
       </div>
@@ -71,11 +76,14 @@ export default function SongRow({
 
       </div>
 
+      {/* custom right slot (heart/menu late) */}
+      {rightSlot}
+
 
       {/* duration */}
       {song.duration && (
 
-        <div className="text-xs text-neutral-400">
+        <div className="text-xs text-neutral-400 w-12 text-right">
 
           {song.duration}
 
