@@ -5,3 +5,4 @@ export * from "./playlist.types";
 export * from "./api.types";
 export * from "./auth.types";
 export * from "./recent-song.types";
+export * from "./favourite.types";
