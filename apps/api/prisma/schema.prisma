@@ -17,7 +17,8 @@ model User {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   sessions  Session[]
-  ListeningHistory    ListeningHistory[]
+  listeningHistory    ListeningHistory[]
+  favourite Favourite[]
 }
 
 model Artist {
@@ -139,4 +140,26 @@ model ListeningHistory {
   @@index([userId, playedAt])
   @@index([songId])
   @@index([userId, songId])
+}
+
+
+model Favourite {
+  id            String        @id   @default(uuid())
+  userId        String
+  entityType    FavouriteEntityType
+  entityId      String
+  createdAt     DateTime      @default(now())
+
+
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+
+  @@index([userId, entityType])
+  @@unique([userId, entityType, entityId])
+}
+
+
+enum FavouriteEntityType {
+  SONG
+  PLAYLIST
 }

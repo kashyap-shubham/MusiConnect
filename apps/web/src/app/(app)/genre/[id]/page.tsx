@@ -1,21 +1,18 @@
 import Header from "@/components/app/Header";
-import SongRow from "@/components/app/explore/SongRow";
+import SongRow from "@/components/app/SongRow";
 
 const genre = {
-
   id: "1",
-  name: "Hip Hop"
-
+  name: "Hip Hop",
 };
 
 const songs = [
-
   {
     id: "1",
     title: "Sicko Mode",
     artist: "Travis Scott",
     imageUrl: "/artists/artist1.jpg",
-    duration: "5:12"
+    duration: "5:12",
   },
 
   {
@@ -23,7 +20,7 @@ const songs = [
     title: "God's Plan",
     artist: "Drake",
     imageUrl: "/artists/artist2.jpg",
-    duration: "3:18"
+    duration: "3:18",
   },
 
   {
@@ -31,50 +28,24 @@ const songs = [
     title: "HUMBLE",
     artist: "Kendrick Lamar",
     imageUrl: "/artists/artist3.jpg",
-    duration: "2:57"
+    duration: "2:57",
   },
-
 ];
 
 export default function GenrePage() {
-
   return (
-
     <div className="p-10 space-y-8">
-
       <div>
+        <h1 className="text-3xl font-semibold">{genre.name}</h1>
 
-        <h1 className="text-3xl font-semibold">
-
-          {genre.name}
-
-        </h1>
-
-        <p className="text-neutral-400 mt-1">
-
-          Songs in this genre
-
-        </p>
-
+        <p className="text-neutral-400 mt-1">Songs in this genre</p>
       </div>
-
 
       <div className="bg-neutral-900 rounded-xl p-4">
-
         {songs.map((song, i) => (
-
-          <SongRow
-            key={song.id}
-            index={i + 1}
-            song={song}
-          />
-
+          <SongRow key={song.id} index={i + 1} song={song} />
         ))}
-
       </div>
-
     </div>
-
   );
-
 }

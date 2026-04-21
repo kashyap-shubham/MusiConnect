@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import SectionHeader from "@/components/shared/SectionHeader";
 import VerticalScrollArrow from "@/components/ui/VerticalScrollArrow";
-import SongRow from "./SongRow";
+import SongRow from "../SongRow";
 import cn from "@/lib/utils/cn";
 
 export interface Song {
