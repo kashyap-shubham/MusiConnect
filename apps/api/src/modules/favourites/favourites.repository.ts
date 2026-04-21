@@ -8,7 +8,7 @@ export type CreateFavouriteInput = ToggleFavouriteInput & {
 }
 
 
-export class FavuriteRepository {
+export class FavouriteRepository {
 
 
     async findOne(userId: string, entityId: string, entityType: "SONG" | "PLAYLIST") {
