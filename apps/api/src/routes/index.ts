@@ -9,6 +9,7 @@ import songRouter from "@/modules/songs/songs.routes";
 
 import playlistRouter from "@/modules/playlists/playlists.routes";
 import listeningHistoryRouter from "@/modules/listening-history/listening-history.routes";
+import favouriteRouter from "@/modules/favourites/favourites.routes";
 
 const router: Router = Router();
 
@@ -26,5 +27,8 @@ router.use("/playlists", playlistRouter);
 
 // ListeningHistory Routes
 router.use("/songs", listeningHistoryRouter)
+
+// Favourites Routes
+router.use("/favourites", favouriteRouter);
 
 export default router;
