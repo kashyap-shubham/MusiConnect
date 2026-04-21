@@ -3,7 +3,7 @@ import { ToggleFavouriteInput } from "./schemas/toggle-favourite.scheam";
 
 
 
-export class favouriteService {
+export class FavouriteService {
 
     private favouriteReposiotry: FavouriteRepository;
 
@@ -13,7 +13,7 @@ export class favouriteService {
     }
 
 
-    async toggleFavourites(userId: string, input: ToggleFavouriteInput) {
+    async toggleFavourite(userId: string, input: ToggleFavouriteInput) {
 
         const existing = await this.favouriteReposiotry.findOne(
             userId,
@@ -43,5 +43,5 @@ export class favouriteService {
         return this.favouriteReposiotry.findLikedSongs(userId);
     }
 
-    
+
 }
