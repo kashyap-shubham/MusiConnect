@@ -93,35 +93,75 @@ async function seedDatabase() {
       // SONGS
       console.log("Seeding songs...");
 
+      // const songs = [
+      //   {
+      //     id: "55555555-5555-5555-5555-555555555555",
+      //     title: "Choo Lo",
+      //     duration: 230,
+      //     audioKey: "songs/choo-lo.mp3",
+      //     imageKey: null,
+      //     albumId: "33333333-3333-3333-3333-333333333333",
+      //     artistIds: ["11111111-1111-1111-1111-111111111111"],
+      //   },
+      //   {
+      //     id: "66666666-6666-6666-6666-666666666666",
+      //     title: "Aaftab",
+      //     duration: 210,
+      //     audioKey: "songs/aaftab.mp3",
+      //     imageKey: null,
+      //     albumId: "33333333-3333-3333-3333-333333333333",
+      //     artistIds: ["11111111-1111-1111-1111-111111111111"],
+      //   },
+      //   {
+      //     id: "77777777-7777-7777-7777-777777777777",
+      //     title: "Kesariya",
+      //     duration: 215,
+      //     audioKey: "songs/kesariya.mp3",
+      //     imageKey: null,
+      //     albumId: "44444444-4444-4444-4444-444444444444",
+      //     artistIds: ["22222222-2222-2222-2222-222222222222"],
+      //   },
+      // ];
+
       const songs = [
         {
           id: "55555555-5555-5555-5555-555555555555",
-          title: "Choo Lo",
-          duration: 230,
-          audioKey: "songs/choo-lo.mp3",
-          imageKey: null,
+          title: "Bairan",
+          duration: 140,
+          audioKey: "audio/bairan.mp3",
+          imageKey: "images/bairan.jpg",
           albumId: "33333333-3333-3333-3333-333333333333",
           artistIds: ["11111111-1111-1111-1111-111111111111"],
         },
         {
           id: "66666666-6666-6666-6666-666666666666",
-          title: "Aaftab",
-          duration: 210,
-          audioKey: "songs/aaftab.mp3",
-          imageKey: null,
+          title: "Phir Se",
+          duration: 200,
+          audioKey: "audio/phir-se.mp3",
+          imageKey: "images/phir-se.jpg",
           albumId: "33333333-3333-3333-3333-333333333333",
           artistIds: ["11111111-1111-1111-1111-111111111111"],
         },
         {
           id: "77777777-7777-7777-7777-777777777777",
-          title: "Kesariya",
-          duration: 215,
-          audioKey: "songs/kesariya.mp3",
-          imageKey: null,
+          title: "Sitaare",
+          duration: 220,
+          audioKey: "audio/sitaare.mp3",
+          imageKey: "images/sitaare.jpg",
+          albumId: "44444444-4444-4444-4444-444444444444",
+          artistIds: ["22222222-2222-2222-2222-222222222222"],
+        },
+        {
+          id: "99999999-9999-9999-9999-999999999999",
+          title: "Vaari",
+          duration: 210,
+          audioKey: "audio/vaari.mp3",
+          imageKey: "images/vaari.jpg",
           albumId: "44444444-4444-4444-4444-444444444444",
           artistIds: ["22222222-2222-2222-2222-222222222222"],
         },
       ];
+
 
       for (const song of songs) {
         await tx.song.upsert({
