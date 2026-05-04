@@ -187,10 +187,7 @@ export default function ExplorePage() {
 
 
         <ErrorBoundary>
-          <PlayerCard
-            song={playerSong}
-            isPlaying={false}
-          />
+          <PlayerCard />
         </ErrorBoundary>
 
       </div>

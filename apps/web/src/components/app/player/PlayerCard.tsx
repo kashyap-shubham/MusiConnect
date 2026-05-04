@@ -2,182 +2,93 @@
 
 import Image from "next/image";
 import { ListMusic } from "lucide-react";
+import { usePlayerStore } from "@/store/player.store";
 
 import ProgressBar from "./ProgressBar";
 import PlayerControls from "./PlayerControls";
 
-
-export interface Song {
-
-  id: string
-  title: string
-  artist: string
-
-  imageUrl: string
-
-  duration: number
-  currentTime: number
-
-}
-
-
-interface Props {
-
-  song?: Song
-
-  isPlaying?: boolean
-
-  onPlay?: () => void
-  onPause?: () => void
-
-  onNext?: () => void
-  onPrev?: () => void
-
-  onShuffle?: () => void
-  onRepeat?: () => void
-
-}
-
-
-export default function PlayerCard({
-
-  song,
-  isPlaying,
-
-  onPlay,
-  onPause,
-
-  onNext,
-  onPrev,
-
-  onShuffle,
-  onRepeat
-
-}: Props) {
+export default function PlayerCard() {
+  const { currentSong, isPlaying, togglePlay } = usePlayerStore();
 
   return (
-
     <div
       className="
         bg-neutral-900
         rounded-xl
         p-4
-
         h-full
-
         flex
         flex-col
       "
     >
-
       {/* header */}
       <div className="flex items-center justify-between mb-3">
-
-        <span className="text-sm text-neutral-400">
-
-          Player
-
-        </span>
-
+        <span className="text-sm text-neutral-400">Player</span>
         <ListMusic size={18} />
-
       </div>
 
-
-      {/* artwork grows */}
+      {/* artwork */}
       <div className="flex-1 flex flex-col">
-
         <div
           className="
             relative
             w-full
             flex-1
-
             rounded-lg
             overflow-hidden
             bg-neutral-800
-
             flex
             items-center
             justify-center
           "
         >
-
-          {song ? (
-
+          {currentSong ? (
             <Image
-              src={song.imageUrl}
-              alt={song.title}
+              src={currentSong.imageUrl}
+              alt={currentSong.title}
               fill
               className="object-cover"
             />
-
           ) : (
-
             <span className="text-xs text-neutral-500">
-
-              No song selected
-
+              Select a song to play
             </span>
-
           )}
-
         </div>
-
 
         {/* song info */}
         <div className="text-center mt-3">
-
           <div className="text-base font-semibold truncate">
-
-            {song?.title ?? "Nothing playing"}
-
+            {currentSong?.title ?? "Nothing playing"}
           </div>
 
           <div className="text-sm text-neutral-400 truncate">
-
-            {song?.artist ?? "Select a song"}
-
+            {currentSong?.artist ?? "—"}
           </div>
-
         </div>
-
       </div>
 
-
-      {/* bottom controls area */}
+      {/* controls */}
       <div className="mt-4 space-y-3">
-
         <ProgressBar
-
-          duration={song?.duration ?? 0}
-
-          currentTime={song?.currentTime ?? 0}
-
+          duration={currentSong?.duration ?? 0}
+          currentTime={0} // we'll fix this later
           onSeek={(time) => {
-            console.log("seek to", time)
+            const audio = usePlayerStore.getState().audio;
+            if (audio) audio.currentTime = time;
           }}
         />
 
         <PlayerControls
-
           isPlaying={isPlaying}
-
-          onPlay={onPlay}
-          onPause={onPause}
-
-          onNext={onNext}
-          onPrev={onPrev}
-
-          onShuffle={onShuffle}
-          onRepeat={onRepeat}
-
+          onPlay={() => togglePlay()}
+          onPause={() => togglePlay()}
+          onNext={() => {}}
+          onPrev={() => {}}
+          onShuffle={() => {}}
+          onRepeat={() => {}}
         />
-
       </div>
-
     </div>
-
   );
-
 }
