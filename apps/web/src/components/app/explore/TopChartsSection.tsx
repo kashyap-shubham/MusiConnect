@@ -11,7 +11,8 @@ export interface Song {
   title: string;
   artist: string;
   imageUrl: string;
-  duration?: string;
+  audioUrl: string;
+  duration: number;
 }
 
 interface Props {
