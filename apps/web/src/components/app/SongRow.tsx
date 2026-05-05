@@ -8,8 +8,8 @@ interface SongRowData {
   title: string;
   artist: string;
   imageUrl: string;
-  audioUrl: string; // 🔥 required now
-  duration: number; // 🔥 required now
+  audioUrl: string;
+  duration: number;
 }
 
 interface Props {
@@ -17,6 +17,8 @@ interface Props {
   song: SongRowData;
   onClick?: () => void;
   rightSlot?: React.ReactNode;
+  allSongs?: SongRowData[];
+  songIndex?: number;
 }
 
 export default function SongRow({
@@ -24,25 +26,22 @@ export default function SongRow({
   song,
   onClick,
   rightSlot,
+  allSongs,
+  songIndex,
 }: Props) {
-  const { playSong } = usePlayerStore();
+  const setQueue = usePlayerStore((s) => s.setQueue);
 
   const handleClick = () => {
-    // if custom click provided → use it
     if (onClick) {
       onClick();
       return;
     }
 
-    // default behavior → play song
-    playSong({
-      id: song.id,
-      title: song.title,
-      artist: song.artist,
-      imageUrl: song.imageUrl,
-      audioUrl: song.audioUrl,
-      duration: song.duration,
-    });
+    if (allSongs && typeof songIndex === "number") {
+      setQueue(allSongs, songIndex);
+    } else {
+      setQueue([song], 0);
+    }
   };
 
   function formatTime(seconds: number) {
@@ -54,27 +53,17 @@ export default function SongRow({
     return `${m}:${s.toString().padStart(2, "0")}`;
   }
 
-
   return (
     <div
       onClick={handleClick}
       className="
-        flex
-        items-center
-        gap-3
-        p-2
-        rounded-lg
-        hover:bg-neutral-800
-        transition
-        cursor-pointer
+        flex items-center gap-3 p-2
+        rounded-lg hover:bg-neutral-800
+        transition cursor-pointer
       "
     >
-      {/* index */}
-      <div className="text-sm text-neutral-400 w-4">
-        {index}
-      </div>
+      <div className="text-sm text-neutral-400 w-4">{index}</div>
 
-      {/* cover */}
       <div className="relative h-10 w-10 rounded-md overflow-hidden bg-neutral-700">
         <Image
           src={song.imageUrl}
@@ -84,21 +73,15 @@ export default function SongRow({
         />
       </div>
 
-      {/* title */}
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium truncate">
-          {song.title}
-        </div>
-
+        <div className="text-sm font-medium truncate">{song.title}</div>
         <div className="text-xs text-neutral-400 truncate">
           {song.artist}
         </div>
       </div>
 
-      {/* right slot */}
       {rightSlot}
 
-      {/* duration */}
       <div className="text-xs text-neutral-400 w-12 text-right">
         {formatTime(song.duration)}
       </div>

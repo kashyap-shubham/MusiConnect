@@ -24,10 +24,8 @@ const SCROLL_AMOUNT = 120;
 
 export default function TopChartsSection({ songs }: Props) {
   const [expanded, setExpanded] = useState(false);
-
   const [canScrollUp, setCanScrollUp] = useState(false);
   const [canScrollDown, setCanScrollDown] = useState(false);
-
   const [scrolling, setScrolling] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -40,7 +38,6 @@ export default function TopChartsSection({ songs }: Props) {
     if (!el) return;
 
     setCanScrollUp(el.scrollTop > 0);
-
     setCanScrollDown(el.scrollTop < el.scrollHeight - el.clientHeight - 5);
 
     setScrolling(true);
@@ -66,16 +63,11 @@ export default function TopChartsSection({ songs }: Props) {
 
   function toggleExpanded() {
     if (expanded && scrollRef.current) {
-      scrollRef.current.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-
+      scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
       setCanScrollUp(false);
     }
 
     setExpanded((prev) => !prev);
-
     setTimeout(checkScroll, 100);
   }
 
@@ -100,12 +92,17 @@ export default function TopChartsSection({ songs }: Props) {
           onScroll={checkScroll}
           className={cn(
             "space-y-1 pr-6 h-75",
-
-            expanded ? "overflow-y-auto scrollbar-hide" : "overflow-hidden",
+            expanded ? "overflow-y-auto scrollbar-hide" : "overflow-hidden"
           )}
         >
           {visibleSongs.map((song, i) => (
-            <SongRow key={song.id} index={i + 1} song={song} />
+            <SongRow
+              key={song.id}
+              index={i + 1}
+              song={song}
+              allSongs={visibleSongs}
+              songIndex={i}
+            />
           ))}
         </div>
 
