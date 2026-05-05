@@ -9,7 +9,6 @@ export type Song = {
   duration: number;
 };
 
-
 type PlayerState = {
   currentSong: Song | null;
   isPlaying: boolean;
@@ -32,7 +31,6 @@ type PlayerState = {
   playPrev: () => void;
 };
 
-
 export const usePlayerStore = create<PlayerState>((set, get) => ({
   currentSong: null,
   isPlaying: false,
@@ -49,6 +47,7 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
   playSong: (song) => {
     const { audio, rafId } = get();
 
+    // cleanup old audio + RAF
     if (audio) {
       audio.pause();
       audio.src = "";
@@ -63,9 +62,7 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
     const sync = () => {
       const current = audioRef.currentTime;
 
-      set({
-        currentTime: current,
-      });
+      set({ currentTime: current });
 
       const newRaf = requestAnimationFrame(sync);
       set({ rafId: newRaf });
@@ -89,14 +86,13 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
       if (rafId) cancelAnimationFrame(rafId);
     };
 
+    // AUTO NEXT 
     audioRef.onended = () => {
-      const { rafId } = get();
+      const { rafId, playNext } = get();
+
       if (rafId) cancelAnimationFrame(rafId);
 
-      set({
-        isPlaying: false,
-        currentTime: 0,
-      });
+      playNext();
     };
 
     audioRef.play();
@@ -106,7 +102,7 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
       isPlaying: true,
       audio: audioRef,
       currentTime: 0,
-      duration: song.duration,
+      duration: song.duration, // fallback until metadata loads
     });
   },
 
@@ -129,12 +125,55 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
 
     audio.currentTime = time;
 
-    set({
-      currentTime: time,
-    });
+    set({ currentTime: time });
   },
 
-  setQueue: () => {},
-  playNext: () => {},
-  playPrev: () => {},
+  setQueue: (songs, startIndex = 0) => {
+    if (!songs.length) return;
+
+    set({
+      queue: songs,
+      currentIndex: startIndex,
+    });
+
+    const song = songs[startIndex];
+
+    if (song) {
+      get().playSong(song);
+    }
+  },
+
+  playNext: () => {
+    const { queue, currentIndex } = get();
+
+    if (!queue.length) return;
+
+    const nextIndex = currentIndex + 1;
+
+    if (nextIndex >= queue.length) return;
+
+    const nextSong = queue[nextIndex];
+    if (!nextSong) return;
+
+    set({ currentIndex: nextIndex });
+
+    get().playSong(nextSong);
+  },
+
+  playPrev: () => {
+    const { queue, currentIndex } = get();
+
+    if (!queue.length) return;
+
+    const prevIndex = currentIndex - 1;
+
+    if (prevIndex < 0) return;
+
+    const prevSong = queue[prevIndex];
+    if (!prevSong) return;
+
+    set({ currentIndex: prevIndex });
+
+    get().playSong(prevSong);
+  },
 }));
