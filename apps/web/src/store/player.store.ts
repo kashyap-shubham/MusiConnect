@@ -14,8 +14,12 @@ type PlayerState = {
   isPlaying: boolean;
   audio: HTMLAudioElement | null;
 
+  currentTime: number;
+  duration: number;
+
   playSong: (song: Song) => void;
   togglePlay: () => void;
+  seek: (time: number) => void;
 };
 
 export const usePlayerStore = create<PlayerState>((set, get) => ({
@@ -23,15 +27,29 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
   isPlaying: false,
   audio: null,
 
+  currentTime: 0,
+  duration: 0,
+
   playSong: (song) => {
     let audio = get().audio;
 
-    // create audio instance if not exists
     if (!audio) {
       audio = new Audio();
+
+      const audioRef = audio; 
+
+      audioRef.ontimeupdate = () => {
+        set({
+          currentTime: audioRef.currentTime,
+          duration: audioRef.duration || 0,
+        });
+      };
+
+      audioRef.onended = () => {
+        set({ isPlaying: false });
+      };
     }
 
-    // change source + play
     audio.src = song.audioUrl;
     audio.play();
 
@@ -44,7 +62,6 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
 
   togglePlay: () => {
     const { audio, isPlaying } = get();
-
     if (!audio) return;
 
     if (isPlaying) {
@@ -54,5 +71,16 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
     }
 
     set({ isPlaying: !isPlaying });
+  },
+
+  seek: (time) => {
+    const { audio } = get();
+    if (!audio) return;
+
+    audio.currentTime = time;
+
+    set({
+      currentTime: time,
+    });
   },
 }));
