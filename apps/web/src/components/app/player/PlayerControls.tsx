@@ -26,6 +26,9 @@ interface Props {
   onShuffle?: () => void
   onRepeat?: () => void
 
+  isShuffle?: boolean;
+  repeatMode?: "off" | "one" | "all";
+
 }
 
 
@@ -40,7 +43,11 @@ export default function PlayerControls({
   onPrev,
 
   onShuffle,
-  onRepeat
+  onRepeat,
+
+  isShuffle,
+  repeatMode,
+
 
 }: Props) {
 
