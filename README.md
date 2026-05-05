@@ -494,30 +494,6 @@ observability (logs + metrics)
 
 ---
 
-# Why this project is valuable for engineering portfolio
-
-Demonstrates real-world backend architecture
-
-Shows system design thinking
-
-Uses scalable monorepo structure
-
-Implements type-safe contracts
-
-Follows production-ready coding patterns
-
-Shows ability to design realtime systems
-
-Demonstrates strong separation of concerns
-
-Uses modern stack used in startups
-
-Shows ability to structure large codebases
-
-Demonstrates practical full-stack skills
-
----
-
 # Author
 
 Shubham Kashyap
