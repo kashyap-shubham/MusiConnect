@@ -9,6 +9,7 @@ export type Song = {
   duration: number;
 };
 
+
 type PlayerState = {
   currentSong: Song | null;
   isPlaying: boolean;
@@ -19,10 +20,18 @@ type PlayerState = {
 
   rafId: number | null;
 
+  queue: Song[];
+  currentIndex: number;
+
   playSong: (song: Song) => void;
   togglePlay: () => void;
   seek: (time: number) => void;
+
+  setQueue: (songs: Song[], startIndex?: number) => void;
+  playNext: () => void;
+  playPrev: () => void;
 };
+
 
 export const usePlayerStore = create<PlayerState>((set, get) => ({
   currentSong: null,
@@ -34,10 +43,12 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
 
   rafId: null,
 
+  queue: [],
+  currentIndex: -1,
+
   playSong: (song) => {
     const { audio, rafId } = get();
 
-    
     if (audio) {
       audio.pause();
       audio.src = "";
@@ -60,7 +71,6 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
       set({ rafId: newRaf });
     };
 
-    
     audioRef.onloadedmetadata = () => {
       const dur = audioRef.duration;
 
@@ -96,7 +106,7 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
       isPlaying: true,
       audio: audioRef,
       currentTime: 0,
-      duration: song.duration, 
+      duration: song.duration,
     });
   },
 
@@ -123,4 +133,8 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
       currentTime: time,
     });
   },
+
+  setQueue: () => {},
+  playNext: () => {},
+  playPrev: () => {},
 }));
