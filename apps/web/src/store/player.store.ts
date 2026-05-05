@@ -17,6 +17,8 @@ type PlayerState = {
   currentTime: number;
   duration: number;
 
+  rafId: number | null;
+
   playSong: (song: Song) => void;
   togglePlay: () => void;
   seek: (time: number) => void;
@@ -30,33 +32,71 @@ export const usePlayerStore = create<PlayerState>((set, get) => ({
   currentTime: 0,
   duration: 0,
 
+  rafId: null,
+
   playSong: (song) => {
-    let audio = get().audio;
+    const { audio, rafId } = get();
 
-    if (!audio) {
-      audio = new Audio();
-
-      const audioRef = audio; 
-
-      audioRef.ontimeupdate = () => {
-        set({
-          currentTime: audioRef.currentTime,
-          duration: audioRef.duration || 0,
-        });
-      };
-
-      audioRef.onended = () => {
-        set({ isPlaying: false });
-      };
+    
+    if (audio) {
+      audio.pause();
+      audio.src = "";
     }
 
-    audio.src = song.audioUrl;
-    audio.play();
+    if (rafId) {
+      cancelAnimationFrame(rafId);
+    }
+
+    const audioRef = new Audio(song.audioUrl);
+
+    const sync = () => {
+      const current = audioRef.currentTime;
+
+      set({
+        currentTime: current,
+      });
+
+      const newRaf = requestAnimationFrame(sync);
+      set({ rafId: newRaf });
+    };
+
+    
+    audioRef.onloadedmetadata = () => {
+      const dur = audioRef.duration;
+
+      if (!isNaN(dur) && dur > 0) {
+        set({ duration: dur });
+      }
+    };
+
+    audioRef.onplay = () => {
+      const newRaf = requestAnimationFrame(sync);
+      set({ rafId: newRaf });
+    };
+
+    audioRef.onpause = () => {
+      const { rafId } = get();
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+
+    audioRef.onended = () => {
+      const { rafId } = get();
+      if (rafId) cancelAnimationFrame(rafId);
+
+      set({
+        isPlaying: false,
+        currentTime: 0,
+      });
+    };
+
+    audioRef.play();
 
     set({
       currentSong: song,
       isPlaying: true,
-      audio,
+      audio: audioRef,
+      currentTime: 0,
+      duration: song.duration, 
     });
   },
 

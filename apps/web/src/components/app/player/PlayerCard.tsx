@@ -8,7 +8,13 @@ import ProgressBar from "./ProgressBar";
 import PlayerControls from "./PlayerControls";
 
 export default function PlayerCard() {
-  const { currentSong, isPlaying, togglePlay } = usePlayerStore();
+  const currentSong = usePlayerStore((s) => s.currentSong);
+  const isPlaying = usePlayerStore((s) => s.isPlaying);
+  const togglePlay = usePlayerStore((s) => s.togglePlay);
+
+  const currentTime = usePlayerStore((s) => s.currentTime);
+  const duration = usePlayerStore((s) => s.duration);
+  const seek = usePlayerStore((s) => s.seek);
 
   return (
     <div
@@ -71,12 +77,9 @@ export default function PlayerCard() {
       {/* controls */}
       <div className="mt-4 space-y-3">
         <ProgressBar
-          duration={currentSong?.duration ?? 0}
-          currentTime={0} // we'll fix this later
-          onSeek={(time) => {
-            const audio = usePlayerStore.getState().audio;
-            if (audio) audio.currentTime = time;
-          }}
+          duration={duration}
+          currentTime={currentTime}
+          onSeek={seek}
         />
 
         <PlayerControls

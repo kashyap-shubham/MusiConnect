@@ -45,6 +45,16 @@ export default function SongRow({
     });
   };
 
+  function formatTime(seconds: number) {
+    if (!seconds || isNaN(seconds)) return "--:--";
+
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  }
+
+
   return (
     <div
       onClick={handleClick}
@@ -90,8 +100,7 @@ export default function SongRow({
 
       {/* duration */}
       <div className="text-xs text-neutral-400 w-12 text-right">
-        {Math.floor(song.duration / 60)}:
-        {(song.duration % 60).toString().padStart(2, "0")}
+        {formatTime(song.duration)}
       </div>
     </div>
   );
