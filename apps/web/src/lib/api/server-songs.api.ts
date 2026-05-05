@@ -11,5 +11,5 @@ export type SongApiResponse = {
 };
 
 export async function getSongsServer(cookie: string) {
-  return serverApi<SongApiResponse[]>("/api/songs", cookie);
+  return serverApi<SongApiResponse[]>("/songs", cookie);
 }

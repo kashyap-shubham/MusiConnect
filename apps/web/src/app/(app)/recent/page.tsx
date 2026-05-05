@@ -3,7 +3,7 @@ import ErrorBoundary from "@/components/shared/ErrorBoundary";
 
 import { headers } from "next/headers";
 
-import { getRecentSongsServer } from "@/lib/api/server-song.api";
+import { getRecentSongsServer } from "@/lib/api/server-recent.song.api";
 
 // const recentSongs = [
 

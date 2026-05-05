@@ -1,4 +1,4 @@
-import { SongApiResponse } from "@/lib/api/songs.api";
+import { SongApiResponse } from "@/lib/api/server-songs.api";
 
 // UI-friendly type (what your components use)
 export type UISong = {
