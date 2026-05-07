@@ -29,7 +29,8 @@
     "run": "^1.5.0",
     "zod": "^4.4.3",
     "dotenv": "^17.4.2",
-    "dotenv-cli": "^11.0.0"
+    "dotenv-cli": "^11.0.0",
+    "@prisma/client-runtime-utils": "^7.8.0"
   },
   "devDependencies": {
     "@repo/logger": "workspace:*",
