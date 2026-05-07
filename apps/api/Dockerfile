@@ -4,16 +4,14 @@ WORKDIR /app
 
 RUN npm install -g pnpm
 
-# Copy ONLY built backend
-COPY apps/api/dist ./dist
-COPY apps/api/package.json ./package.json
-COPY apps/api/prisma ./prisma
-COPY pnpm-lock.yaml ./pnpm-lock.yaml
-
-# Install only production deps
-RUN pnpm install --prod --no-frozen-lockfile
-
+ENV CI=true
 ENV NODE_ENV=production
+
+COPY out/full .
+
+RUN pnpm install --no-frozen-lockfile
+
+WORKDIR /app/apps/api
 
 EXPOSE 3001
 

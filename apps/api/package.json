@@ -27,7 +27,9 @@
     "passport-google-oauth20": "^2.0.0",
     "pg": "^8.20.0",
     "run": "^1.5.0",
-    "zod": "^4.4.3"
+    "zod": "^4.4.3",
+    "dotenv": "^17.4.2",
+    "dotenv-cli": "^11.0.0"
   },
   "devDependencies": {
     "@repo/logger": "workspace:*",
@@ -40,8 +42,6 @@
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.17",
     "@types/pg": "^8.20.0",
-    "dotenv": "^17.4.2",
-    "dotenv-cli": "^11.0.0",
     "prisma": "^7.8.0",
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.17",
