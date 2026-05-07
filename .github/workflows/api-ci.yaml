@@ -1,0 +1,39 @@
+name: API CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pnpm
+        run: npm install -g pnpm turbo
+
+      - name: Prune Turborepo
+        run: turbo prune api --docker
+
+      - name: Build Docker image
+        run: |
+          docker build \
+          -f apps/api/Dockerfile \
+          -t ${{ secrets.DOCKER_USERNAME }}/musiconnect-api:latest .
+
+      - name: Login to Docker Hub
+        run: |
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Push Docker image
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/musiconnect-api:latest

@@ -85,7 +85,7 @@ app.use(
     rolling: true,
     cookie: {
       httpOnly: true, // prevents JS access to cookie
-      secure: env.NODE_ENV === "production", // HTTPS only in production
+      secure: env.NODE_ENV === "production" && env.FRONTEND_URL.startsWith("https"), // HTTPS only in production
       sameSite: "lax", // protects against CSRF
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
     },
