@@ -1,6 +1,11 @@
+.env.*
 node_modules
+.pnpm-store
+.next
+dist
+build
 .git
 .env
 .env.*
-dist
-.next
+Dockerfile
+docker-compose.yml
