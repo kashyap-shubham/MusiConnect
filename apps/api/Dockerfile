@@ -19,8 +19,6 @@ COPY --from=pruner /app/out/full/apps/api/prisma ./apps/api/prisma
 RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile
 
-RUN pnpm --filter api exec prisma generate
-
 # -------- Builder --------
 FROM base AS builder
 RUN npm install -g turbo pnpm
@@ -40,8 +38,6 @@ RUN npm install -g pnpm
 COPY --from=builder /app .
 
 ENV NODE_ENV=production
-
-RUN pnpm --filter api exec prisma generate
 
 EXPOSE 3001
 
