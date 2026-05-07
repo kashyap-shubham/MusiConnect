@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
-
 import { ArtistService } from "./artists.service";
-
 import { ApiError } from "@/errors/ApiError";
 import { getPagination } from "@/utils/pagination";
 import { paginatedResponse } from "@/utils/paginatedResponse";

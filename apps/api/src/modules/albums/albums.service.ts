@@ -1,10 +1,7 @@
-import { AlbumRepository } from "./albums.repository";
-
 import { ApiError } from "@/errors/ApiError";
-
-import type { CreateAlbumInput } from "./schemas/create-album.schema";
-import type { UpdateAlbumInput } from "./schemas/update-album.schema";
-
+import { AlbumRepository } from "./albums.repository";
+import { CreateAlbumInput } from "./schemas/create-album.schema";
+import { UpdateAlbumInput } from "./schemas/update-album.schema";
 
 export class AlbumService {
 

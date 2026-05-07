@@ -1,35 +1,29 @@
 # -------- Base --------
 FROM node:22-alpine AS base
-RUN npm install -g pnpm turbo
-
 WORKDIR /app
 
-# -------- Prune --------
+# -------- Pruner --------
 FROM base AS pruner
+RUN npm install -g turbo
 
 COPY . .
-
 RUN turbo prune api --docker
 
-# -------- Install --------
+# -------- Installer --------
 FROM base AS installer
-
-WORKDIR /app
 
 COPY --from=pruner /app/out/json/ .
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-
 COPY --from=pruner /app/out/full/apps/api/prisma ./apps/api/prisma
 
+RUN npm install -g pnpm
 RUN pnpm install --frozen-lockfile
 
 RUN pnpm --filter api exec prisma generate
 
-
-# -------- Build --------
+# -------- Builder --------
 FROM base AS builder
-
-WORKDIR /app
+RUN npm install -g turbo pnpm
 
 COPY --from=installer /app .
 COPY --from=pruner /app/out/full/ .
@@ -46,6 +40,8 @@ RUN npm install -g pnpm
 COPY --from=builder /app .
 
 ENV NODE_ENV=production
+
+RUN pnpm --filter api exec prisma generate
 
 EXPOSE 3001
 

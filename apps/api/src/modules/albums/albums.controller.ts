@@ -1,10 +1,7 @@
 import type { Request, Response } from "express";
-
 import { AlbumService } from "./albums.service";
-
 import { ApiError } from "@/errors/ApiError";
 import { getPagination } from "@/utils/pagination";
-import { success } from "zod";
 import { paginatedResponse } from "@/utils/paginatedResponse";
 
 
