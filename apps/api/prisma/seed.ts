@@ -152,6 +152,15 @@ async function seedDatabase() {
           artistIds: ["22222222-2222-2222-2222-222222222222"],
         },
         {
+          id: "88888888-8888-8888-8888-888888888888",
+          title: "Jaiye Sajna",
+          duration: 210,
+          audioKey: "audio/jaiye_sajna.mp3",
+          imageKey: "images/jaiye_sajna.jpg",
+          albumId: "44444444-4444-4444-4444-444444444444",
+          artistIds: ["22222222-2222-2222-2222-222222222222"],
+        },
+        {
           id: "99999999-9999-9999-9999-999999999999",
           title: "Vaari",
           duration: 210,
