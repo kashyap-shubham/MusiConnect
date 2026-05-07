@@ -1,46 +1,59 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@/generated/prisma";
 
-import { CreateSongInput } from "./schemas/create-song.schema";
-import { UpdateSongInput } from "./schemas/update-song.schema";
+import type { CreateSongInput } from "./schemas/create-song.schema";
+import type { UpdateSongInput } from "./schemas/update-song.schema";
 
 /**
  * DTO-optimized select for song entity
  * ensures consistent shape across all queries
  */
-export const songSelect = Prisma.validator<Prisma.SongDefaultArgs>()({
+export const songSelect = {
+  id: true,
+  title: true,
+  duration: true,
+  audioKey: true,
+  imageKey: true,
+
+  album: {
     select: {
       id: true,
       title: true,
-      duration: true,
-      audioKey: true,
       imageKey: true,
-      
-      album: {
+    },
+  },
+
+  artists: {
+    select: {
+      artist: {
         select: {
           id: true,
-          title: true,
-          imageKey: true
-        }
+          name: true,
+        },
       },
-      
-      artists: {
-        select: {
-          artist: {
-            select: {
-              id: true,
-              name: true
-            }
-          }
-        }
-      }
-    }
+    },
+  },
+} as const;
 
-  });
+export interface SongEntity {
+  id: string;
+  title: string;
+  duration: number;
+  audioKey: string;
+  imageKey: string | null;
 
+  album: {
+    id: string;
+    title: string;
+    imageKey: string | null;
+  } | null;
 
-export type SongEntity = Prisma.SongGetPayload<typeof songSelect>;
-
+  artists: {
+    artist: {
+      id: string;
+      name: string;
+    };
+  }[];
+}
 
 export class SongRepository {
 
@@ -48,37 +61,41 @@ export class SongRepository {
 
     return prisma.song.findMany({
 
-      ...songSelect,
+      select: songSelect,
       orderBy: {
         createdAt: "desc"
       }
-    });
+
+    }) as Promise<SongEntity[]>;
 
   }
 
 
 
   async findById(id: string): Promise<SongEntity | null> {
-    
+
     return prisma.song.findUnique({
 
       where: { id },
-      ...songSelect
-    });
+      select: songSelect
+
+    }) as Promise<SongEntity | null>;
 
   }
 
 
 
   async create(data: CreateSongInput): Promise<SongEntity> {
-    
+
     return prisma.song.create({
+
       data: {
         title: data.title,
         duration: data.duration,
         audioKey: data.audioKey,
         imageKey: data.imageKey,
         albumId: data.albumId,
+
         artists: {
           create:
             data.artistIds.map(
@@ -92,8 +109,10 @@ export class SongRepository {
             )
         }
       },
-      ...songSelect
-    });
+
+      select: songSelect
+
+    }) as Promise<SongEntity>;
 
   }
 
@@ -101,16 +120,22 @@ export class SongRepository {
 
   async update(id: string, data: UpdateSongInput): Promise<SongEntity> {
 
-    const {artistIds, ...songData} = data;
+    const { artistIds, ...songData } = data;
 
     return prisma.song.update({
 
       where: { id },
+
       data: {
+
         ...songData,
+
         ...(artistIds && {
+
           artists: {
+
             deleteMany: {},
+
             create:
               artistIds.map(
                 artistId => ({
@@ -121,11 +146,16 @@ export class SongRepository {
                   }
                 })
               )
+
           }
+
         })
+
       },
-      ...songSelect
-    });
+
+      select: songSelect
+
+    }) as Promise<SongEntity>;
 
   }
 
@@ -144,18 +174,28 @@ export class SongRepository {
   async findAllPaginated(skip: number, take: number) {
 
     const [data, total] = await Promise.all([
+
       prisma.song.findMany({
+
         skip,
         take,
+
         orderBy: {
           createdAt: "desc"
         },
-        ...songSelect
+
+        select: songSelect
+
       }),
+
       prisma.song.count()
+
     ]);
 
-    return {data, total};
+    return {
+      data: data as SongEntity[],
+      total
+    };
 
   }
 

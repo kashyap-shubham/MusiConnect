@@ -29,7 +29,7 @@ export const createSongSchema = z.object({
 
     artistIds: z
       .array(
-        z.string().uuid("Invalid artist id")
+        z.uuid("Invalid artist id")
       )
       .min(1, "At least one artist required")
 
