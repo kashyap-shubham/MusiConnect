@@ -486,8 +486,6 @@ Integration tests
 
 Load testing
 
-Kubernetes deployment
-
 rate limiting middleware
 
 observability (logs + metrics)
