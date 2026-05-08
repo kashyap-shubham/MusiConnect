@@ -74,8 +74,8 @@ export default async function RecentPage() {
     imageUrl: song.imageKey
       ? `${process.env.NEXT_PUBLIC_CDN_URL}/${song.imageKey}`
       : "/placeholder.png",
-
-    duration: formatDuration(song.duration),
+    audioUrl: song.audioUrl,
+    duration: song.duration,
   }));
 
   return (

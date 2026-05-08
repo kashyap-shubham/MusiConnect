@@ -4,6 +4,8 @@ export interface FavouriteSongDTO {
   title: string;
 
   duration: number;
+  
+  audioUrl: string;
 
   imageKey: string | null;
 

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation"
 import { getCurrentUserServer } from "@/lib/api/server-auth.api"
+import { headers } from "next/headers";
 
 export default async function AuthLayout({
   children,
@@ -7,7 +8,9 @@ export default async function AuthLayout({
   children: React.ReactNode
 }) {
 
-  const user = await getCurrentUserServer()
+  const cookie = (await headers()).get("cookie");
+
+  const user = cookie ? await getCurrentUserServer(cookie) : null;
 
   if (user) {
     redirect("/explore")

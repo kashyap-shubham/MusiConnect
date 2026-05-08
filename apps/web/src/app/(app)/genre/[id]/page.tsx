@@ -9,26 +9,38 @@ const genre = {
 const songs = [
   {
     id: "1",
-    title: "Sicko Mode",
+    title: "Stargazing",
     artist: "Travis Scott",
     imageUrl: "/artists/artist1.jpg",
-    duration: "5:12",
+    audioUrl: "/songs/stargazing.mp3",
+    duration: 271,
   },
 
   {
     id: "2",
-    title: "God's Plan",
-    artist: "Drake",
+    title: "Sicko Mode",
+    artist: "Travis Scott",
     imageUrl: "/artists/artist2.jpg",
-    duration: "3:18",
+    audioUrl: "/songs/sickomode.mp3",
+    duration: 312,
   },
 
   {
     id: "3",
-    title: "HUMBLE",
-    artist: "Kendrick Lamar",
+    title: "Butterfly Effect",
+    artist: "Travis Scott",
     imageUrl: "/artists/artist3.jpg",
-    duration: "2:57",
+    audioUrl: "/songs/butterflyeffect.mp3",
+    duration: 235,
+  },
+
+  {
+    id: "4",
+    title: "No Bystanders",
+    artist: "Travis Scott",
+    imageUrl: "/artists/artist4.jpg",
+    audioUrl: "/songs/nobystanders.mp3",
+    duration: 218,
   },
 ];
 

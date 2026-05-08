@@ -12,7 +12,7 @@ export interface PlaylistSongDTO {
   duration: number;
   imageKey: string | null;
   addedAt: string;
-
+  audioUrl: string;
   album: {
     id: string;
     title: string;

@@ -21,7 +21,8 @@ const songs = [
     title: "Stargazing",
     artist: "Travis Scott",
     imageUrl: "/artists/artist1.jpg",
-    duration: "4:31",
+    audioUrl: "/songs/stargazing.mp3",
+    duration: 271,
   },
 
   {
@@ -29,7 +30,8 @@ const songs = [
     title: "Sicko Mode",
     artist: "Travis Scott",
     imageUrl: "/artists/artist2.jpg",
-    duration: "5:12",
+    audioUrl: "/songs/sickomode.mp3",
+    duration: 312,
   },
 
   {
@@ -37,7 +39,8 @@ const songs = [
     title: "Butterfly Effect",
     artist: "Travis Scott",
     imageUrl: "/artists/artist3.jpg",
-    duration: "3:55",
+    audioUrl: "/songs/butterflyeffect.mp3",
+    duration: 235,
   },
 
   {
@@ -45,7 +48,8 @@ const songs = [
     title: "No Bystanders",
     artist: "Travis Scott",
     imageUrl: "/artists/artist4.jpg",
-    duration: "3:38",
+    audioUrl: "/songs/nobystanders.mp3",
+    duration: 218,
   },
 ];
 

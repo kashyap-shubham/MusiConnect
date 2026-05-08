@@ -79,8 +79,8 @@ export default async function LikedPage() {
     artist: song.artists.map(a => a.name).join(", "),
 
     imageUrl: song.imageKey ? `${process.env.NEXT_PUBLIC_CDN_URL}/${song.imageKey}` : "/placeholder.png",
-
-    duration: formatDuration(song.duration)
+    audioUrl: song.audioUrl,
+    duration: song.duration
   }));
 
 

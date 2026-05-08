@@ -9,6 +9,7 @@ export interface RecentSongDTO {
   imageKey: string | null;
 
   playedAt: string;
+  audioUrl: string;
 
   album: {
     id: string;
