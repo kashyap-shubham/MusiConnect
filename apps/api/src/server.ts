@@ -82,11 +82,14 @@ app.use(
     resave: false,
     saveUninitialized: false,
     rolling: true,
+
     proxy: true,
+
     cookie: {
+      domain: ".musiconnect.space",
       httpOnly: true, // prevents JS access to cookie
-      secure: env.NODE_ENV === "production", // HTTPS only in production
-      sameSite: env.NODE_ENV === "production" ? "none" : "lax", // protects against CSRF
+      secure: true, // HTTPS only in production
+      sameSite: "none", // protects against CSRF
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
     },
   }),
