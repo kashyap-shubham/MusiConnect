@@ -71,7 +71,6 @@ if (env.NODE_ENV === "production") {
 
 }
 
-
 /* Session Configuration
 | Required for Passport Google OAuth
 | Stores user session securely in cookies
