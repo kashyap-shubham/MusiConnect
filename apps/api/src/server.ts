@@ -29,9 +29,23 @@ app.use(helmet());
 | Allows frontend to communicate with backend
 | credentials:true required for cookies (session auth)
 */
+const allowedOrigins = [
+  "https://musiconnect.space",
+  "https://www.musiconnect.space",
+];
+
 app.use(
   cors({
-    origin: env.FRONTEND_URL,
+    origin: (origin, callback) => {
+
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+
+    },
+
     credentials: true,
   }),
 );
