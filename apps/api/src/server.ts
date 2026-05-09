@@ -31,13 +31,12 @@ app.use(helmet());
 */
 const allowedOrigins = [
   "https://musiconnect.space",
-  "https://www.musiconnect.space",
 ];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-
+      
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
