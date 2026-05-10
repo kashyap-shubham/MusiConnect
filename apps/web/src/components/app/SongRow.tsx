@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+
 import { usePlayerStore } from "@/store/player.store";
 
 interface SongRowData {
@@ -29,6 +30,7 @@ export default function SongRow({
   allSongs,
   songIndex,
 }: Props) {
+
   const setQueue = usePlayerStore((s) => s.setQueue);
 
   const handleClick = () => {
@@ -48,6 +50,7 @@ export default function SongRow({
     if (!seconds || isNaN(seconds)) return "--:--";
 
     const m = Math.floor(seconds / 60);
+
     const s = Math.floor(seconds % 60);
 
     return `${m}:${s.toString().padStart(2, "0")}`;
@@ -56,33 +59,114 @@ export default function SongRow({
   return (
     <div
       onClick={handleClick}
+
       className="
-        flex items-center gap-3 p-2
-        rounded-lg hover:bg-neutral-800
-        transition cursor-pointer
+        flex
+        items-center
+
+        gap-2
+        sm:gap-3
+
+        p-2
+
+        rounded-lg
+
+        hover:bg-neutral-800
+
+        transition
+        cursor-pointer
+
+        min-w-0
       "
     >
-      <div className="text-sm text-neutral-400 w-4">{index}</div>
+      {/* index */}
+      <div
+        className="
+          text-xs
+          sm:text-sm
 
-      <div className="relative h-10 w-10 rounded-md overflow-hidden bg-neutral-700">
+          text-neutral-400
+
+          w-4
+          shrink-0
+        "
+      >
+        {index}
+      </div>
+
+      {/* image */}
+      <div
+        className="
+          relative
+
+          h-9 w-9
+
+          sm:h-10
+          sm:w-10
+
+          rounded-md
+          overflow-hidden
+
+          bg-neutral-700
+
+          shrink-0
+        "
+      >
         <Image
           src={song.imageUrl}
           alt={song.title}
           fill
+          sizes="40px"
           className="object-cover"
         />
       </div>
 
+      {/* song info */}
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium truncate">{song.title}</div>
-        <div className="text-xs text-neutral-400 truncate">
+        <div
+          className="
+            text-sm
+            font-medium
+            truncate
+          "
+        >
+          {song.title}
+        </div>
+
+        <div
+          className="
+            text-xs
+            text-neutral-400
+            truncate
+          "
+        >
           {song.artist}
         </div>
       </div>
 
-      {rightSlot}
+      {/* right slot */}
+      {rightSlot && (
+        <div className="shrink-0">
+          {rightSlot}
+        </div>
+      )}
 
-      <div className="text-xs text-neutral-400 w-12 text-right">
+      {/* duration */}
+      <div
+        className="
+          text-[11px]
+          sm:text-xs
+
+          text-neutral-400
+
+          w-10
+          sm:w-12
+
+          text-right
+
+          shrink-0
+        "
+      >
         {formatTime(song.duration)}
       </div>
     </div>

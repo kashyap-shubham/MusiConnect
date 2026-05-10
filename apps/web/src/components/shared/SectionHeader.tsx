@@ -14,9 +14,18 @@ export default function SectionHeader({
 
   return (
 
-    <div className="flex mb-4 items-center justify-between">
+    <div className="flex mb-4 items-center justify-between gap-4">
 
-      <h2 className="text-lg font-semibold">
+      <h2
+        className="
+          text-base
+
+          sm:text-lg
+
+          font-semibold
+          truncate
+        "
+      >
         {title}
       </h2>
 
@@ -25,7 +34,12 @@ export default function SectionHeader({
         <button
           onClick={onAction}
           className="
-            text-sm
+            shrink-0
+
+            text-xs
+
+            sm:text-sm
+
             text-neutral-400
             hover:text-white
             transition

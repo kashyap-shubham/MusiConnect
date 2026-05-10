@@ -25,10 +25,15 @@ export default function VerticalScrollArrow({
     <div
       className={`
         absolute
-        right-2
+        right-1
+
+        sm:right-2
 
         z-20
         pointer-events-none
+
+        hidden
+        sm:block
 
         ${isUp ? "top-2" : "bottom-2"}
       `}
@@ -39,8 +44,13 @@ export default function VerticalScrollArrow({
         className={`
           absolute
           right-0
-          w-14
-          h-14
+
+          w-12
+          h-12
+
+          sm:w-14
+          sm:h-14
+
           pointer-events-none
 
           backdrop-blur-[2px]
@@ -58,7 +68,10 @@ export default function VerticalScrollArrow({
         className={`
           pointer-events-auto
 
-          h-8 w-8
+          h-7 w-7
+
+          sm:h-8
+          sm:w-8
 
           rounded-full
 
@@ -88,8 +101,8 @@ export default function VerticalScrollArrow({
       >
 
         {isUp
-          ? <ChevronUp size={18} />
-          : <ChevronDown size={18} />
+          ? <ChevronUp size={16} />
+          : <ChevronDown size={16} />
         }
 
       </button>

@@ -1,8 +1,10 @@
 "use client";
 
 import { useRef, useState } from "react";
+
 import SectionHeader from "@/components/shared/SectionHeader";
 import VerticalScrollArrow from "@/components/ui/VerticalScrollArrow";
+
 import cn from "@/lib/utils/cn";
 
 export interface Genre {
@@ -27,17 +29,21 @@ export default function GenresSection({ genres }: Props) {
   const [scrolling, setScrolling] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const visibleGenres = expanded ? genres : genres.slice(0, INITIAL_VISIBLE);
 
   function checkScroll() {
     const el = scrollRef.current;
+
     if (!el) return;
 
     setCanScrollUp(el.scrollTop > 0);
 
-    setCanScrollDown(el.scrollTop < el.scrollHeight - el.clientHeight - 5);
+    setCanScrollDown(
+      el.scrollTop < el.scrollHeight - el.clientHeight - 5
+    );
 
     setScrolling(true);
 
@@ -52,6 +58,7 @@ export default function GenresSection({ genres }: Props) {
 
   function scroll(direction: "up" | "down") {
     const el = scrollRef.current;
+
     if (!el) return;
 
     el.scrollBy({
@@ -95,9 +102,22 @@ export default function GenresSection({ genres }: Props) {
           ref={scrollRef}
           onScroll={checkScroll}
           className={cn(
-            "grid grid-cols-2 gap-3 pr-6 h-75",
+            `
+              grid
+              grid-cols-2
 
-            expanded ? "overflow-y-auto scrollbar-hide" : "overflow-hidden",
+              gap-3
+
+              pr-0
+              sm:pr-6
+
+              h-64
+              sm:h-75
+            `,
+
+            expanded
+              ? "overflow-y-auto scrollbar-hide"
+              : "overflow-hidden",
           )}
         >
           {visibleGenres.map((genre) => (
@@ -105,13 +125,24 @@ export default function GenresSection({ genres }: Props) {
               key={genre.id}
               className={`
                 ${genre.color}
+
                 rounded-lg
+
                 p-3
-                text-sm
+
+                text-xs
+                sm:text-sm
+
                 font-medium
                 text-white
-                h-16
-                flex items-end
+
+                h-14
+                sm:h-16
+
+                flex
+                items-end
+
+                truncate
               `}
             >
               {genre.name}

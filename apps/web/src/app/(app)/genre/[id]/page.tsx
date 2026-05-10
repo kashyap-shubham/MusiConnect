@@ -1,12 +1,15 @@
-import Header from "@/components/app/Header";
 import SongRow from "@/components/app/SongRow";
 
 const genre = {
+
   id: "1",
+
   name: "Hip Hop",
+
 };
 
 const songs = [
+
   {
     id: "1",
     title: "Stargazing",
@@ -42,22 +45,87 @@ const songs = [
     audioUrl: "/songs/nobystanders.mp3",
     duration: 218,
   },
+
 ];
 
 export default function GenrePage() {
+
   return (
-    <div className="p-10 space-y-8">
+
+    <div
+      className="
+        space-y-6
+
+        sm:space-y-8
+      "
+    >
+
+      {/* header */}
       <div>
-        <h1 className="text-3xl font-semibold">{genre.name}</h1>
 
-        <p className="text-neutral-400 mt-1">Songs in this genre</p>
+        <h1
+          className="
+            text-2xl
+
+            sm:text-3xl
+
+            lg:text-4xl
+
+            font-semibold
+          "
+        >
+
+          {genre.name}
+
+        </h1>
+
+        <p
+          className="
+            text-sm
+
+            sm:text-base
+
+            text-neutral-400
+            mt-1
+          "
+        >
+
+          Songs in this genre
+
+        </p>
+
       </div>
 
-      <div className="bg-neutral-900 rounded-xl p-4">
-        {songs.map((song, i) => (
-          <SongRow key={song.id} index={i + 1} song={song} />
-        ))}
+      {/* songs */}
+      <div
+        className="
+          bg-neutral-900
+          rounded-xl
+
+          p-3
+
+          sm:p-4
+        "
+      >
+
+        <div className="space-y-1">
+
+          {songs.map((song, i) => (
+
+            <SongRow
+              key={song.id}
+              index={i + 1}
+              song={song}
+            />
+
+          ))}
+
+        </div>
+
       </div>
+
     </div>
+
   );
+
 }

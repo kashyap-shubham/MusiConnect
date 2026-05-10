@@ -1,4 +1,5 @@
 "use client";
+
 import { api } from "@/lib/api/http-client";
 import { UserDTO } from "@repo/types";
 import { LogOut, Settings, User } from "lucide-react";
@@ -37,10 +38,14 @@ export default function ProfileSection({ user }: Props) {
       await api("/auth/logout", {
         method: "POST",
       });
+
       router.push("/signin");
       router.refresh();
+
     } catch (error) {
+
       console.error("Logout failed", error);
+
     }
   }
 
@@ -53,12 +58,17 @@ export default function ProfileSection({ user }: Props) {
           rounded-lg
           bg-white/5
           border border-white/10
-          w-52
+
+          w-auto
+          max-w-45
+
+          sm:max-w-none
+          sm:w-52
         "
       >
         <div className="h-7 w-7 rounded-full bg-white/20 shrink-0" />
 
-        <p className="text-sm text-white/40">Loading...</p>
+        <p className="text-sm text-white/40 truncate">Loading...</p>
       </div>
     );
   }
@@ -66,7 +76,8 @@ export default function ProfileSection({ user }: Props) {
   /*
   safe values
   */
-  const displayName = user.name?.trim() || user.email?.split("@")[0] || "User";
+  const displayName =
+    user.name?.trim() || user.email?.split("@")[0] || "User";
 
   const initials = displayName
     .split(" ")
@@ -76,21 +87,31 @@ export default function ProfileSection({ user }: Props) {
     .toUpperCase();
 
   return (
-    <div ref={ref} className="relative">
+    <div ref={ref} className="relative shrink-0">
       {/* Profile button */}
       <button
         onClick={() => setOpen((prev) => !prev)}
         className="
-        flex items-center gap-3
-        px-3 py-1.5
-        rounded-lg
-        bg-white/5
-        border border-white/10
-        hover:bg-white/15
-        transition
-        w-52
-        hover: cursor-pointer
-      "
+          flex items-center gap-2
+          sm:gap-3
+
+          px-2.5 py-1.5
+          sm:px-3
+
+          rounded-lg
+          bg-white/5
+          border border-white/10
+          hover:bg-white/15
+          transition
+
+          w-auto
+          max-w-47.5
+
+          sm:max-w-none
+          sm:w-52
+
+          hover:cursor-pointer
+        "
       >
         {/* avatar */}
         <div className="relative h-7 w-7 rounded-full overflow-hidden bg-white/20 shrink-0">
@@ -105,11 +126,11 @@ export default function ProfileSection({ user }: Props) {
           ) : (
             <div
               className="
-              flex items-center justify-center
-              h-full w-full
-              text-xs font-medium
-              text-white/80
-            "
+                flex items-center justify-center
+                h-full w-full
+                text-xs font-medium
+                text-white/80
+              "
             >
               {initials}
             </div>
@@ -122,14 +143,31 @@ export default function ProfileSection({ user }: Props) {
 
       {/* dropdown */}
       {open && (
-        <div className="absolute right-0 mt-2 w-44 rounded-lg border border-white/10 bg-neutral-900 shadow-xl overflow-hidden z-50">
+        <div
+          className="
+            absolute right-0 mt-2
+            w-44
+            rounded-lg
+            border border-white/10
+            bg-neutral-900
+            shadow-xl
+            overflow-hidden
+            z-50
+          "
+        >
           {/* profile */}
           <button
             onClick={() => {
               router.push("/profile");
               setOpen(false);
             }}
-            className="flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-white/20 transition"
+            className="
+              flex items-center gap-2
+              w-full px-4 py-2
+              text-sm
+              hover:bg-white/20
+              transition
+            "
           >
             <User size={16} />
             Profile
@@ -141,7 +179,13 @@ export default function ProfileSection({ user }: Props) {
               router.push("/settings");
               setOpen(false);
             }}
-            className="flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-white/20 transition"
+            className="
+              flex items-center gap-2
+              w-full px-4 py-2
+              text-sm
+              hover:bg-white/20
+              transition
+            "
           >
             <Settings size={16} />
             Settings
@@ -152,7 +196,13 @@ export default function ProfileSection({ user }: Props) {
           {/* logout */}
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-red-500/50 transition"
+            className="
+              flex items-center gap-2
+              w-full px-4 py-2
+              text-sm
+              hover:bg-red-500/50
+              transition
+            "
           >
             <LogOut size={16} />
             Logout

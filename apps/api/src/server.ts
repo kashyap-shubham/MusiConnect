@@ -29,9 +29,10 @@ app.use(helmet());
 | Allows frontend to communicate with backend
 | credentials:true required for cookies (session auth)
 */
-const allowedOrigins = [
-  "https://musiconnect.space",
-];
+const allowedOrigins =
+  env.NODE_ENV === "production"
+    ? ["https://musiconnect.space"]
+    : ["http://localhost:3000"];
 
 app.use(
   cors({
@@ -91,19 +92,32 @@ if (env.NODE_ENV === "production") {
 app.use(
   session({
     name: "connect.sid",
+
     secret: env.SESSION_SECRET!,
+
     resave: false,
     saveUninitialized: false,
+
     rolling: true,
 
-    proxy: true,
+    proxy: env.NODE_ENV === "production",
 
     cookie: {
-      domain: ".musiconnect.space",
-      httpOnly: true, // prevents JS access to cookie
-      secure: true, // HTTPS only in production
-      sameSite: "none", // protects against CSRF
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7days
+      domain:
+        env.NODE_ENV === "production"
+          ? ".musiconnect.space"
+          : undefined,
+
+      httpOnly: true,
+
+      secure: env.NODE_ENV === "production",
+
+      sameSite:
+        env.NODE_ENV === "production"
+          ? "none"
+          : "lax",
+
+      maxAge: 7 * 24 * 60 * 60 * 1000,
     },
   }),
 );

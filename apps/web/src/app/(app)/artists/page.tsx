@@ -1,6 +1,6 @@
-import Header from "@/components/app/Header";
 import ArtistsCard from "@/components/app/explore/ArtistsCard";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
+
 import Link from "next/link";
 
 const artists = [
@@ -67,18 +67,41 @@ export default function ArtistsPage() {
 
   return (
 
-    <div className="p-10 space-y-8">
+    <div
+      className="
+        space-y-6
+
+        sm:space-y-8
+      "
+    >
 
       {/* page title */}
       <div>
 
-        <h1 className="text-2xl font-semibold">
+        <h1
+          className="
+            text-xl
+
+            sm:text-2xl
+
+            font-semibold
+          "
+        >
 
           Artists
 
         </h1>
 
-        <p className="text-sm text-neutral-400 mt-1">
+        <p
+          className="
+            text-xs
+
+            sm:text-sm
+
+            text-neutral-400
+            mt-1
+          "
+        >
 
           Browse all artists
 
@@ -86,15 +109,26 @@ export default function ArtistsPage() {
 
       </div>
 
-
       {/* grid */}
       <ErrorBoundary>
 
         <div
           className="
             grid
-            grid-cols-5
-            gap-6
+
+            grid-cols-2
+
+            sm:grid-cols-3
+
+            md:grid-cols-4
+
+            xl:grid-cols-5
+
+            gap-4
+
+            sm:gap-5
+
+            lg:gap-6
           "
         >
 
@@ -103,6 +137,7 @@ export default function ArtistsPage() {
             <Link
               key={artist.id}
               href={`/artist/${artist.id}`}
+              className="min-w-0"
             >
 
               <ArtistsCard artist={artist} />

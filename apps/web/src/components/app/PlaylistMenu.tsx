@@ -1,72 +1,102 @@
-"use client"
+"use client";
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect } from "react";
 
-import { MoreHorizontal, Pencil, Trash2, Star } from "lucide-react"
-
+import {
+  MoreHorizontal,
+  Pencil,
+  Trash2,
+  Star
+} from "lucide-react";
 
 interface Props {
 
   onRename: () => void
+
   onDelete: () => void
+
   onFavourite: () => void
 
 }
 
+export default function PlaylistMenu({
 
-export default function PlaylistMenu({ onRename, onDelete, onFavourite }: Props) {
+  onRename,
+  onDelete,
+  onFavourite
+
+}: Props) {
 
   const [open, setOpen] = useState(false);
 
-  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [position, setPosition] = useState({
+
+    top: 0,
+
+    left: 0
+
+  });
 
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-
   function openMenu(e: React.MouseEvent) {
 
-    e.preventDefault()
-    e.stopPropagation()
+    e.preventDefault();
 
-    const rect = buttonRef.current?.getBoundingClientRect()
+    e.stopPropagation();
 
-    if (!rect) return
+    const rect = buttonRef.current?.getBoundingClientRect();
+
+    if (!rect) return;
+
+    const menuWidth = 208;
+
+    const padding = 12;
+
+    const calculatedLeft =
+      window.innerWidth < 640
+        ? Math.max(
+            padding,
+            Math.min(
+              rect.right - menuWidth,
+              window.innerWidth - menuWidth - padding
+            )
+          )
+        : rect.left - 160;
 
     setPosition({
 
       top: rect.bottom + 8,
 
-      left: rect.left - 160
+      left: calculatedLeft
 
-    })
+    });
 
-    setOpen(true)
+    setOpen(true);
 
   }
-
 
   useEffect(() => {
 
     function closeMenu() {
 
-      setOpen(false)
+      setOpen(false);
 
     }
 
     window.addEventListener(
       "click",
       closeMenu
-    )
+    );
 
     return () =>
 
       window.removeEventListener(
         "click",
         closeMenu
-      )
+      );
 
-  }, [])
-
+  }, []);
 
   return (
 
@@ -74,13 +104,12 @@ export default function PlaylistMenu({ onRename, onDelete, onFavourite }: Props)
 
       {/* 3 dots */}
       <button
-
         ref={buttonRef}
 
         onClick={openMenu}
 
         className="
-          p-1
+          p-1.5
 
           text-white/50
           hover:text-white
@@ -90,14 +119,14 @@ export default function PlaylistMenu({ onRename, onDelete, onFavourite }: Props)
           rounded-md
 
           transition
+
+          shrink-0
         "
       >
 
         <MoreHorizontal size={16} />
 
       </button>
-
-
 
       {/* floating dropdown */}
       {open && (
@@ -115,6 +144,8 @@ export default function PlaylistMenu({ onRename, onDelete, onFavourite }: Props)
 
           className="
             w-52
+
+            max-w-[calc(100vw-24px)]
 
             bg-neutral-900/95
 
@@ -142,16 +173,13 @@ export default function PlaylistMenu({ onRename, onDelete, onFavourite }: Props)
             onClick={onRename}
           />
 
-
           <MenuItem
             icon={<Star size={14} />}
             label="Add to favourites"
             onClick={onFavourite}
           />
 
-
           <div className="h-px bg-white/10 my-1" />
-
 
           <MenuItem
             icon={<Trash2 size={14} />}
@@ -166,10 +194,9 @@ export default function PlaylistMenu({ onRename, onDelete, onFavourite }: Props)
 
     </>
 
-  )
+  );
 
 }
-
 
 function MenuItem({
 
@@ -181,8 +208,11 @@ function MenuItem({
 }: {
 
   icon: React.ReactNode
+
   label: string
+
   onClick: () => void
+
   danger?: boolean
 
 }) {
@@ -190,12 +220,11 @@ function MenuItem({
   return (
 
     <button
-
       onClick={(e) => {
 
-        e.stopPropagation()
+        e.stopPropagation();
 
-        onClick()
+        onClick();
 
       }}
 
@@ -204,7 +233,7 @@ function MenuItem({
 
         w-full
 
-        px-3 py-2
+        px-3 py-2.5
 
         text-sm
 
@@ -223,15 +252,14 @@ function MenuItem({
     >
 
       {/* fixed icon width */}
-      <span className="w-4 flex justify-center">
+      <span className="w-4 flex justify-center shrink-0">
 
         {icon}
 
       </span>
 
-
       {/* aligned label */}
-      <span className="flex-1 text-left">
+      <span className="flex-1 text-left truncate">
 
         {label}
 
@@ -239,6 +267,6 @@ function MenuItem({
 
     </button>
 
-  )
+  );
 
 }

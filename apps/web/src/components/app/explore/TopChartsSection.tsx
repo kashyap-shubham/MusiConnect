@@ -1,9 +1,11 @@
 "use client";
 
 import { useRef, useState } from "react";
+
 import SectionHeader from "@/components/shared/SectionHeader";
 import VerticalScrollArrow from "@/components/ui/VerticalScrollArrow";
 import SongRow from "../SongRow";
+
 import cn from "@/lib/utils/cn";
 
 export interface Song {
@@ -24,21 +26,29 @@ const SCROLL_AMOUNT = 120;
 
 export default function TopChartsSection({ songs }: Props) {
   const [expanded, setExpanded] = useState(false);
+
   const [canScrollUp, setCanScrollUp] = useState(false);
+
   const [canScrollDown, setCanScrollDown] = useState(false);
+
   const [scrolling, setScrolling] = useState(false);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+
   const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const visibleSongs = expanded ? songs : songs.slice(0, INITIAL_VISIBLE);
 
   function checkScroll() {
     const el = scrollRef.current;
+
     if (!el) return;
 
     setCanScrollUp(el.scrollTop > 0);
-    setCanScrollDown(el.scrollTop < el.scrollHeight - el.clientHeight - 5);
+
+    setCanScrollDown(
+      el.scrollTop < el.scrollHeight - el.clientHeight - 5
+    );
 
     setScrolling(true);
 
@@ -53,6 +63,7 @@ export default function TopChartsSection({ songs }: Props) {
 
   function scroll(direction: "up" | "down") {
     const el = scrollRef.current;
+
     if (!el) return;
 
     el.scrollBy({
@@ -63,11 +74,16 @@ export default function TopChartsSection({ songs }: Props) {
 
   function toggleExpanded() {
     if (expanded && scrollRef.current) {
-      scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+      scrollRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+
       setCanScrollUp(false);
     }
 
     setExpanded((prev) => !prev);
+
     setTimeout(checkScroll, 100);
   }
 
@@ -91,8 +107,19 @@ export default function TopChartsSection({ songs }: Props) {
           ref={scrollRef}
           onScroll={checkScroll}
           className={cn(
-            "space-y-1 pr-6 h-75",
-            expanded ? "overflow-y-auto scrollbar-hide" : "overflow-hidden"
+            `
+              space-y-1
+
+              pr-0
+              sm:pr-6
+
+              h-64
+              sm:h-75
+            `,
+
+            expanded
+              ? "overflow-y-auto scrollbar-hide"
+              : "overflow-hidden"
           )}
         >
           {visibleSongs.map((song, i) => (

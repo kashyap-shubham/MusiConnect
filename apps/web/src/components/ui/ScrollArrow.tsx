@@ -25,9 +25,13 @@ export default function ScrollArrow({
         absolute
         top-0
         bottom-0
-        w-16
 
-        flex
+        hidden
+        sm:flex
+
+        w-14
+        lg:w-16
+
         items-center
 
         z-20
@@ -58,7 +62,11 @@ export default function ScrollArrow({
 
           relative
 
-          h-9 w-9
+          h-8 w-8
+
+          lg:h-9
+          lg:w-9
+
           mx-2
 
           rounded-full

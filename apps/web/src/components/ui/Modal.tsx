@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { X } from "lucide-react"
+import { X } from "lucide-react";
 
 interface Props {
 
@@ -20,8 +20,7 @@ export default function Modal({
 
 }: Props) {
 
-  if (!open) return null
-
+  if (!open) return null;
 
   return (
 
@@ -30,13 +29,17 @@ export default function Modal({
         fixed
         inset-0
 
+        z-50
+
         bg-black/60
 
         flex
         items-center
         justify-center
 
-        z-50
+        p-4
+
+        sm:p-6
       "
     >
 
@@ -47,11 +50,17 @@ export default function Modal({
           w-full
           max-w-md
 
+          max-h-[90vh]
+
+          overflow-y-auto
+
           bg-neutral-900
 
           rounded-xl
 
-          p-6
+          p-5
+
+          sm:p-6
         "
       >
 
@@ -63,8 +72,23 @@ export default function Modal({
             top-3
             right-3
 
+            h-8
+            w-8
+
+            rounded-full
+
+            flex
+            items-center
+            justify-center
+
             text-neutral-400
+
             hover:text-white
+            hover:bg-white/10
+
+            transition
+
+            shrink-0
           "
         >
 
@@ -78,6 +102,6 @@ export default function Modal({
 
     </div>
 
-  )
+  );
 
 }

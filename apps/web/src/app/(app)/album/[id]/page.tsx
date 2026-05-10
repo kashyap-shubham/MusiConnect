@@ -1,9 +1,11 @@
-import Header from "@/components/app/Header";
 import SongRow from "@/components/app/SongRow";
+
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
+
 import Image from "next/image";
 
 const album = {
+
   id: "1",
 
   title: "Astroworld",
@@ -13,9 +15,11 @@ const album = {
   year: 2018,
 
   imageUrl: "/artists/main.jpg",
+
 };
 
 const songs = [
+
   {
     id: "1",
     title: "Stargazing",
@@ -51,58 +55,157 @@ const songs = [
     audioUrl: "/songs/nobystanders.mp3",
     duration: 218,
   },
+
 ];
 
 export default function AlbumPage() {
+
   return (
-    <div className="p-10 space-y-8">
+
+    <div
+      className="
+        space-y-6
+
+        sm:space-y-8
+      "
+    >
+
       {/* album header */}
-      <div className="flex gap-6 items-center">
+      <div
+        className="
+          flex
+
+          flex-col
+          items-center
+          text-center
+
+          sm:flex-row
+          sm:items-center
+          sm:text-left
+
+          gap-5
+          sm:gap-6
+        "
+      >
+
         <div
           className="
             relative
-            w-40
-            h-40
+
+            w-32
+            h-32
+
+            sm:w-40
+            sm:h-40
 
             rounded-xl
             overflow-hidden
 
             bg-neutral-800
+
+            shrink-0
           "
         >
+
           <Image
             src={album.imageUrl}
             alt={album.title}
             fill
+            sizes="(max-width: 640px) 128px, 160px"
             className="object-cover"
           />
+
         </div>
 
-        <div>
-          <p className="text-sm text-neutral-400">Album</p>
+        <div className="min-w-0">
 
-          <h1 className="text-3xl font-semibold mt-1">{album.title}</h1>
+          <p
+            className="
+              text-xs
 
-          <p className="text-neutral-400 mt-2">
-            {album.artist} • {album.year}
+              sm:text-sm
+
+              text-neutral-400
+            "
+          >
+
+            Album
+
           </p>
+
+          <h1
+            className="
+              mt-1
+
+              text-2xl
+
+              sm:text-3xl
+
+              lg:text-4xl
+
+              font-semibold
+
+              wrap-break-words
+            "
+          >
+
+            {album.title}
+
+          </h1>
+
+          <p
+            className="
+              text-sm
+
+              sm:text-base
+
+              text-neutral-400
+              mt-2
+            "
+          >
+
+            {album.artist} • {album.year}
+
+          </p>
+
         </div>
+
       </div>
 
       {/* songs */}
       <ErrorBoundary>
+
         <div
           className="
             bg-neutral-900
             rounded-xl
-            p-4
+
+            p-3
+
+            sm:p-4
           "
         >
-          {songs.map((song, i) => (
-            <SongRow key={song.id} index={i + 1} song={song} />
-          ))}
+
+          <div className="space-y-1">
+
+            {songs.map((song, i) => (
+
+              <SongRow
+                key={song.id}
+                index={i + 1}
+                song={song}
+              />
+
+            ))}
+
+          </div>
+
         </div>
+
       </ErrorBoundary>
+
     </div>
+
   );
+
 }

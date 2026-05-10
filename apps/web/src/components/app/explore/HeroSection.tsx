@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Heart } from "lucide-react";
 
 export interface HeroSectionProps {
-  
+
   title: string
   subtitle?: string
   label?: string
@@ -29,10 +29,21 @@ export default function HeroSection({
       className="
         relative
         w-full
-        h-80
+
+        h-105
+
+        sm:h-115
+
+        lg:h-80
+
         overflow-hidden
         rounded-2xl
+
         flex
+        flex-col
+
+        lg:flex-row
+
         bg-black
       "
     >
@@ -46,14 +57,16 @@ export default function HeroSection({
           object-cover
           scale-110
           blur-xl
-          opacity-60"
+          opacity-60
+        "
       />
 
       {/* dark overlay */}
       <div
         className="
           absolute inset-0
-          bg-black/20"
+          bg-black/20
+        "
       />
 
       {/* LEFT CONTENT */}
@@ -61,27 +74,81 @@ export default function HeroSection({
         className="
           relative
           z-10
-          w-[45%]
+
+          w-full
+          lg:w-[45%]
+
           flex
           flex-col
           justify-center
-          px-10
+
+          px-5 py-8
+
+          sm:px-8
+
+          lg:px-10
         "
       >
-        {label && <p className="text-sm text-neutral-300">{label}</p>}
+        {label && (
+          <p className="text-xs sm:text-sm text-neutral-300">
+            {label}
+          </p>
+        )}
 
-        <h1 className="mt-2 text-5xl font-semibold tracking-tight">{title}</h1>
+        <h1
+          className="
+            mt-2
 
-        {subtitle && <p className="mt-2 text-neutral-300">{subtitle}</p>}
+            text-3xl
 
-        <div className="mt-6 flex gap-4">
+            sm:text-4xl
+
+            lg:text-5xl
+
+            font-semibold
+            tracking-tight
+            leading-tight
+          "
+        >
+          {title}
+        </h1>
+
+        {subtitle && (
+          <p
+            className="
+              mt-2
+              text-sm
+
+              sm:text-base
+
+              text-neutral-300
+            "
+          >
+            {subtitle}
+          </p>
+        )}
+
+        <div
+          className="
+            mt-6
+            flex
+            items-center
+            gap-4
+            flex-wrap
+          "
+        >
           <button
             onClick={onPrimaryAction}
             className="
               rounded-full
               bg-indigo-500
-              px-6 py-2
+
+              px-5 py-2
+
+              sm:px-6
+
               text-sm font-medium
+
               hover:bg-indigo-400
               transition
             "
@@ -93,9 +160,12 @@ export default function HeroSection({
             onClick={onSecondaryAction}
             className="
               flex items-center justify-center
+
               h-10 w-10
+
               rounded-full
               border border-neutral-500
+
               hover:bg-neutral-800
               transition
             "
@@ -106,7 +176,23 @@ export default function HeroSection({
       </div>
 
       {/* RIGHT IMAGE */}
-      <div className="relative w-[55%] h-full z-10">
+      <div
+        className="
+          relative
+
+          flex-1
+          w-full
+
+          h-55
+
+          sm:h-65
+
+          lg:h-full
+          lg:w-[55%]
+
+          z-10
+        "
+      >
         <Image
           src={imageUrl}
           alt={title}
@@ -114,7 +200,9 @@ export default function HeroSection({
           priority
           className="
             object-cover
-            object-right
+            object-center
+
+            lg:object-right
           "
         />
 
@@ -122,7 +210,11 @@ export default function HeroSection({
         <div
           className="
             absolute inset-0
-            bg-linear-to-r
+
+            bg-linear-to-t
+
+            lg:bg-linear-to-r
+
             from-black/70
             via-black/30
             to-transparent

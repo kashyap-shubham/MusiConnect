@@ -1,6 +1,7 @@
-import Header from "@/components/app/Header";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
+
 import Link from "next/link";
+
 import Image from "next/image";
 
 interface Album {
@@ -71,18 +72,41 @@ export default function AlbumsPage() {
 
   return (
 
-    <div className="p-10 space-y-8">
+    <div
+      className="
+        space-y-6
+
+        sm:space-y-8
+      "
+    >
 
       {/* title */}
       <div>
 
-        <h1 className="text-2xl font-semibold">
+        <h1
+          className="
+            text-xl
+
+            sm:text-2xl
+
+            font-semibold
+          "
+        >
 
           Albums
 
         </h1>
 
-        <p className="text-sm text-neutral-400 mt-1">
+        <p
+          className="
+            text-xs
+
+            sm:text-sm
+
+            text-neutral-400
+            mt-1
+          "
+        >
 
           Browse all albums
 
@@ -90,14 +114,25 @@ export default function AlbumsPage() {
 
       </div>
 
-
       <ErrorBoundary>
 
         <div
           className="
             grid
-            grid-cols-5
-            gap-6
+
+            grid-cols-2
+
+            sm:grid-cols-3
+
+            md:grid-cols-4
+
+            xl:grid-cols-5
+
+            gap-4
+
+            sm:gap-5
+
+            lg:gap-6
           "
         >
 
@@ -106,18 +141,21 @@ export default function AlbumsPage() {
             <Link
               key={album.id}
               href={`/album/${album.id}`}
+              className="min-w-0"
             >
 
               <div
                 className="
                   space-y-2
                   cursor-pointer
+                  min-w-0
                 "
               >
 
                 <div
                   className="
                     relative
+
                     w-full
                     aspect-square
 
@@ -132,21 +170,33 @@ export default function AlbumsPage() {
                     src={album.imageUrl}
                     alt={album.title}
                     fill
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                     className="object-cover"
                   />
 
                 </div>
 
+                <div className="min-w-0">
 
-                <div>
-
-                  <div className="text-sm font-medium">
+                  <div
+                    className="
+                      text-sm
+                      font-medium
+                      truncate
+                    "
+                  >
 
                     {album.title}
 
                   </div>
 
-                  <div className="text-xs text-neutral-400">
+                  <div
+                    className="
+                      text-xs
+                      text-neutral-400
+                      truncate
+                    "
+                  >
 
                     {album.artist} • {album.year}
 

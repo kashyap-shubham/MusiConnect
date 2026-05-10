@@ -21,7 +21,10 @@ export default function ArtistsCard({
 
     <div
       className="
-        min-w-30
+        min-w-28
+
+        sm:min-w-30
+
         space-y-2
         cursor-pointer
         group
@@ -32,8 +35,12 @@ export default function ArtistsCard({
       <div
         className="
           relative
-          h-22.5
-          w-22.5
+
+          h-20 w-20
+
+          sm:h-22.5
+          sm:w-22.5
+
           rounded-lg
           overflow-hidden
           bg-neutral-800
@@ -44,6 +51,7 @@ export default function ArtistsCard({
           src={artist.imageUrl}
           alt={artist.name}
           fill
+          sizes="(max-width: 640px) 80px, 90px"
           className="
             object-cover
             group-hover:scale-105
@@ -54,14 +62,26 @@ export default function ArtistsCard({
       </div>
 
       {/* name */}
-      <div className="text-sm font-medium">
+      <div
+        className="
+          text-sm
+          font-medium
+          truncate
+        "
+      >
         {artist.name}
       </div>
 
       {/* plays */}
       {artist.monthlyListeners && (
 
-        <div className="text-xs text-neutral-400">
+        <div
+          className="
+            text-xs
+            text-neutral-400
+            truncate
+          "
+        >
           {artist.monthlyListeners}
         </div>
 

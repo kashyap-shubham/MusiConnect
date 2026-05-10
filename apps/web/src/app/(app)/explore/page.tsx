@@ -4,7 +4,9 @@ import TopArtistsSection from "@/components/app/explore/TopArtistsSection";
 import TopChartsSection from "@/components/app/explore/TopChartsSection";
 import PlayerCard from "@/components/app/player/PlayerCard";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
-import { cookies, headers } from "next/headers";
+
+import { headers } from "next/headers";
+
 import { getSongsServer } from "@/lib/api/server-songs.api";
 import { mapSongsToUI } from "@/lib/mappers/song.mapper";
 
@@ -15,42 +17,49 @@ const artists = [
     imageUrl: "/artists/artist1.jpg",
     monthlyListeners: "44M plays",
   },
+
   {
     id: "2",
     name: "Billie Eilish",
     imageUrl: "/artists/artist2.jpg",
     monthlyListeners: "203M plays",
   },
+
   {
     id: "3",
     name: "Kanye",
     imageUrl: "/artists/artist3.jpg",
     monthlyListeners: "1M plays",
   },
+
   {
     id: "4",
     name: "Kanye",
     imageUrl: "/artists/artist4.jpg",
     monthlyListeners: "15M plays",
   },
+
   {
     id: "5",
     name: "Kanye",
     imageUrl: "/artists/artist5.jpg",
     monthlyListeners: "155M plays",
   },
+
   {
     id: "6",
     name: "Kanye",
     imageUrl: "/artists/artist6.jpg",
     monthlyListeners: "150M plays",
   },
+
   {
     id: "7",
     name: "Kanye",
     imageUrl: "/artists/artist6.jpg",
     monthlyListeners: "150M plays",
   },
+
   {
     id: "8",
     name: "Kanye",
@@ -72,89 +81,15 @@ const genres = [
   { id: "10", name: "Metal", color: "bg-gray-500" },
 ];
 
-// const topCharts = [
-
-//   {
-//     id: "1",
-//     title: "Blinding Lights",
-//     artist: "The Weeknd",
-//     imageUrl: "/artists/artist1.jpg",
-//     duration: "3:22"
-//   },
-
-//   {
-//     id: "2",
-//     title: "As It Was",
-//     artist: "Harry Styles",
-//     imageUrl: "/artists/artist2.jpg",
-//     duration: "2:47"
-//   },
-
-//   {
-//     id: "3",
-//     title: "Starboy",
-//     artist: "The Weeknd",
-//     imageUrl: "/artists/artist3.jpg",
-//     duration: "3:50"
-//   },
-
-//   {
-//     id: "4",
-//     title: "Levitating",
-//     artist: "Dua Lipa",
-//     imageUrl: "/artists/artist4.jpg",
-//     duration: "3:12"
-//   },
-
-//   {
-//     id: "5",
-//     title: "Stay",
-//     artist: "Justin Bieber",
-//     imageUrl: "/artists/artist5.jpg",
-//     duration: "2:30"
-//   },
-
-//   {
-//     id: "6",
-//     title: "Peaches",
-//     artist: "Justin Bieber",
-//     imageUrl: "/artists/artist6.jpg",
-//     duration: "3:18"
-//   },
-
-//   {
-//     id: "7",
-//     title: "Save Your Tears",
-//     artist: "The Weeknd",
-//     imageUrl: "/artists/artist1.jpg",
-//     duration: "3:35"
-//   },
-
-// ];
-
-// const playerSong = {
-
-//   id: "1",
-
-//   title: "Butterfly Effect",
-
-//   artist: "Travis Scott",
-
-//   imageUrl: "/artists/main.jpg",
-
-//   duration: 245,
-//   currentTime: 0,
-
-// };
-
 export default async function ExplorePage() {
   const cookie = (await headers()).get("cookie") ?? "";
 
   const songsData = await getSongsServer(cookie);
+
   const topCharts = mapSongsToUI(songsData);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 lg:space-y-8">
       <HeroSection
         title="In My Feelings"
         subtitle="Camila Cabello · 63 Million Plays"
@@ -162,13 +97,32 @@ export default async function ExplorePage() {
         imageUrl="/artists/artist1.jpg"
       />
 
-      <div className="grid grid-cols-[minmax(0,2fr)_1fr] gap-6 items-stretch">
-        <div className="space-y-6">
+      <div
+        className="
+          grid
+          gap-6
+          items-stretch
+
+          grid-cols-1
+
+          xl:grid-cols-[minmax(0,2fr)_1fr]
+        "
+      >
+        <div className="space-y-6 min-w-0">
           <ErrorBoundary>
             <TopArtistsSection artists={artists} />
           </ErrorBoundary>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div
+            className="
+              grid
+              gap-6
+
+              grid-cols-1
+
+              md:grid-cols-2
+            "
+          >
             <ErrorBoundary>
               <GenresSection genres={genres} />
             </ErrorBoundary>
@@ -179,9 +133,11 @@ export default async function ExplorePage() {
           </div>
         </div>
 
-        <ErrorBoundary>
-          <PlayerCard />
-        </ErrorBoundary>
+        <div className="min-w-0">
+          <ErrorBoundary>
+            <PlayerCard />
+          </ErrorBoundary>
+        </div>
       </div>
     </div>
   );

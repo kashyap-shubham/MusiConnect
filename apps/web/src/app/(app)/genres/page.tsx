@@ -1,5 +1,5 @@
-import Header from "@/components/app/Header";
 import ErrorBoundary from "@/components/shared/ErrorBoundary";
+
 import Link from "next/link";
 
 interface Genre {
@@ -67,18 +67,41 @@ export default function GenresPage() {
 
   return (
 
-    <div className="p-10 space-y-8">
+    <div
+      className="
+        space-y-6
+
+        sm:space-y-8
+      "
+    >
 
       {/* title */}
       <div>
 
-        <h1 className="text-2xl font-semibold">
+        <h1
+          className="
+            text-xl
+
+            sm:text-2xl
+
+            font-semibold
+          "
+        >
 
           Genres
 
         </h1>
 
-        <p className="text-sm text-neutral-400 mt-1">
+        <p
+          className="
+            text-xs
+
+            sm:text-sm
+
+            text-neutral-400
+            mt-1
+          "
+        >
 
           Browse by genre
 
@@ -86,14 +109,23 @@ export default function GenresPage() {
 
       </div>
 
-
       <ErrorBoundary>
 
         <div
           className="
             grid
-            grid-cols-4
-            gap-6
+
+            grid-cols-2
+
+            sm:grid-cols-3
+
+            lg:grid-cols-4
+
+            gap-4
+
+            sm:gap-5
+
+            lg:gap-6
           "
         >
 
@@ -108,12 +140,21 @@ export default function GenresPage() {
                 className={`
                   ${genre.color}
 
-                  h-28
+                  h-24
+
+                  sm:h-28
+
                   rounded-xl
 
-                  p-4
+                  p-3
+
+                  sm:p-4
 
                   text-white
+
+                  text-sm
+                  sm:text-base
+
                   font-medium
 
                   flex

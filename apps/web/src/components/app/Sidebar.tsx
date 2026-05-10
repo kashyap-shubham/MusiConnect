@@ -1,20 +1,44 @@
 "use client";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import {Compass, LayoutGrid, Disc3, Mic2, Clock, Heart, Plus} from "lucide-react";
-import cn from "@/lib/utils/cn";
-import { useState } from "react";
-import CreatePlaylistModal from "./CreatePlaylistModal";
-import PlaylistMenu from "./PlaylistMenu";
-import { PlaylistDTO } from "@repo/types";
-import { createPlaylist, deletePlaylist, renamePlaylist } from "@/lib/api/client-playlist.api";
 
+import Link from "next/link";
+
+import { usePathname } from "next/navigation";
+
+import {
+  Compass,
+  LayoutGrid,
+  Disc3,
+  Mic2,
+  Clock,
+  Heart,
+  Plus,
+} from "lucide-react";
+
+import cn from "@/lib/utils/cn";
+
+import { useState } from "react";
+
+import CreatePlaylistModal from "./CreatePlaylistModal";
+
+import PlaylistMenu from "./PlaylistMenu";
+
+import { PlaylistDTO } from "@repo/types";
+
+import {
+  createPlaylist,
+  deletePlaylist,
+  renamePlaylist,
+} from "@/lib/api/client-playlist.api";
 
 type SidebarProps = {
-  playlists: PlaylistDTO[];
-};
 
-export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
+  playlists: PlaylistDTO[];
+
+}
+
+export default function Sidebar({
+  playlists: initialPlaylists,
+}: SidebarProps) {
 
   const [playlists, setPlaylists] = useState(initialPlaylists);
 
@@ -25,75 +49,100 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
   async function handleCreatePlaylist(name: string) {
 
     const optimisticId = crypto.randomUUID();
-    
+
     const optimisticPlaylist: PlaylistDTO = {
+
       id: optimisticId,
+
       name,
+
       createdAt: new Date().toISOString(),
-      songsCount: 0
-    }
-  
+
+      songsCount: 0,
+
+    };
+
     setPlaylists((prev) => [optimisticPlaylist, ...prev]);
 
     try {
+
       const realPlaylist = await createPlaylist(name);
 
-      setPlaylists(prev => prev.map(p => p.id === optimisticId ? realPlaylist : p));
+      setPlaylists((prev) =>
+        prev.map((p) =>
+          p.id === optimisticId
+            ? realPlaylist
+            : p
+        ),
+      );
 
     } catch (error) {
-      setPlaylists(prev => prev.filter(p => p.id !== optimisticId));
+
+      setPlaylists((prev) =>
+        prev.filter((p) => p.id !== optimisticId)
+      );
+
     }
+
   }
 
-  async function handleRenamePlaylist(playlistId: string, newName: string) {
-    
+  async function handleRenamePlaylist(
+    playlistId: string,
+    newName: string,
+  ) {
+
     const previous = [...playlists];
 
-    setPlaylists(prev =>
-      prev.map(p =>
+    setPlaylists((prev) =>
+      prev.map((p) =>
         p.id === playlistId
           ? {
               ...p,
-              name: newName
+              name: newName,
             }
-          : p
-      )
-    )
-
-
+          : p,
+      ),
+    );
 
     try {
 
-      await renamePlaylist(playlistId, newName)
+      await renamePlaylist(
+        playlistId,
+        newName,
+      );
 
     } catch {
 
-      setPlaylists(previous)
+      setPlaylists(previous);
 
     }
 
   }
 
-  async function handleDeletePlaylist(playlistId: string) {
+  async function handleDeletePlaylist(
+    playlistId: string
+  ) {
 
     const previous = [...playlists];
-    
-    setPlaylists(prev =>
-      prev.filter(p =>
-        p.id !== playlistId
-      )
-    )
+
+    setPlaylists((prev) =>
+      prev.filter((p) => p.id !== playlistId),
+    );
 
     try {
-      await deletePlaylist(playlistId)
+
+      await deletePlaylist(playlistId);
 
     } catch {
-      setPlaylists(previous)
+
+      setPlaylists(previous);
+
     }
 
   }
 
   const menuItems = [
+
     {
       label: "Explore",
       href: "/explore",
@@ -117,9 +166,11 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
       href: "/artists",
       icon: Mic2,
     },
+
   ];
 
   const libraryItems = [
+
     {
       label: "Recent",
       href: "/recent",
@@ -131,135 +182,371 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
       href: "/liked",
       icon: Heart,
     },
+
   ];
 
   return (
-    <div className="h-screen flex flex-col px-6 py-8">
-      
+
+    <div
+      className="
+        h-full
+
+        flex
+        flex-col
+
+        min-h-0
+
+        overflow-hidden
+
+        px-4
+        py-5
+
+        sm:px-5
+
+        lg:px-6
+        lg:py-8
+      "
+    >
+
       {/* LOGO */}
-      <h1 className="text-xl font-semibold mb-10 cursor-pointer">MusiConnect</h1>
+      <h1
+        className="
+          text-lg
 
-      {/* MENU */}
-      <div className="mb-8">
-        <p className="text-xs text-white/40 mb-4">MENU</p>
+          sm:text-xl
 
-        <div className="flex flex-col gap-3">
-          {menuItems.map((item) => {
-            const Icon = item.icon;
+          font-semibold
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-3 text-sm transition",
-                  pathname === item.href
-                    ? "text-white"
-                    : "text-white/70 hover:text-white",
-                )}
-              >
-                <Icon size={18} />
+          mb-7
 
-                {item.label}
-              </Link>
-            );
-          })}
+          lg:mb-10
+
+          cursor-pointer
+
+          truncate
+
+          shrink-0
+        "
+      >
+
+        MusiConnect
+
+      </h1>
+
+      {/* scrollable content */}
+      <div
+        className="
+          flex-1
+
+          min-h-0
+
+          overflow-y-auto
+
+          scrollbar-hide
+
+          pr-1
+        "
+      >
+
+        {/* MENU */}
+        <div className="mb-6 lg:mb-8">
+
+          <p className="text-xs text-white/40 mb-4">
+
+            MENU
+
+          </p>
+
+          <div className="flex flex-col gap-3">
+
+            {menuItems.map((item) => {
+
+              const Icon = item.icon;
+
+              return (
+
+                <Link
+                  key={item.href}
+
+                  href={item.href}
+
+                  className={cn(
+                    `
+                      flex items-center gap-3
+
+                      rounded-lg
+
+                      px-2
+                      py-2
+
+                      text-sm
+
+                      transition
+
+                      truncate
+                    `,
+
+                    pathname === item.href
+                      ? "bg-white/10 text-white"
+                      : "text-white/70 hover:text-white hover:bg-white/5",
+                  )}
+                >
+
+                  <Icon
+                    size={18}
+                    className="shrink-0"
+                  />
+
+                  <span className="truncate">
+
+                    {item.label}
+
+                  </span>
+
+                </Link>
+
+              );
+
+            })}
+
+          </div>
+
         </div>
 
-      </div>
+        {/* LIBRARY */}
+        <div className="mb-6 lg:mb-8">
 
-      {/* LIBRARY */}
-      <div className="mb-8">
-        <p className="text-xs text-white/40 mb-4">LIBRARY</p>
+          <p className="text-xs text-white/40 mb-4">
 
-        <div className="flex flex-col gap-3">
-          {libraryItems.map((item) => {
-            const Icon = item.icon;
+            LIBRARY
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex items-center gap-3 text-sm transition",
-                  pathname === item.href
-                    ? "text-white"
-                    : "text-white/70 hover:text-white",
-                )}
-              >
-                <Icon size={18} />
+          </p>
 
-                {item.label}
-              </Link>
-            );
-          })}
+          <div className="flex flex-col gap-3">
+
+            {libraryItems.map((item) => {
+
+              const Icon = item.icon;
+
+              return (
+
+                <Link
+                  key={item.href}
+
+                  href={item.href}
+
+                  className={cn(
+                    `
+                      flex items-center gap-3
+
+                      rounded-lg
+
+                      px-2
+                      py-2
+
+                      text-sm
+
+                      transition
+
+                      truncate
+                    `,
+
+                    pathname === item.href
+                      ? "bg-white/10 text-white"
+                      : "text-white/70 hover:text-white hover:bg-white/5",
+                  )}
+                >
+
+                  <Icon
+                    size={18}
+                    className="shrink-0"
+                  />
+
+                  <span className="truncate">
+
+                    {item.label}
+
+                  </span>
+
+                </Link>
+
+              );
+
+            })}
+
+          </div>
+
         </div>
-      </div>
 
-      {/* PLAYLISTS */}
-      <div className="flex-1 flex flex-col">
-        
-        <p className="text-xs text-white/40 mb-4">PLAYLISTS</p>
+        {/* PLAYLISTS */}
+        <div className="min-h-0">
 
-        <button
-          onClick={() => setOpenModal(true)}
-          className="
+          <p className="text-xs text-white/40 mb-4">
+
+            PLAYLISTS
+
+          </p>
+
+          <button
+            onClick={() => setOpenModal(true)}
+
+            className="
               flex items-center gap-3
+
+              w-full
+
+              rounded-lg
+
+              px-2
+              py-2
+
+              text-sm
+
+              text-white/70
+
+              hover:text-white
+              hover:bg-white/5
+
+              transition
+
+              hover:cursor-pointer
+
+              shrink-0
+            "
+          >
+
+            <Plus
+              size={18}
+              className="shrink-0"
+            />
+
+            <span className="truncate">
+
+              Create New
+
+            </span>
+
+          </button>
+
+          <div
+            className="
+              mt-4
+
+              space-y-2
+
               text-sm
               text-white/70
-              hover:text-white hover:cursor-pointer">
+            "
+          >
 
-          <Plus size={18} />
-          Create New
-        </button>
+            {playlists.length === 0 ? (
 
-        <div className="mt-4 space-y-2 overflow-y-auto text-sm text-white/70">
-          {playlists.length === 0 ? (<p className="text-white/40 text-xs"> No Playlists yet</p>) : 
-          (
-            <div className="mt-4 space-y-2">
-              {playlists.map((playlist) => (
-                <div key={playlist.id}
-                  className="
+              <p className="text-white/40 text-xs">
+
+                No Playlists yet
+
+              </p>
+
+            ) : (
+
+              <div className="space-y-2">
+
+                {playlists.map((playlist) => (
+
+                  <div
+                    key={playlist.id}
+
+                    className="
                       flex
                       items-center
                       justify-between
+
+                      gap-2
+
                       px-1
-                      hover:bg-white/5
+
                       rounded-md
-                      group">
 
-                  <Link
-                    href={`/playlist/${playlist.id}`}
-                    className={cn("flex-1 truncate py-1", 
-                        pathname === `/playlists/${playlist.id}` ? "text-white" : "text-white/70 hover:text-white"
-                    )}>
+                      hover:bg-white/5
 
-                    {playlist.name}
-                  </Link>
+                      group
 
-                  <PlaylistMenu
-                    onRename={async () => {
-                      const newName = prompt("Rename playlist");
+                      min-w-0
+                    "
+                  >
 
-                      if (!newName?.trim()) return;
+                    <Link
+                      href={`/playlist/${playlist.id}`}
 
-                      await handleRenamePlaylist(playlist.id, newName);
-                    }}
-                      
-                    onDelete={async () => {
-                      await handleDeletePlaylist(playlist.id);
-                    }}
+                      className={cn(
+                        `
+                          flex-1
 
-                    onFavourite={() => {
-                      console.log("favourite playlist", playlist.id);
-                    }}
-                  />
-                </div>
-              ))}
+                          truncate
 
-            </div>
-          )}
+                          py-2
+
+                          min-w-0
+                        `,
+
+                        pathname === `/playlist/${playlist.id}`
+                          ? "text-white"
+                          : "text-white/70 hover:text-white",
+                      )}
+                    >
+
+                      {playlist.name}
+
+                    </Link>
+
+                    <div className="shrink-0">
+
+                      <PlaylistMenu
+                        onRename={async () => {
+
+                          const newName = prompt("Rename playlist");
+
+                          if (!newName?.trim()) return;
+
+                          await handleRenamePlaylist(
+                            playlist.id,
+                            newName,
+                          );
+
+                        }}
+
+                        onDelete={async () => {
+
+                          await handleDeletePlaylist(
+                            playlist.id,
+                          );
+
+                        }}
+
+                        onFavourite={() => {
+
+                          console.log(
+                            "favourite playlist",
+                            playlist.id,
+                          );
+
+                        }}
+                      />
+
+                    </div>
+
+                  </div>
+
+                ))}
+
+              </div>
+
+            )}
+
+          </div>
+
         </div>
+
       </div>
 
       {/* modal */}
@@ -268,6 +555,9 @@ export default function Sidebar({ playlists: initialPlaylists }: SidebarProps) {
         onClose={() => setOpenModal(false)}
         onCreate={handleCreatePlaylist}
       />
+
     </div>
+
   );
+
 }

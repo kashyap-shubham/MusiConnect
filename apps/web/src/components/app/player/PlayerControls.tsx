@@ -12,7 +12,6 @@ import {
 
 } from "lucide-react";
 
-
 interface Props {
 
   isPlaying?: boolean
@@ -31,7 +30,6 @@ interface Props {
 
 }
 
-
 export default function PlayerControls({
 
   isPlaying,
@@ -48,9 +46,7 @@ export default function PlayerControls({
   isShuffle,
   repeatMode,
 
-
 }: Props) {
-
 
   return (
 
@@ -63,34 +59,51 @@ export default function PlayerControls({
         rounded-lg
 
         py-3
-        px-4
+        px-3
+
+        sm:px-4
 
         space-y-2
       "
     >
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
 
-        <button onClick={onRepeat}>
+        <button
+          onClick={onRepeat}
+          className="
+            shrink-0
+            p-1
+          "
+        >
 
           <Repeat size={16} />
 
         </button>
 
-
-        <button onClick={onPrev}>
+        <button
+          onClick={onPrev}
+          className="
+            shrink-0
+            p-1
+          "
+        >
 
           <SkipBack size={18} />
 
         </button>
 
-
         <button
           onClick={isPlaying ? onPause : onPlay}
 
           className="
-            h-10
-            w-10
+            h-9
+            w-9
+
+            sm:h-10
+            sm:w-10
+
+            shrink-0
 
             bg-white
             text-black
@@ -110,15 +123,25 @@ export default function PlayerControls({
 
         </button>
 
-
-        <button onClick={onNext}>
+        <button
+          onClick={onNext}
+          className="
+            shrink-0
+            p-1
+          "
+        >
 
           <SkipForward size={18} />
 
         </button>
 
-
-        <button onClick={onShuffle}>
+        <button
+          onClick={onShuffle}
+          className="
+            shrink-0
+            p-1
+          "
+        >
 
           <Shuffle size={16} />
 
@@ -126,12 +149,16 @@ export default function PlayerControls({
 
       </div>
 
-
       <div className="flex items-center justify-center gap-1">
 
         <ChevronUp size={14} />
 
-        <span className="text-[10px] tracking-wide">
+        <span
+          className="
+            text-[10px]
+            tracking-wide
+          "
+        >
 
           LYRICS
 
