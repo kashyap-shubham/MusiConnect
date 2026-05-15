@@ -13,7 +13,7 @@ export default function Benefit() {
 
             <div className="flex justify-center items-center">
                 {/* left card */}
-                <div className="h-80 w-85 bg-black relative -left-[30%]">
+                <div className="h-80 w-85 bg-black relative left-[-30%]">
 
                 </div>
 
