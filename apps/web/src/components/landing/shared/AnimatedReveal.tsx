@@ -8,13 +8,10 @@ interface Props {
   className?: string;
 }
 
-export default function AnimatedReveal({
-  children,
-  className,
-}: Props) {
+export default function AnimatedReveal({ children, className }: Props) {
   return (
     <motion.div
-      variants={fadeUp}
+      variants={fadeUp as any}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}

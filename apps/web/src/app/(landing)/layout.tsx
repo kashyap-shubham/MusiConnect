@@ -6,9 +6,10 @@ export default async function LandingLayout({
     children: React.ReactNode;
 }) {
     
-    return 
-    <div>
-       <Navbar /> 
-       {children}
-    </div>
+    return (
+        <>
+            <Navbar />
+            {children}
+        </>
+    )
 }
